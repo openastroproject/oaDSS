@@ -1,8 +1,7 @@
-#include "stdafx.h"
-#include <algorithm>
+#include "dss_common.h"
+
 #include "ColorBitmap.h"
 #include "ColorHelpers.h"
-#include "ZExcept.h"
 #include "ColorMultiBitmap.h"
 #include "MedianFilterEngine.h"
 #include "BitmapCharacteristics.h"

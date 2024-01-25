@@ -87,7 +87,7 @@ extern "C"
 #pragma info(restore)
 #endif
 
-#include "ztrace.h"
+#include "Ztrace.h"
 #include "zexcept.h"
 #include "zreslock.h"
 #include "zmstrlck.h"

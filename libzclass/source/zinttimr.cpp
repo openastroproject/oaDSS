@@ -23,7 +23,7 @@ extern "C" {
 #pragma info(restore)
 #endif
 
-#include "ztrace.h"
+#include "Ztrace.h"
 #include "zinttimr.h"
 #include "zexcept.h"
 #include "zmstrlck.h"

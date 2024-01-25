@@ -50,7 +50,7 @@ add_library( dsscore
 	Multitask.cpp
 	QEventLogger.cpp
 #	RAWUtils.cpp								# pokes about in libRaw internals
-	RegisterEngine.cpp
+#	RegisterEngine.cpp					# AVX, Windows-specific path handling
 	RunningStackingEngine.cpp
 	Settings.cpp
 	StackedBitmap.cpp

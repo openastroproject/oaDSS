@@ -24,7 +24,7 @@ using namespace DSS;
 
 /* ------------------------------------------------------------------- */
 
-static	CComAutoCriticalSection			g_FITSCritical;
+static	std::mutex			g_FITSCritical;
 
 CFITSHeader::CFITSHeader()
 {
@@ -35,7 +35,7 @@ CFITSHeader::CFITSHeader()
 	m_CFAType		= CFATYPE_NONE;
 	m_Format		= FF_UNKNOWN;
 	m_bSigned		= false;
-	g_FITSCritical.Lock();
+	g_FITSCritical.lock();
     m_lWidth = 0;
     m_lHeight = 0;
 	m_lBitsPerPixel = 0;
@@ -50,7 +50,7 @@ CFITSHeader::CFITSHeader()
 
 CFITSHeader::~CFITSHeader()
 {
-	g_FITSCritical.Unlock();
+	g_FITSCritical.unlock();
 };
 
 /* ------------------------------------------------------------------- */
@@ -613,7 +613,7 @@ bool CFITSReader::Read()
 		if (m_pProgress)
 			m_pProgress->Start2(m_lHeight);
 
-		std::int64_t fPixel[3] = { 1, 1, 1 };		// want to start reading at column 1, row 1, plane 1
+		long long int fPixel[3] = { 1, 1, 1 };		// want to start reading at column 1, row 1, plane 1
 
 		ZTRACE_RUNTIME("FITS colours=%d, bps=%d, w=%d, h=%d", colours, m_lBitsPerPixel, m_lWidth, m_lHeight);
 
@@ -1333,7 +1333,7 @@ bool CFITSWriter::Open()
 				if ((m_lNrChannels == 1) && (m_CFAType != CFATYPE_NONE))
 					bResult = bResult && WriteKey("DSSCFATYPE", (int)m_CFAType);
 
-				WriteKey("SOFTWARE", QString("DeepSkyStacker %1").arg(VERSION_DEEPSKYSTACKER).toUtf8());
+				WriteKey("SOFTWARE", QString("DeepSkyStacker %1").arg(VERSION_DEEPSKYSTACKER).toStdString().c_str());
 				WriteAllKeys();
 			};
 
@@ -1856,6 +1856,6 @@ void GetFITSExtension(const fs::path& file, QString& strExtension)
 
 void GetFITSExtension(fs::path path, QString& strExtension)
 {
-	QDir qPath(path);
+	QDir qPath(path.c_str());
 	GetFITSExtension(qPath.absolutePath(), strExtension);
 }

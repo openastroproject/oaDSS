@@ -27,14 +27,14 @@ add_library( dsscore
 	CosmeticEngine.cpp
 	DarkFrame.cpp
 	DeBloom.cpp
-#	DeepStack.cpp								# Windows-specific code
+	DeepStack.cpp
 	DSSProgress.cpp
 	dss_settings.cpp
 	EntropyInfo.cpp
 	ExceptionHandling.cpp
 #	File.cpp										# Windows-specific code
 	Filters.cpp
-#	FITSUtil.cpp								# Many compilation errors -- prototypes?
+	FITSUtil.cpp
 	FlatFrame.cpp
 	FrameInfo.cpp
 	FrameList.cpp

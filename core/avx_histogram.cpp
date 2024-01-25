@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <immintrin.h>
+
 #include "avx_histogram.h"
 
 AvxHistogram::AvxHistogram(CMemoryBitmap& inputbm) :

@@ -64,12 +64,12 @@ add_library( dsscore
 	tracecontrol.cpp
 #	Workspace.cpp								# Qt6 specifics
 #	avx_avg.cpp									# AVX
-#	avx_bitmap_filler.cpp				# AVX
-#	avx_cfa.cpp									# AVX
+	avx_bitmap_filler.cpp
+	avx_cfa.cpp
 #	avx.cpp											# AVX
 #	avx_entropy.cpp							# AVX
 #	avx_filter.cpp							# AVX
-#	avx_histogram.cpp						# AVX
+	avx_histogram.cpp
 #	avx_luminance.cpp						# AVX
 #	avx_output.cpp							# AVX
 #	avx_support.cpp							# AVX

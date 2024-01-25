@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <immintrin.h>
+
 #include "avx_output.h"
 #include "avx_support.h"
 #include "avx_median.h"

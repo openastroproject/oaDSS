@@ -1,8 +1,10 @@
-#include "stdafx.h" 
+#include "dss_common.h"
+
+#include <immintrin.h>
+
 #include "avx_support.h" 
 #include "BitmapCharacteristics.h" 
 #include "Multitask.h" 
-#include "Ztrace.h"
  
  
  

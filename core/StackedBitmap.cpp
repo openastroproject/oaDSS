@@ -1,13 +1,14 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <omp.h>
+#include <tiffio.h>
+
 #include "StackedBitmap.h"
 #include "TIFFUtil.h"
 #include "ColorHelpers.h"
-#include "Ztrace.h"
 #include "DSSProgress.h"
 #include "GrayBitmap.h"
 #include "ColorBitmap.h"
-#include "omp.h"
-#include "tiffio.h"
 #include "FITSUtil.h"
 #include "BitmapExt.h"
 #include "Multitask.h"

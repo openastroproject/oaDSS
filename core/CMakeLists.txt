@@ -10,11 +10,6 @@ add_compile_options ( -Wno-ignored-attributes )
 add_compile_options ( -march=haswell )
 add_compile_options ( -O2 )
 
-add_compile_definitions ( __int8=int8_t )
-add_compile_definitions ( __int64=int64_t )
-add_compile_definitions ( TCHAR=char )
-add_compile_definitions ( MAXWORD=65535 )
-
 add_library( dsscore
 	AHDDemosaicing.cpp
 	BackgroundCalibration.cpp
@@ -36,9 +31,9 @@ add_library( dsscore
 	dss_settings.cpp
 	EntropyInfo.cpp
 	ExceptionHandling.cpp
-#	File.cpp
-	Filters.cpp
- 	FITSUtil.cpp
+#	File.cpp										# Windows-specific code
+#	Filters.cpp									# Bitmap-specific code
+#	FITSUtil.cpp								# Many compilation errors -- prototypes?
 	FlatFrame.cpp
 	FrameInfo.cpp
 	FrameList.cpp

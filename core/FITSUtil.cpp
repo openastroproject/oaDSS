@@ -1,11 +1,15 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <cstdint>
+#include <mutex>
+
+#include <fitsio.h>
+#include <omp.h>
+
 //#include "resource.h"
 #include "Workspace.h"
 #include "FITSUtil.h"
-#include "..\CFitsio\fitsio.h"
-#include "Ztrace.h"
 #include "DSSProgress.h"
-#include "ZExcBase.h"
 #include "Multitask.h"
 #include "GrayBitmap.h"
 #include "ColorBitmap.h"
@@ -672,8 +676,8 @@ bool CFITSReader::Read()
 			}
 			if (m_bDSI && (fMax > 1))
 			{
-				fMin = min(0.0, fMin);
-				fMax = max(fMax, 65535.0);
+				fMin = std::min(0.0, fMin);
+				fMax = std::max(fMax, 65535.0);
 			};
 
 		}

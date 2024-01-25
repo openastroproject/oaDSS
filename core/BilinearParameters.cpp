@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "BilinearParameters.h"
 
 void CBilinearParameters::Clear() noexcept

@@ -1,4 +1,7 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
+#include <omp.h>
+
 //#include "resource.h"
 #include "BitmapBase.h"
 #include "BackgroundCalibration.h"
@@ -6,7 +9,6 @@
 #include "StackingTasks.h"
 #include "avx_histogram.h"
 #include "Multitask.h"
-#include "Ztrace.h"
 
 CBackgroundCalibration::CBackgroundCalibration() :
 	m_bInitOk{ false },

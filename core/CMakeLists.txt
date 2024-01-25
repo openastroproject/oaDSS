@@ -10,6 +10,9 @@ add_compile_options ( -Wno-ignored-attributes )
 add_compile_options ( -march=haswell )
 add_compile_options ( -O2 )
 
+add_compile_definitions ( __int8=int8_t )
+add_compile_definitions ( __int64=int64_t )
+
 add_library( dsscore
 	AHDDemosaicing.cpp
 	BackgroundCalibration.cpp

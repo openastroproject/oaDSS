@@ -29,7 +29,7 @@ add_library( dsscore
 #	CosmeticEngine.cpp					# BITMAP-related code
 #	DarkFrame.cpp								# BITMAP-related code
 #	DeBloom.cpp									# BITMAP-related code
-	DeepStack.cpp
+#	DeepStack.cpp								# Windows-specific code
 	DSSProgress.cpp
 	dss_settings.cpp
 	DSSTools.cpp

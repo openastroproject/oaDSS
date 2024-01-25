@@ -1,7 +1,9 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
+#include <omp.h>
+
 #include "AHDDemosaicing.h"
 #include "ColorBitmap.h"
-#include "Ztrace.h"
 #include "DSSProgress.h"
 #include "Multitask.h"
 #include "ColorHelpers.h"

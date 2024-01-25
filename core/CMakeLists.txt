@@ -27,7 +27,7 @@ add_library( dsscore
 	ColorHelpers.cpp
 #	ColorMultiBitmap.cpp				# default argument for template parameter
 #	CosmeticEngine.cpp					# BITMAP-related code
-	DarkFrame.cpp
+#	DarkFrame.cpp								# BITMAP-related code
 	DeBloom.cpp
 	DeepStack.cpp
 	DSSProgress.cpp

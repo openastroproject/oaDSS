@@ -45,7 +45,7 @@
 
 #define Z_TRACE_DEVELOP
 #include <zexcept.h>
-#include <ztrace.h>
+#include <Ztrace.h>
 
 void subr(void);
 int main(int argc, char* argv[])

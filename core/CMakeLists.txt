@@ -53,7 +53,7 @@ add_library( dsscore
 #	RegisterEngine.cpp					# AVX, Windows-specific path handling
 #	RunningStackingEngine.cpp		# BITMAP-related code
 #	Settings.cpp								# CA2CTEX?
-	StackedBitmap.cpp
+#	StackedBitmap.cpp
 	StackingEngine.cpp
 	StackingTasks.cpp
 	StackWalker.cpp

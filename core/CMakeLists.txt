@@ -22,7 +22,7 @@ add_library( dsscore
 #	BitmapExt.cpp								# Still has Windows-specific code
 	BitMapFiller.cpp
 	BitmapInfo.cpp
-	ChannelAlign.cpp
+#	ChannelAlign.cpp						# BITMAP-related code
 	ColorBitmap.cpp
 	ColorHelpers.cpp
 	ColorMultiBitmap.cpp

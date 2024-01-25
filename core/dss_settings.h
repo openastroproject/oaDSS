@@ -84,7 +84,7 @@ public:
 
 		fread(&lNameSize, sizeof(lNameSize), 1, hFile);
 		fread(szName, sizeof(TCHAR), lNameSize, hFile);
-		m_strName = QString::fromWCharArray(&szName[0]);
+		m_strName = QString(&szName[0]);
 		return m_BezierAdjust.Load(hFile) && m_HistoAdjust.Load(hFile);
 	};
 

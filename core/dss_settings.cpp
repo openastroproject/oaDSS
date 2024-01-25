@@ -33,7 +33,10 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <stdio.h>
+
 #include "dss_settings.h"
 #pragma pack(push, HDSETTINGS, 2)
 
@@ -67,7 +70,7 @@ bool CDSSSettings::Load()
 	if (szFile.isEmpty())
 		GetDefaultSettingsFileName(szFile);
 
-	if (FILE* hFile = _tfopen(szFile.toStdWString().c_str(), _T("rb")))
+	if (FILE* hFile = fopen(szFile.toStdString().c_str(), _T("r")))
 	{
 		HDSETTINGSHEADER Header;
 		fread(&Header, sizeof(Header), 1, hFile);
@@ -100,7 +103,7 @@ bool	CDSSSettings::Save()
 	if (outFile.isEmpty())
 		GetDefaultSettingsFileName(outFile);
 
-	if (FILE* hFile = _tfopen(outFile.toStdWString().c_str(), _T("wb")))
+	if (FILE* hFile = fopen(outFile.toStdString().c_str(), _T("w")))
 	{
 		m_lSettings.sort();
 

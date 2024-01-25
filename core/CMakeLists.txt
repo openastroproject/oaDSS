@@ -12,6 +12,7 @@ add_compile_options ( -O2 )
 
 add_compile_definitions ( __int8=int8_t )
 add_compile_definitions ( __int64=int64_t )
+add_compile_definitions ( TCHAR=char )
 
 add_library( dsscore
 	AHDDemosaicing.cpp

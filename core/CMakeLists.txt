@@ -77,6 +77,7 @@ add_library( dsscore
 target_include_directories ( dsscore
     PRIVATE
     ${top}/include
+    ${top}/matrix
     ${top}/libzclass
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}

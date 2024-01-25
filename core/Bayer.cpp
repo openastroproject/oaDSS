@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "Bayer.h"
 
 BAYERCOLOR GetBayerColor(size_t baseX, size_t baseY, CFATYPE CFAType, int xOffset/*=0*/, int yOffset/*=0*/)

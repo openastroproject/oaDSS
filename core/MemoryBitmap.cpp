@@ -1,6 +1,6 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "MemoryBitmap.h"
-#include "Ztrace.h"
 #include "CFABitmapInfo.h"
 
 CMemoryBitmap::CMemoryBitmap() :

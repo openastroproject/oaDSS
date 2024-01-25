@@ -1,3 +1,5 @@
 #pragma once
 
-bool GetFileCreationDateTime(LPCTSTR szFileName, FILETIME& FileTime);
+#include <time.h>
+
+bool GetFileCreationDateTime(LPCTSTR szFileName, struct timespec& FileTime);

@@ -55,7 +55,7 @@ add_library( dsscore
 	RunningStackingEngine.cpp
 #	Settings.cpp								# CA2CTEX?
 	StackedBitmap.cpp
-#	StackingEngine.cpp					# File info errors
+	StackingEngine.cpp					# File info errors
 #	StackingTasks.cpp						# CA2CTEX?
 #	StackWalker.cpp							# Platform not supported!
 	StarMask.cpp

@@ -1,8 +1,10 @@
 #include "dss_common.h"
 
+#include <time.h>
+
 #include "File.h"
 
-bool GetFileCreationDateTime(LPCTSTR szFileName, FILETIME& FileTime)
+bool GetFileCreationDateTime(LPCTSTR szFileName, struct timespec& FileTime)
 {
 	bool			bResult = false;
 	HANDLE			hFind;

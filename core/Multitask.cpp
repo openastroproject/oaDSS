@@ -1,4 +1,7 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <omp.h>
+
 #include "Multitask.h"
 
 int CMultitask::GetNrCurrentOmpThreads()

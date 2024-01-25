@@ -1,10 +1,12 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
+#include <set>
+
 #include "dssrect.h"
 #include "ChannelAlign.h"
 #include "RegisterEngine.h"
 #include "MatchingStars.h"
 #include "BitmapIterator.h"
-#include "Ztrace.h"
 #include "ColorBitmap.h"
 
 /* ------------------------------------------------------------------- */
@@ -170,7 +172,7 @@ bool CChannelAlign::AlignChannels(CMemoryBitmap* pBitmap, ProgressBase* pProgres
 
 			std::sort(vStarsOrg.begin(), vStarsOrg.end(), CompareStarLuminancy);
 
-			for (size_t i = 0; i < min(vStarsOrg.size(), static_cast<STARVECTOR::size_type>(100)); i++)
+			for (size_t i = 0; i < std::min(vStarsOrg.size(), static_cast<STARVECTOR::size_type>(100)); i++)
 				MatchingStars.AddReferenceStar(vStarsOrg[i].m_fX, vStarsOrg[i].m_fY);
 		}
 
@@ -179,7 +181,7 @@ bool CChannelAlign::AlignChannels(CMemoryBitmap* pBitmap, ProgressBase* pProgres
 
 			std::sort(vStarsOrg.begin(), vStarsOrg.end(), CompareStarLuminancy);
 
-			for (size_t i = 0; i < min(vStarsOrg.size(), static_cast<STARVECTOR::size_type>(100)); i++)
+			for (size_t i = 0; i < std::min(vStarsOrg.size(), static_cast<STARVECTOR::size_type>(100)); i++)
 				MatchingStars.AddTargetedStar(vStarsOrg[i].m_fX, vStarsOrg[i].m_fY);
 		}
 
@@ -193,7 +195,7 @@ bool CChannelAlign::AlignChannels(CMemoryBitmap* pBitmap, ProgressBase* pProgres
 
 			MatchingStars.ClearTarget();
 
-			for (size_t i = 0; i < min(vStarsOrg.size(), static_cast<STARVECTOR::size_type>(100)); i++)
+			for (size_t i = 0; i < std::min(vStarsOrg.size(), static_cast<STARVECTOR::size_type>(100)); i++)
 				MatchingStars.AddTargetedStar(vStarsOrg[i].m_fX, vStarsOrg[i].m_fY);
 
 			bTransformationsOk = MatchingStars.ComputeCoordinateTransformation(pThird->m_BilinearParameters);

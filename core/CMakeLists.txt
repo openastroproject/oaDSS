@@ -59,7 +59,7 @@ add_library( dsscore
 #	StackWalker.cpp							# Platform not supported!
 #	StarMask.cpp								# BITMAP-related code
 	TaskInfo.cpp
-	TIFFUtil.cpp
+#	TIFFUtil.cpp								# BITMAP-related code
 	tracecontrol.cpp
 	Workspace.cpp
 	avx_avg.cpp

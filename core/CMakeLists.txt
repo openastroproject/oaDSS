@@ -49,7 +49,7 @@ add_library( dsscore
 	MultiBitmapProcess.cpp
 	Multitask.cpp
 	QEventLogger.cpp
-	RAWUtils.cpp
+#	RAWUtils.cpp								# pokes about in libRaw internals
 	RegisterEngine.cpp
 	RunningStackingEngine.cpp
 	Settings.cpp

@@ -1,5 +1,5 @@
-#include <stdafx.h>
-#include <algorithm>
+#include "dss_common.h"
+
 #include "GrayBitmap.h"
 #include "DSSProgress.h"
 #include "ColorHelpers.h"
@@ -7,7 +7,6 @@
 #include "Multitask.h"
 #include "GreyMultiBitmap.h"
 #include "MedianFilterEngine.h"
-#include "ZExcept.h"
 
 using namespace DSS;
 

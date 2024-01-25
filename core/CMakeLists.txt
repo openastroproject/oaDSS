@@ -19,7 +19,7 @@ add_library( dsscore
 	Bayer.cpp
 	BilinearParameters.cpp
 	BitmapBase.cpp
-	BitmapExt.cpp
+#	BitmapExt.cpp								# Still has Windows-specific code
 	BitMapFiller.cpp
 	BitmapInfo.cpp
 	ChannelAlign.cpp

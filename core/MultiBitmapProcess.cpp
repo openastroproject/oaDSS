@@ -1,14 +1,15 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
+#include <omp.h>
+
 #include "StackingTasks.h"
 #include "MultiBitmap.h"
 #include "MemoryBitmap.h"
-#include "Ztrace.h"
 #include "Multitask.h"
 #include "avx_output.h"
-#include "ZExcBase.h"
 #include "GrayBitmap.h"
 #include "ColorBitmap.h"
-#include <QTemporaryFile>
+#include "dssbase.h"
 
 namespace
 {
@@ -119,7 +120,7 @@ bool CMultiBitmap::AddBitmap(CMemoryBitmap* pBitmap, ProgressBase* pProgress)
 #if defined(_WINDOWS)
 			_wfopen(partFile.file.c_str(), L"a+b"),
 #else
-			std::fopen(partFile.file.c_ctr(), "a+b"),
+			std::fopen(partFile.file.c_str(), "a+b"),
 #endif
 			dtor };
 
@@ -257,9 +258,9 @@ static void ComputeWeightedAverage(int x, int y, CMemoryBitmap* pBitmap, CMemory
 		double		fRed = 0, fGreen = 0, fBlue = 0;
 		double		fWRed = 0, fWGreen = 0, fWBlue = 0;
 
-		for (int i = std::max(0, x-5);i<=min(lWidth-1, x+5);i++)
+		for (int i = std::max(0, x-5);i<=std::min(lWidth-1, x+5);i++)
 		{
-			for (int j = std::max(0, y-5);j<=min(lHeight-1, y+5);j++)
+			for (int j = std::max(0, y-5);j<=std::min(lHeight-1, y+5);j++)
 			{
 				double		fRed1, fGreen1, fBlue1;
 				double		fWRed1, fWGreen1, fWBlue1;
@@ -288,9 +289,9 @@ static void ComputeWeightedAverage(int x, int y, CMemoryBitmap* pBitmap, CMemory
 		double		fGray = 0;
 		double		fWGray = 0;
 
-		for (int i = std::max(0, x-5);i<=min(lWidth-1, x+5);i++)
+		for (int i = std::max(0, x-5);i<=std::min(lWidth-1, x+5);i++)
 		{
-			for (int j = std::max(0, y-5);j<=min(lHeight-1, y+5);j++)
+			for (int j = std::max(0, y-5);j<=std::min(lHeight-1, y+5);j++)
 			{
 				double		fGray1;
 				double		fWGray1;
@@ -390,7 +391,7 @@ std::shared_ptr<CMemoryBitmap> CMultiBitmap::GetResult(ProgressBase* pProgress)
 #if defined(_WINDOWS)
 				_wfopen(partFile.file.c_str(), L"rb")
 #else
-				std::fopen(partFile.file.c_ctr(), "rb")
+				std::fopen(partFile.file.c_str(), "rb")
 #endif
 				)
 			{

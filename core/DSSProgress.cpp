@@ -1,4 +1,5 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include <QCoreApplication>
 #include "DSSProgress.h"
 #include "Multitask.h"

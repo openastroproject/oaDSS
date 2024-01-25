@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "ColorHelpers.h"
 
 void CYMGToRGB(double fCyan, double fYellow, double fMagenta, double fGreen2, double& fRed, double& fGreen, double& fBlue)
@@ -109,40 +110,40 @@ void CYMGToRGB3(double fCyan, double fYellow, double fMagenta, double fGreen2, d
 	// R = (M+Y-C)/2
 	// G = (Y+C-M)/2
 	// B = (M+C-Y)/2
-	fRed = max(0.0, fMagenta + fYellow - fCyan) / 2.0;
-	fGreen = max(0.0, fYellow + fCyan - fMagenta) / 2.0;
-	fBlue = max(0.0, fMagenta + fCyan - fYellow) / 2.0;
+	fRed = std::max(0.0, fMagenta + fYellow - fCyan) / 2.0;
+	fGreen = std::max(0.0, fYellow + fCyan - fMagenta) / 2.0;
+	fBlue = std::max(0.0, fMagenta + fCyan - fYellow) / 2.0;
 
 	// RGB from CYG
 	// G = G
 	// R = Y - G
 	// B = C - G
 	fGreen += fGreen2;
-	fRed += max(0.0, fYellow - fGreen2);
-	fBlue += max(0.0, fCyan - fGreen2);
+	fRed += std::max(0.0, fYellow - fGreen2);
+	fBlue += std::max(0.0, fCyan - fGreen2);
 
 	// RGB from CMG
 	// G = G
 	// B = C - G
 	// R = M - B = M - C + G
-	fBlue += max(0.0, fCyan - fGreen2);
-	fRed += max(0.0, fMagenta - fCyan + fGreen2);
+	fBlue += std::max(0.0, fCyan - fGreen2);
+	fRed += std::max(0.0, fMagenta - fCyan + fGreen2);
 
 	// RGB from YMG
 	// G = G
 	// R = Y - G
 	// B = M - R = M - Y + G
-	fRed += max(0.0, fYellow - fGreen2);
-	fBlue += max(0.0, fMagenta - fYellow + fGreen2);
+	fRed += std::max(0.0, fYellow - fGreen2);
+	fBlue += std::max(0.0, fMagenta - fYellow + fGreen2);
 
 	// Average the results
 	fRed /= 4.0;
 	fBlue /= 4.0;
 	fGreen /= 2.0;
 
-	fRed = max(0.0, fRed);
-	fBlue = max(0.0, fBlue);
-	fGreen = max(0.0, fGreen);
+	fRed = std::max(0.0, fRed);
+	fBlue = std::max(0.0, fBlue);
+	fGreen = std::max(0.0, fGreen);
 }
 
 void ToHSL(double Red, double Green, double Blue, double& H, double& S, double& L)

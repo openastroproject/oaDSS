@@ -52,7 +52,7 @@ add_library( dsscore
 #	RAWUtils.cpp								# pokes about in libRaw internals
 #	RegisterEngine.cpp					# AVX, Windows-specific path handling
 #	RunningStackingEngine.cpp		# BITMAP-related code
-	Settings.cpp
+#	Settings.cpp								# CA2CTEX?
 	StackedBitmap.cpp
 	StackingEngine.cpp
 	StackingTasks.cpp

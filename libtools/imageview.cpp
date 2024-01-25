@@ -33,7 +33,7 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "common.h"
 #include "imageview.h"
 #include "Ztrace.h"
 

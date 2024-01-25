@@ -1,10 +1,7 @@
 // QLinearGradientCtrl.cpp 
 //
-#include "stdafx.h"
+#include "common.h"
 #include "QLinearGradientCtrl.h"
-
-#include "Ztrace.h"
-#include "ZExcBase.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // QLinearGradientCtrl
@@ -513,14 +510,14 @@ void QLinearGradientCtrl::mouseMoveEvent(QMouseEvent *event)
 		//----- Checks to see if the mouse is far enough away to "drop out" -----//
 		if (vertical)
 		{
-			if (max(point.x() - m_MouseDown.x(), m_MouseDown.x() - point.x()) <= 200)
+			if (std::max(point.x() - m_MouseDown.x(), m_MouseDown.x() - point.x()) <= 200)
 				selpegpos = point.y();
 			else
 				selpegpos = m_MouseDown.y();
 		}
 		else
 		{
-			if (max(point.y() - m_MouseDown.y(), m_MouseDown.y() - point.y()) <= 200)
+			if (std::max(point.y() - m_MouseDown.y(), m_MouseDown.y() - point.y()) <= 200)
 				selpegpos = point.x();
 			else
 				selpegpos = m_MouseDown.x();

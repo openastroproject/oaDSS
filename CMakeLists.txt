@@ -26,3 +26,4 @@ if ( NOT LIBEXIV2_FOUND )
 endif()
 
 add_subdirectory ( libzclass )
+add_subdirectory ( libtools )

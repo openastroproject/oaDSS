@@ -41,7 +41,7 @@ add_library( dsscore
 #	GreyMultiBitmap.cpp					# default argument for template parameter
 	group.cpp
 	ImageListModel.cpp
-	imageloader.cpp
+#	imageloader.cpp							# BITMAP-related code
 	MasterFrames.cpp
 	MatchingStars.cpp
 	MedianFilterEngine.cpp

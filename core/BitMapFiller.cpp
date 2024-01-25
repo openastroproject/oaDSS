@@ -1,9 +1,16 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <memory>
+#include <cstddef>
+#include <vector>
+#include <limits>
+
+#include <byteswap.h>
+
 #include "BitMapFiller.h"
 #include "avx_bitmap_filler.h"
 #include "avx_support.h"
 #include "DSSProgress.h"
-#include "ZExcept.h"
 
 using namespace DSS;
 
@@ -141,7 +148,7 @@ size_t NonAvxBitmapFiller::Write(const void* source, const size_t bytesPerPixel,
 		{
 			const std::uint16_t* const pData = static_cast<const std::uint16_t*>(source);
 			for (size_t i = 0; i < nrPixels; ++i)
-				redBuffer[i] = static_cast<float>(_byteswap_ushort(pData[i])); // Load an convert to little endian
+				redBuffer[i] = static_cast<float>(bswap_16(pData[i])); // Load an convert to little endian
 		}
 
 		if (this->isRgbBayerPattern())
@@ -180,9 +187,9 @@ size_t NonAvxBitmapFiller::Write(const void* source, const size_t bytesPerPixel,
 			const std::uint16_t* pData = static_cast<const std::uint16_t*>(source);
 			for (size_t i = 0; i < nrPixels; ++i, pData += 3)
 			{
-				redBuffer[i] = static_cast<float>(_byteswap_ushort(pData[0]));
-				greenBuffer[i] = static_cast<float>(_byteswap_ushort(pData[1]));
-				blueBuffer[i] = static_cast<float>(_byteswap_ushort(pData[2]));
+				redBuffer[i] = static_cast<float>(bswap_16(pData[0]));
+				greenBuffer[i] = static_cast<float>(bswap_16(pData[1]));
+				blueBuffer[i] = static_cast<float>(bswap_16(pData[2]));
 			}
 		}
 

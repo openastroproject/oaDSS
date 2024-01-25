@@ -214,12 +214,13 @@ public:
 	// Read color values from T* and return 16 x packed short
 	inline static __m256i read16PackedShort(const std::uint16_t* const pColor)
 	{
-		return _mm256_loadu_epi16(pColor);
+		return _mm256_loadu_si256(( const __m256i_u* ) pColor);
 	}
 	inline static __m256i read16PackedShort(const std::uint32_t* const pColor)
 	{
-		const __m256i lo = _mm256_srli_epi32(_mm256_loadu_epi32(pColor), 16); // Shift 16 bits right while shifting in zeros.
-		const __m256i hi = _mm256_srli_epi32(_mm256_loadu_epi32(pColor + 8), 16);
+		const __m256i lo = _mm256_srli_epi32(_mm256_loadu_si256(( const __m256i_u* )pColor), 16); // Shift 16 bits right while shifting in zeros.
+		const __m256i hi = _mm256_srli_epi32(_mm256_loadu_si256(( const __m256i_u* )( pColor + 8)), 16);
+
 		return cvt2xEpi32Epu16(lo, hi);
 	}
 	inline static __m256i read16PackedShort(const float* const pColor)

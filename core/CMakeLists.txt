@@ -25,7 +25,7 @@ add_library( dsscore
 #	ChannelAlign.cpp						# BITMAP-related code
 #	ColorBitmap.cpp							# BITMAP-related code
 	ColorHelpers.cpp
-	ColorMultiBitmap.cpp
+#	ColorMultiBitmap.cpp				# default argument for template parameter
 	CosmeticEngine.cpp
 	DarkFrame.cpp
 	DeBloom.cpp

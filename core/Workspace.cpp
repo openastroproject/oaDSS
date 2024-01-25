@@ -1,7 +1,10 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
+#include <deque>
+
 #include "Workspace.h"
 #include "DSSCommon.h"
-#include "ZExcBase.h"
+
 class WorkspaceSettings
 {
 public:

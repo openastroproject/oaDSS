@@ -53,9 +53,9 @@ add_library( dsscore
 #	RAWUtils.cpp								# pokes about in libRaw internals
 #	RegisterEngine.cpp					# AVX, Windows-specific path handling
 	RunningStackingEngine.cpp
-#	Settings.cpp								# CA2CTEX?
+	Settings.cpp
 	StackedBitmap.cpp
-	StackingEngine.cpp					# File info errors
+	StackingEngine.cpp
 #	StackingTasks.cpp						# CA2CTEX?
 #	StackWalker.cpp							# Platform not supported!
 	StarMask.cpp

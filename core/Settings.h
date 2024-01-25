@@ -1,5 +1,7 @@
 #pragma once
 
+#include <set>
+
 #include "Workspace.h"
 
 
@@ -70,7 +72,7 @@ public :
 		CHAR			szBuffer[2000];
 
 		if (fgets(szBuffer, sizeof(szBuffer), hFile))
-			bResult = Read((LPCTSTR)CA2CTEX<sizeof(szBuffer)>(szBuffer));
+			bResult = Read( szBuffer );
 
 		return bResult;
 	};
@@ -101,9 +103,9 @@ protected :
 	bool	ReadVariableFromWorkspace(LPCTSTR szKey, LPCTSTR szDefault, LPCTSTR szPrefix = nullptr)
 	{
 		Workspace workspace;
-		const QString keyName(QString::fromWCharArray(szKey));
-		const QString prefix(szPrefix ? QString::fromWCharArray(szPrefix) : "");
-		const QString strDefault(QString::fromWCharArray(szDefault));
+		const QString keyName(szKey);
+		const QString prefix(szPrefix ? szPrefix : "");
+		const QString strDefault(szDefault);
 		QString strValue(workspace.value(keyName).toString());
 
 		if (strValue.isEmpty())
@@ -126,7 +128,7 @@ protected :
 	{
 		CSetting		s;
 
-		s.m_strVariable = QString::fromWCharArray(szVariable);
+		s.m_strVariable = szVariable;
 		s.m_strValue = QString("%1").arg(lValue);
 
 		if (m_sSettings.find(s) == m_sSettings.end())
@@ -137,8 +139,8 @@ protected :
 	{
 		CSetting		s;
 
-		s.m_strVariable = QString::fromWCharArray(szVariable);
-		s.m_strValue    = QString::fromWCharArray(szValue);
+		s.m_strVariable = szVariable;
+		s.m_strValue    = szValue;
 
 		if (m_sSettings.find(s) == m_sSettings.end())
 			m_sSettings.insert(s);
@@ -152,7 +154,7 @@ protected :
 		if (GetPictureInfo(szFileName, bmpInfo))
 		{
 			QString strValue = QString("%1[%2]").arg(szFileName, bmpInfo.m_strDateTime);
-			AddVariable(szVariable, strValue.toStdWString().c_str());
+			AddVariable(szVariable, strValue.toStdString().c_str());
 		};
 	};
 	void	AddFileVariable(LPCTSTR szVariable, const fs::path& szFileName)
@@ -163,7 +165,7 @@ protected :
 		if (GetPictureInfo(szFileName, bmpInfo))
 		{
 			QString strValue = QString("%1[%2]").arg(szFileName.c_str(), bmpInfo.m_strDateTime);
-			AddVariable(szVariable, strValue.toStdWString().c_str());
+			AddVariable(szVariable, strValue.toStdString().c_str());
 		};
 	};
 

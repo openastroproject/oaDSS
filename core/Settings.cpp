@@ -56,7 +56,7 @@ bool	CGlobalSettings::ReadFromFile(LPCTSTR szFile)
 
 	m_sSettings.clear();
 	m_vFiles.clear();
-	hFile = _tfopen(szFile, _T("rt"));
+	hFile = fopen(szFile, _T("rt"));
 	if (hFile)
 	{
 		// First read the settings
@@ -88,7 +88,7 @@ void	CGlobalSettings::WriteToFile(LPCTSTR szFile)
 {
 	FILE *				hFile;
 
-	hFile = _tfopen(szFile, _T("wt"));
+	hFile = fopen(szFile, _T("wt"));
 	if (hFile)
 	{
 		// First write the settings
@@ -133,7 +133,7 @@ bool	CGlobalSettings::InitFromCurrent(CTaskInfo * pTask, LPCTSTR szFile)
 
 		for (size_t i = 0; i < pTask->m_vBitmaps.size(); i++)
 		{
-			const QString strFile(QString("%1[%2]").arg(pTask->m_vBitmaps[i].filePath.u8string().c_str()).arg(pTask->m_vBitmaps[i].m_strDateTime));
+			const QString strFile(QString("%1[%2]").arg(pTask->m_vBitmaps[i].filePath.c_str()).arg(pTask->m_vBitmaps[i].m_strDateTime));
 			m_vFiles.push_back(strFile);
 
 			if (!bFITS && (pTask->m_vBitmaps[i].m_strInfos.left(4) == "FITS"))

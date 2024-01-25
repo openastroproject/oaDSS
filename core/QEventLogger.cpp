@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "QEventLogger.h"
 #include <QApplication>
 #include <QTableView>

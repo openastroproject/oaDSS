@@ -1,14 +1,14 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <libraw/libraw.h>
+
 #include "RAWUtils.h"
-#include "libraw/libraw.h"
-#include "Ztrace.h"
 #include "Workspace.h"
 #include "DSSProgress.h"
 //#include "resource.h"
 #include "MemoryBitmap.h"
 #include "Multitask.h"
 #include "MedianFilterEngine.h"
-#include "ZExcBase.h"
 #include "BitmapInfo.h"
 
 // #include <zexcept.h>

@@ -42,7 +42,7 @@ add_library( dsscore
 	group.cpp
 	ImageListModel.cpp
 #	imageloader.cpp							# BITMAP-related code
-	MasterFrames.cpp
+#	MasterFrames.cpp						# BITMAP-related code
 	MatchingStars.cpp
 	MedianFilterEngine.cpp
 	MemoryBitmap.cpp

@@ -36,7 +36,7 @@ add_library( dsscore
 	dss_settings.cpp
 	EntropyInfo.cpp
 	ExceptionHandling.cpp
-	File.cpp
+#	File.cpp
 	Filters.cpp
  	FITSUtil.cpp
 	FlatFrame.cpp

@@ -1,8 +1,8 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "EntropyInfo.h"
 #include "DSSProgress.h"
 #include "avx_entropy.h"
-#include "Ztrace.h"
 #include "MemoryBitmap.h"
 #include "DSSTools.h"
 

@@ -63,14 +63,14 @@ add_library( dsscore
 	TIFFUtil.cpp
 	tracecontrol.cpp
 #	Workspace.cpp								# Qt6 specifics
-#	avx_avg.cpp									# AVX
+	avx_avg.cpp
 	avx_bitmap_filler.cpp
 	avx_cfa.cpp
-#	avx.cpp											# AVX
+#	avx.cpp											# AVX (var.m256_f32[n])
 #	avx_entropy.cpp							# AVX
-#	avx_filter.cpp							# AVX
+#	avx_filter.cpp							# AVX (var.m256_f32[n])
 	avx_histogram.cpp
-	avx_luminance.cpp						# AVX
+	avx_luminance.cpp
 #	avx_output.cpp							# AVX (var.m256_f32[n])
 #	avx_support.cpp							# AVX
 )

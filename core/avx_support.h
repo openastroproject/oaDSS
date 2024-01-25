@@ -168,8 +168,8 @@ public:
 	inline static std::tuple<__m256, __m256> read16PackedSingle(const std::uint32_t* const pColor) noexcept
 	{
 		return {
-			_mm256_cvtepi32_ps(_mm256_srli_epi32(_mm256_loadu_epi32(pColor), 16)), // Shift 16 bits right while shifting in zeros.
-			_mm256_cvtepi32_ps(_mm256_srli_epi32(_mm256_loadu_epi32(pColor + 8), 16))
+			_mm256_cvtepi32_ps(_mm256_srli_epi32(_mm256_loadu_si256(( const __m256i_u*) pColor), 16)), // Shift 16 bits right while shifting in zeros.
+			_mm256_cvtepi32_ps(_mm256_srli_epi32(_mm256_loadu_si256(( const __m256i_u*)( pColor + 8)), 16))
 		};
 	}
 	inline static std::tuple<__m256, __m256> read16PackedSingle(const float* const pColor) noexcept

@@ -53,11 +53,11 @@ add_library( dsscore
 #	RegisterEngine.cpp					# AVX, Windows-specific path handling
 #	RunningStackingEngine.cpp		# BITMAP-related code
 #	Settings.cpp								# CA2CTEX?
-#	StackedBitmap.cpp
-	StackingEngine.cpp
-	StackingTasks.cpp
-	StackWalker.cpp
-	StarMask.cpp
+#	StackedBitmap.cpp						# BITMAP-related code
+#	StackingEngine.cpp					# BITMAP-related code
+#	StackingTasks.cpp						# BITMAP-related code
+#	StackWalker.cpp							# Platform not supported!
+#	StarMask.cpp								# BITMAP-related code
 	TaskInfo.cpp
 	TIFFUtil.cpp
 	tracecontrol.cpp

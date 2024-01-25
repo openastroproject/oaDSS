@@ -68,42 +68,42 @@ public :
 		switch (BayerColor)
 		{
 		case BAYER_UNKNOWN :
-			fAdjustGray *= m_fMeanGray / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanGray / std::max(1.0, fFlatGray);
 			break;
 		case BAYER_RED :
-			fAdjustGray *= m_fMeanRed / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanRed / std::max(1.0, fFlatGray);
 			break;
 		case BAYER_GREEN :
-			fAdjustGray *= m_fMeanGreen / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanGreen / std::max(1.0, fFlatGray);
 			break;
 		case BAYER_BLUE	:
-			fAdjustGray *= m_fMeanBlue / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanBlue / std::max(1.0, fFlatGray);
 			break;
 		case BAYER_CYAN :
-			fAdjustGray *= m_fMeanCyan / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanCyan / std::max(1.0, fFlatGray);
 			break;
 		case BAYER_YELLOW :
-			fAdjustGray *= m_fMeanYellow / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanYellow / std::max(1.0, fFlatGray);
 			break;
 		case BAYER_MAGENTA :
-			fAdjustGray *= m_fMeanMagenta / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanMagenta / std::max(1.0, fFlatGray);
 			break;
 		case BAYER_GREEN2 :
-			fAdjustGray *= m_fMeanGreen2 / max(1.0, fFlatGray);
+			fAdjustGray *= m_fMeanGreen2 / std::max(1.0, fFlatGray);
 			break;
 		};
-		fAdjustGray = min(fAdjustGray, 255.0);
+		fAdjustGray = std::min(fAdjustGray, 255.0);
 	};
 
 	void	Normalize(double & fAdjustRed, double & fAdjustGreen, double & fAdjustBlue, double fFlatRed, double fFlatGreen, double fFlatBlue)
 	{
-		fAdjustRed   *= m_fMeanRed / max(1.0, fFlatRed);
-		fAdjustGreen *= m_fMeanGreen / max(1.0, fFlatGreen);
-		fAdjustBlue  *= m_fMeanBlue / max(1.0, fFlatBlue);
+		fAdjustRed   *= m_fMeanRed / std::max(1.0, fFlatRed);
+		fAdjustGreen *= m_fMeanGreen / std::max(1.0, fFlatGreen);
+		fAdjustBlue  *= m_fMeanBlue / std::max(1.0, fFlatBlue);
 
-		fAdjustRed = min(fAdjustRed, 255.0);
-		fAdjustGreen = min(fAdjustGreen, 255.0);
-		fAdjustBlue = min(fAdjustBlue, 255.0);
+		fAdjustRed = std::min(fAdjustRed, 255.0);
+		fAdjustGreen = std::min(fAdjustGreen, 255.0);
+		fAdjustBlue = std::min(fAdjustBlue, 255.0);
 	};
 };
 

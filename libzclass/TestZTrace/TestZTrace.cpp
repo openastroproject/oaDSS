@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
   _putenv("Z_TRACEFILE=TestZTrace.txt");
   _putenv("Z_CHECKSTACK=ON");
 #else
-  putenv("Z_TRACEFILE=TestZTrace.txt");
+  putenv(const_cast<char*>("Z_TRACEFILE=TestZTrace.txt"));
 #endif
   ZTrace::enableTrace();
   ZTrace::writeToFile();

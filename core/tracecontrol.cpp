@@ -33,9 +33,12 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <iostream>
+#include <cstdlib>
+
 #include "tracecontrol.h"
-#include "ZExcBase.h"
 
 namespace DSS
 {
@@ -61,7 +64,7 @@ namespace DSS
 		else if ("DeepSkyStackerLive" == path) start = "DSSLiveTrace";
 		else ZASSERT(false);
 		
-		(void) _putenv(traceTo.toStdString().c_str()); // set Z_TRACETO=FILE
+		(void) putenv(const_cast<char*>(traceTo.toStdString().c_str())); // set Z_TRACETO=FILE
 
 		std::time_t time = std::time({});
 		char timeString[std::size("yyyy-mm-ddThh-mm-ssZ")];
@@ -78,7 +81,7 @@ namespace DSS
 		file /= name.toStdU16String();
 
 		QString traceFile = QString{ "Z_TRACEFILE=%1" }.arg(file.generic_u16string().c_str());
-		(void) _putenv(traceFile.toStdString().c_str());
+		(void) putenv(const_cast<char*>(traceFile.toStdString().c_str()));
 	}
 
 	TraceControl::~TraceControl()

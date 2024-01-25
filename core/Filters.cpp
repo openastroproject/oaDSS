@@ -1,6 +1,6 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "Filters.h"
-#include "Ztrace.h"
 #include "MemoryBitmap.h"
 #include "DSSProgress.h"
 

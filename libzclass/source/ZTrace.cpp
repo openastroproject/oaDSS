@@ -74,7 +74,6 @@ extern "C"
     #include <stdlib.h>
     #include <string.h>
     #include <time.h>
-    #include <sys/timeb.h>
     #include <sys/types.h>
     
 #if defined(ZCLASS_UNIX)
@@ -471,14 +470,14 @@ void  ZTrace :: writeFormattedString(const std::string& strString,
       //
       if (isWriteTimeStampEnabled())
       {
-        struct timeb tstruct = {0,0,0,0};
+				struct timespec tstruct;
         struct tm *gmt;
         char timebuff[21] = {0};
 
-        ftime(&tstruct);
-        gmt = gmtime(&(tstruct.time));
+				clock_gettime ( CLOCK_REALTIME, &tstruct );
+				gmt = gmtime(&(tstruct.tv_sec));
         strftime(&timebuff[0], sizeof(timebuff) - 1, "%Y/%m/%d %H:%M:%S", gmt);
-        sprintf(buffer, "%s.%03u", &timebuff[0], tstruct.millitm);
+        sprintf(buffer, "%s.%03u", &timebuff[0], ( unsigned int )( tstruct.tv_nsec / 1000));
         strWork.append(&buffer[0]).append(" ");
         memset(buffer, 0, sizeof(buffer));
       }

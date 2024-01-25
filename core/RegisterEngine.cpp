@@ -1,9 +1,10 @@
+#include "dss_common.h"
 
-#include "stdafx.h"
+#include <omp.h>
+
 #include "RegisterEngine.h"
 #include "Workspace.h"
 #include "PixelTransform.h"
-#include "Ztrace.h"
 #include "BackgroundCalibration.h"
 #include "Multitask.h"
 #include "avx_luminance.h"
@@ -560,7 +561,7 @@ size_t CRegisteredFrame::RegisterSubRect(CMemoryBitmap* pBitmap, const DSSRect& 
 bool	CRegisteredFrame::SaveRegisteringInfo(const fs::path& szInfoFileName)
 {
 	bool bResult = false;
-	QFile data(szInfoFileName);
+	QFile data( szInfoFileName.c_str());
 	if (!data.open(QFile::WriteOnly | QFile::Truncate))
 		return false;
 
@@ -640,7 +641,7 @@ bool	CRegisteredFrame::LoadRegisteringInfo(const fs::path& szInfoFileName)
 		return false;
 	};
 
-	QFile data(szInfoFileName);
+	QFile data( szInfoFileName.c_str());
 	if (!data.open(QFile::ReadOnly))
 		return unsuccessfulReturn();
 	QTextStream fileIn(&data);
@@ -833,7 +834,7 @@ void CLightFrameInfo::RegisterPicture(CGrayBitmap& Bitmap)
 		++nrSubrects;
 		if (omp_get_thread_num() == 0 && (++masterCount % 25) == 0) // Only master thread
 		{
-			const QString strText(QCoreApplication::translate("RegisterEngine", "Registering %1 (%2 stars)", "IDS_REGISTERINGNAMEPLUSTARS").arg(filePath.filename().generic_u8string().c_str()).arg(nStars.load()));
+			const QString strText(QCoreApplication::translate("RegisterEngine", "Registering %1 (%2 stars)", "IDS_REGISTERINGNAMEPLUSTARS").arg(filePath.filename().c_str()).arg(nStars.load()));
 			m_pProgress->Progress2(strText, nrSubrects.load());
 		}
 	};

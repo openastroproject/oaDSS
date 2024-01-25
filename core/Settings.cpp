@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "dss_common.h"
 
 //#include "resource.h"
 #include "StackingTasks.h"

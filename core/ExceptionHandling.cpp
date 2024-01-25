@@ -1,13 +1,19 @@
-#include "stdafx.h"
+#include "dss_common.h"
 
-
-#if defined(_WINDOWS)
+#include <csignal>
+#include <cstdlib>
+#include <cstring>
+#include <filesystem>
+#include <memory>
+#include <execinfo.h>
 
 #include "StackWalker.h"
-#include "Ztrace.h"
 #include "tracecontrol.h"
 
 extern std::unique_ptr<std::uint8_t[]> backPocket;
+
+#if defined(_WINDOWS)
+
 extern DSS::TraceControl traceControl;
 
 namespace {
@@ -128,6 +134,12 @@ void setDssExceptionHandling()
 
 #else
 
+	void writeOutput(const char* text)
+	{
+		fputs(text, stderr);
+		ZTRACE_RUNTIME(text);
+	}
+
 /* Resolve symbol name and source location given the path to the executable
    and an address */
 int addr2line(char const* const program_name, void const* const addr)
@@ -177,7 +189,7 @@ void posix_print_stack_trace()
 	   // we'll use this for now so you can see what's going on
 	for (i = 0; i < trace_size; ++i)
 	{
-		if (addr2line(global_program_name, stack_traces[i]) != 0)
+		if (addr2line("program name", stack_traces[i]) != 0)
 		{
 			snprintf(buffer, sizeof(buffer) / sizeof(char),
 				"  error determining line # for: %s\n", messages[i]);
@@ -190,11 +202,13 @@ void posix_print_stack_trace()
 
 void signalHandler(int signal)
 {
+	/*
 	if (backPocket)
 	{
 		free(backPocket);
 		backPocket = nullptr;
 	}
+	*/
 
 	char name[8]{};
 	switch (signal)
@@ -221,7 +235,7 @@ void signalHandler(int signal)
 	ZTRACE_RUNTIME("In signalHandler(%s)", name);
 
 	posix_print_stack_trace();
-	DeepSkyStacker::instance()->close();
+	// DeepSkyStacker::instance()->close();
 }
 
 void setDssExceptionHandling()

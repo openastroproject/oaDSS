@@ -27,3 +27,4 @@ endif()
 
 add_subdirectory ( libzclass )
 add_subdirectory ( libtools )
+add_subdirectory ( core )

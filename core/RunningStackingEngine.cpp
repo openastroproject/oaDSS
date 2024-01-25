@@ -1,6 +1,6 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "RunningStackingEngine.h"
-#include "Ztrace.h"
 #include "GrayBitmap.h"
 #include "ColorBitmap.h"
 #include "BitmapIterator.h"
@@ -179,7 +179,7 @@ bool	CRunningStackingEngine::ComputeOffset(CLightFrameInfo & lfi)
 
 		std::sort(vStarsDst.begin(), vStarsDst.end(), CompareStarLuminancy);
 
-		for (int i = 0;i<min(vStarsDst.size(), static_cast<STARVECTOR::size_type>(100));i++)
+		for (int i = 0;i<std::min(vStarsDst.size(), static_cast<STARVECTOR::size_type>(100));i++)
 			m_MatchingStars.AddTargetedStar(vStarsDst[i].m_fX, vStarsDst[i].m_fY);
 
 		m_MatchingStars.SetSizes(lfi.RenderedWidth(), lfi.RenderedHeight());

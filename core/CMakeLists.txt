@@ -7,6 +7,7 @@ set ( top ${CMAKE_SOURCE_DIR} )
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui)
 
 add_compile_options ( -Wno-ignored-attributes )
+add_compile_options ( -Wno-deprecated-enum-enum-conversion )
 add_compile_options ( -march=haswell )
 add_compile_options ( -O2 )
 

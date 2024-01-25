@@ -1,5 +1,6 @@
-#include "stdafx.h"
-#include "file.h"
+#include "dss_common.h"
+
+#include "File.h"
 
 bool GetFileCreationDateTime(LPCTSTR szFileName, FILETIME& FileTime)
 {

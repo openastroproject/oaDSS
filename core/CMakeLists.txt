@@ -51,7 +51,7 @@ add_library( dsscore
 	QEventLogger.cpp
 #	RAWUtils.cpp								# pokes about in libRaw internals
 #	RegisterEngine.cpp					# AVX, Windows-specific path handling
-	RunningStackingEngine.cpp
+#	RunningStackingEngine.cpp		# BITMAP-related code
 	Settings.cpp
 	StackedBitmap.cpp
 	StackingEngine.cpp

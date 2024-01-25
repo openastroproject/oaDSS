@@ -33,7 +33,9 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+
+#include "dss_common.h"
+
 #include "ImageListModel.h"
 
 namespace DSS

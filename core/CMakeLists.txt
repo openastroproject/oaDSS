@@ -33,7 +33,6 @@ add_library( dsscore
 #	DeepStack.cpp								# Windows-specific code
 	DSSProgress.cpp
 	dss_settings.cpp
-	DSSTools.cpp
 	EntropyInfo.cpp
 	ExceptionHandling.cpp
 	File.cpp

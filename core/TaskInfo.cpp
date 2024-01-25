@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "TaskInfo.h"
 #include "MemoryBitmap.h"
 #include "MultiBitmap.h"

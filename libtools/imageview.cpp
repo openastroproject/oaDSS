@@ -33,7 +33,8 @@
 **
 **
 ****************************************************************************/
-#include "common.h"
+#include "dss_common.h"
+
 #include "imageview.h"
 #include "Ztrace.h"
 

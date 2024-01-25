@@ -1,6 +1,7 @@
 // QLinearGradientCtrl.cpp 
 //
-#include "common.h"
+#include "dss_common.h"
+
 #include "QLinearGradientCtrl.h"
 
 /////////////////////////////////////////////////////////////////////////////

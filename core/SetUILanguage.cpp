@@ -1,6 +1,6 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "SetUILanguage.h"
-#include "DSS-VersionHelpers.h"
 
 /* ------------------------------------------------------------------- */
 

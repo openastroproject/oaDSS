@@ -54,6 +54,7 @@ add_library( dsscore
 #	RegisterEngine.cpp					# AVX, Windows-specific path handling
 	RunningStackingEngine.cpp
 	Settings.cpp
+#	SetUILanguage.cpp						# Very Windows-specific
 	StackedBitmap.cpp
 	StackingEngine.cpp
 	StackingTasks.cpp

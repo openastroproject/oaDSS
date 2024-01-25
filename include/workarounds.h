@@ -15,7 +15,10 @@
 
 #define	MAXWORD				655535
 
+typedef	bool					BOOL;
 typedef	char					CHAR;
+typedef	int64_t				LONG;
+typedef	uint64_t*			ULONG_PTR;
 typedef	char					TCHAR;
 typedef const char*		LPCSTR;
 typedef const char*		LPCTSTR;

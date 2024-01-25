@@ -1,8 +1,13 @@
 // DeepSkyStackerCL.cpp : Defines the entry point for the console application.
 //
 
-#include <stdafx.h>
-#include <QtLogging>
+#include "dss_common.h"
+
+#include <exiv2/exiv2.hpp>
+#include <malloc.h>
+
+#include <source_location>
+
 #include "DeepSkyStackerCL.h"
 #include "progressconsole.h"
 #include "FrameList.h"
@@ -11,7 +16,6 @@
 #include "FITSUtil.h"
 #include "SetUILanguage.h"
 #include "tracecontrol.h"
-#include "Ztrace.h"
 
 //
 // Set up tracing and manage trace file deletion
@@ -25,7 +29,7 @@ namespace
 	{
 		QByteArray localMsg = msg.toLocal8Bit();
 		const char* file = context.file ? context.file : "";
-		char* name{ static_cast<char*>(_alloca(1 + strlen(file))) };
+		char* name{ static_cast<char*>(alloca(1 + strlen(file))) };
 		strcpy(name, file);
 		if (0 != strlen(name))
 		{
@@ -105,7 +109,11 @@ void DeepSkyStackerCommandLine::Process(StackingParams& stackingParams, QTextStr
 		consoleOut << "Register again already registered light frames: " << (stackingParams.IsOptionSet(StackingParams::eStackingOption::FORCE_REGISTER) ? "yes" : "no") << Qt::endl;
 	consoleOut << Qt::endl;
 
-	frameList.loadFilesFromList(QDir(stackingParams.GetFileList()).filesystemAbsolutePath());
+#if QT_VERSION > 0x00060000
+	frameList.loadFilesFromList(QDir(stackingParams.GetFileList()).filesystemAbsolutePath().toStdString.c_str());
+#else
+	frameList.loadFilesFromList(QDir(stackingParams.GetFileList()).absolutePath().toStdString().c_str());
+#endif
 
 	CAllStackingTasks tasks;
 	frameList.fillTasks(tasks);
@@ -420,11 +428,13 @@ int main(int argc, char* argv[])
 	Exiv2::XmpParser::initialize();
 	::atexit(Exiv2::XmpParser::terminate);
 
+#if QT_VERSION >= 0x00060000
 	//
 	// Increase maximum size of QImage from the default of 128MB to 1GB
 	//
 	constexpr int oneGB{ 1024 * 1024 * 1024 };
 	QImageReader::setAllocationLimit(oneGB);
+#endif
 
 	DeepSkyStackerCommandLine process(argc, argv);
 

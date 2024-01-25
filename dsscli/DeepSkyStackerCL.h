@@ -1,4 +1,7 @@
 #pragma once
+
+#include <QtCore>
+
 #include "dssbase.h"
 #include "DSSCommon.h"
 class CMemoryBitmap;

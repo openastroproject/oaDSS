@@ -35,8 +35,11 @@
 ****************************************************************************/
 // ProgressConsole.cpp : Defines the entry point for the console progress display.
 //
-#include <stdafx.h>
+
+#include "dss_common.h"
+
 #include "progressconsole.h"
+
 namespace DSS
 {
 	/************************************************************************************/

@@ -1,4 +1,6 @@
 #include "dss_common.h"
+#include "avx_mathfun.h"
+#define	_mm256_log_ps(x)	log256_ps(x)
 
 #include <immintrin.h>
 

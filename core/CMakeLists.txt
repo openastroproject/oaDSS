@@ -32,10 +32,10 @@ add_library( dsscore
 	EntropyInfo.cpp
 	ExceptionHandling.cpp
 #	File.cpp										# Windows-specific code
-#	Filters.cpp									# Bitmap-specific code
+#	Filters.cpp									# BITMAP-specific code
 #	FITSUtil.cpp								# Many compilation errors -- prototypes?
 	FlatFrame.cpp
-	FrameInfo.cpp
+#	FrameInfo.cpp								# BITMAP-related code
 	FrameList.cpp
 	GrayBitmap.cpp
 	GreyMultiBitmap.cpp

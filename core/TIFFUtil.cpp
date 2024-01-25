@@ -1,17 +1,18 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
+#include <tiffio.h>
+#include <zlib.h>
+#include <omp.h>
+
 #include "TIFFUtil.h"
 //#include "resource.h"
-#include "Ztrace.h"
 #include "BitmapInfo.h"
 #include "DSSProgress.h"
 #include "Multitask.h"
 #include "ColorHelpers.h"
 #include "ColorBitmap.h"
-#include "ZExcBase.h"
 #include "RAWUtils.h"
-#include "tiffio.h"
 #include "dssbase.h"
-#include "zlib.h"
 
 using namespace DSS;
 
@@ -205,7 +206,7 @@ bool CTIFFReader::Open()
 #ifdef Q_OS_WIN
 	m_tiff = TIFFOpenW(file.wstring().c_str(), "r");
 #else
-	m_tiff = TIFFOpen(file.u8string.c_str(), "r");
+	m_tiff = TIFFOpen(file.c_str(), "r");
 #endif
 	TIFFSetErrorHandler(oldHandler);
 	TIFFSetErrorHandlerExt(oldHandlerExt);
@@ -862,7 +863,7 @@ bool CTIFFWriter::Open()
 #ifdef Q_OS_WIN
 	m_tiff = TIFFOpenW(file.wstring().c_str(), "w");
 #else
-	m_tiff = TIFFOpen(file.u8string.c_str(), "w");
+	m_tiff = TIFFOpen(file.c_str(), "w");
 #endif
 	if (m_tiff != nullptr)
 	{

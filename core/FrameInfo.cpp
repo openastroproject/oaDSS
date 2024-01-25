@@ -1,4 +1,5 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "FrameInfo.h"
 #include "BitmapInfo.h"
 #include "BitmapExt.h"

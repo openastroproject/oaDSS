@@ -34,7 +34,11 @@
 **
 **
 ****************************************************************************/
+
+#include <deque>
+
 #include "FrameInfo.h"
+
 namespace DSS
 {
     class ImageListModel :

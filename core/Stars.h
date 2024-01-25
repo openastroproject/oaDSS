@@ -1,4 +1,7 @@
 #pragma once
+
+#include <set>
+
 #include "dssrect.h"
 #include "DSSTools.h"
 

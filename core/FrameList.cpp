@@ -1,11 +1,11 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "FrameList.h"
 #include "ImageListModel.h"
-#include "ZExcept.h"
 #include "StackingTasks.h"
 #include "Workspace.h"
-#include "Ztrace.h"
 #include "RegisterEngine.h"
+#include "dssbase.h"
 
 namespace {
 
@@ -269,7 +269,7 @@ namespace DSS
 #if defined(_WINDOWS)
 			_wfopen(file.c_str(), L"wt")
 #else
-			std::fopen(file.c_ctr(), "wt")
+			std::fopen(file.c_str(), "wt")
 #endif
 			)
 		{
@@ -359,7 +359,7 @@ namespace DSS
 #if defined(_WINDOWS)
 			_wfopen(fileList.c_str(), L"rt")
 #else
-			std::fopen(fileList.c_ctr(), "rt")
+			std::fopen(fileList.c_str(), "rt")
 #endif
 			)
 		{
@@ -482,7 +482,7 @@ namespace DSS
 									{
 										QString errorMessage(
 											QCoreApplication::translate("DSS::StackingDlg", "File %1 was not loaded because it was already loaded in group %2 (%3)")
-											.arg(filePath.generic_u8string().c_str())
+											.arg(filePath.c_str())
 											.arg(groupId)
 											.arg(groupName(groupId)));
 
@@ -667,7 +667,11 @@ namespace DSS
 				{
 					file.m_bChecked = checkState;
 					const QModelIndex changedRow = group.pictures->createIndex(fileIndex, 0);
+#if QT_VERSION < 0x00060000
+					group.pictures->dataChanged(changedRow, changedRow, QVector<int>{ Qt::CheckStateRole });
+#else
 					group.pictures->dataChanged(changedRow, changedRow, QList<int>{ Qt::CheckStateRole });
+#endif
 					group.setDirty();
 					if constexpr (ImmediateReturn)
 						return;
@@ -690,7 +694,11 @@ namespace DSS
 			group.pictures->dataChanged(
 				group.pictures->createIndex(0, 0),
 				group.pictures->createIndex(group.pictures->rowCount(), 0), 
+#if QT_VERSION < 0x00060000
+				QVector<int>{ Qt::CheckStateRole }
+#else
 				QList<int>{ Qt::CheckStateRole }
+#endif
 			);
 			group.setDirty();
 		}

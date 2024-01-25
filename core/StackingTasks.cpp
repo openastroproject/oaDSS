@@ -23,7 +23,7 @@ bool	AreExposureEquals(double fExposure1, double fExposure2)
 	else if (fExposure1 >= 1 && fExposure2 >= 1)
 	{
 		// Both more than 1 second - 5% difference allowed
-		bResult = fabs(fExposure1 - fExposure2)/max(fExposure1, fExposure2) <= 0.05;
+		bResult = fabs(fExposure1 - fExposure2)/std::max(fExposure1, fExposure2) <= 0.05;
 	}
 	else if (fExposure1 < 1 && fExposure2 < 1 && fExposure1 > 0 && fExposure2 > 0)
 	{
@@ -60,7 +60,7 @@ bool LoadFrame(const fs::path filePath, PICTURETYPE PictureType, ProgressBase* p
 	bool bResult = false;
 	CBitmapInfo bmpInfo;
 
-	const auto fileName = filePath.generic_wstring(); // Otherwise szFile could be a dangling pointer.
+	const auto fileName = filePath.generic_string(); // Otherwise szFile could be a dangling pointer.
 	const auto szFile = fileName.c_str();
 
 	if (GetPictureInfo(filePath, bmpInfo) && bmpInfo.CanLoad())
@@ -272,7 +272,7 @@ bool	CStackingInfo::CheckForExistingOffset(fs::path& strMasterFile)
 		COffsetSettings bmpSettings;
 		COffsetSettings newSettings;
 
-		if (newSettings.InitFromCurrent(m_pOffsetTask, strMasterOffset.wstring().c_str()) && bmpSettings.ReadFromFile(strMasterOffsetInfo.wstring().c_str()))
+		if (newSettings.InitFromCurrent(m_pOffsetTask, strMasterOffset.c_str()) && bmpSettings.ReadFromFile(strMasterOffsetInfo.c_str()))
 		{
 			if (newSettings == bmpSettings)
 			{
@@ -383,7 +383,7 @@ bool CStackingInfo::DoOffsetTask(ProgressBase* const pProgress)
 						static_cast<int>(m_pOffsetTask->m_vBitmaps.size()))
 						.arg(strMethod) };
 
-					BuildMasterFileNames(m_pOffsetTask, "MasterOffset", /* bExposure */false, m_pOffsetTask->m_vBitmaps[0].filePath, strMasterOffset, strMasterOffsetInfo);
+					BuildMasterFileNames(m_pOffsetTask, "MasterOffset", /* bExposure */false, m_pOffsetTask->m_vBitmaps[0].filePath.c_str(), strMasterOffset, strMasterOffsetInfo);
 
 					strText = QCoreApplication::translate("StackingTasks", "Saving Master Offset", "IDS_SAVINGMASTEROFFSET");
 					ZTRACE_RUNTIME(strText);
@@ -403,8 +403,8 @@ bool CStackingInfo::DoOffsetTask(ProgressBase* const pProgress)
 
 					// Save the description
 					COffsetSettings s;
-					s.InitFromCurrent(m_pOffsetTask, strMasterOffset.wstring().c_str());
-					s.WriteToFile(strMasterOffsetInfo.wstring().c_str());
+					s.InitFromCurrent(m_pOffsetTask, strMasterOffset.c_str());
+					s.WriteToFile(strMasterOffsetInfo.c_str());
 				}
 			}
 		}
@@ -431,7 +431,7 @@ bool CStackingInfo::CheckForExistingDark(fs::path& strMasterFile)
 			CDarkSettings bmpSettings;
 			CDarkSettings newSettings;
 
-			if (newSettings.InitFromCurrent(m_pDarkTask, strMasterDark.wstring().c_str()) && bmpSettings.ReadFromFile(strMasterDarkInfo.wstring().c_str()))
+			if (newSettings.InitFromCurrent(m_pDarkTask, strMasterDark.c_str()) && bmpSettings.ReadFromFile(strMasterDarkInfo.c_str()))
 			{
 				newSettings.SetMasterOffset(m_pOffsetTask);
 				if (newSettings == bmpSettings)
@@ -594,9 +594,9 @@ bool CStackingInfo::DoDarkTask(ProgressBase* const pProgress)
 
 					// Save the description
 					CDarkSettings s;
-					s.InitFromCurrent(m_pDarkTask, strMasterDark.wstring().c_str());
+					s.InitFromCurrent(m_pDarkTask, strMasterDark.c_str());
 					s.SetMasterOffset(m_pOffsetTask);
-					s.WriteToFile(strMasterDarkInfo.wstring().c_str());
+					s.WriteToFile(strMasterDarkInfo.c_str());
 				}
 			}
 		}
@@ -624,8 +624,8 @@ bool CStackingInfo::CheckForExistingDarkFlat(fs::path& strMasterFile)
 			CDarkSettings		bmpSettings;
 			CDarkSettings		newSettings;
 
-			if (newSettings.InitFromCurrent(m_pDarkFlatTask, strMasterDarkFlat.wstring().c_str()) &&
-				bmpSettings.ReadFromFile(strMasterDarkFlatInfo.wstring().c_str()))
+			if (newSettings.InitFromCurrent(m_pDarkFlatTask, strMasterDarkFlat.c_str()) &&
+				bmpSettings.ReadFromFile(strMasterDarkFlatInfo.c_str()))
 			{
 				newSettings.SetMasterOffset(m_pOffsetTask);
 				if (newSettings == bmpSettings)
@@ -778,9 +778,9 @@ bool	CStackingInfo::DoDarkFlatTask(ProgressBase* const pProgress)
 					// Save the description
 					CDarkSettings		s;
 
-					s.InitFromCurrent(m_pDarkFlatTask, strMasterDarkFlat.wstring().c_str());
+					s.InitFromCurrent(m_pDarkFlatTask, strMasterDarkFlat.c_str());
 					s.SetMasterOffset(m_pOffsetTask);
-					s.WriteToFile(strMasterDarkFlatInfo.wstring().c_str());
+					s.WriteToFile(strMasterDarkFlatInfo.c_str());
 				};
 			};
 		};
@@ -894,7 +894,7 @@ public :
 private :
 	void	AdjustValue(double & fValue)
 	{
-		fValue = min(max(0.0, fValue), 255.0);
+		fValue = std::min(std::max(0.0, fValue), 255.0);
 	};
 
 public :
@@ -1047,7 +1047,7 @@ bool CStackingInfo::CheckForExistingFlat(fs::path& strMasterFile)
 			CFlatSettings bmpSettings;
 			CFlatSettings newSettings;
 
-			if (newSettings.InitFromCurrent(m_pFlatTask, strMasterFlat.wstring().c_str()) && bmpSettings.ReadFromFile(strMasterFlatInfo.wstring().c_str()))
+			if (newSettings.InitFromCurrent(m_pFlatTask, strMasterFlat.c_str()) && bmpSettings.ReadFromFile(strMasterFlatInfo.c_str()))
 			{
 				newSettings.SetMasterOffset(m_pOffsetTask);
 				newSettings.SetMasterDarkFlat(m_pDarkFlatTask);
@@ -1249,10 +1249,10 @@ bool CStackingInfo::DoFlatTask(ProgressBase* const pProgress)
 
 					// Save the description
 					CFlatSettings s;
-					s.InitFromCurrent(m_pFlatTask, strMasterFlat.wstring().c_str());
+					s.InitFromCurrent(m_pFlatTask, strMasterFlat.c_str());
 					s.SetMasterOffset(m_pOffsetTask);
 					s.SetMasterDarkFlat(m_pDarkFlatTask);
-					s.WriteToFile(strMasterFlatInfo.wstring().c_str());
+					s.WriteToFile(strMasterFlatInfo.c_str());
 				}
 			}
 		}
@@ -1361,7 +1361,7 @@ void CAllStackingTasks::AddFileToTask(const CFrameInfo & FrameInfo, const std::u
 	else
 	{
 		m_lNrLightFrames++;
-		m_fMaxExposureTime = max(m_fMaxExposureTime, FrameInfo.m_fExposure);
+		m_fMaxExposureTime = std::max(m_fMaxExposureTime, FrameInfo.m_fExposure);
 	};
 };
 
@@ -1879,7 +1879,7 @@ bool CAllStackingTasks::checkReadOnlyStatus(QStringList & folders)
 #if defined _WINDOWS
 			_wfopen(file.generic_wstring().c_str(), L"wt")
 #else
-			std::fopen(file.generic_u8string().c_str(), "wt")
+			std::fopen(file.c_str(), "wt")
 #endif
 			)
 		{

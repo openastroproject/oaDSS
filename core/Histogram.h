@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ZExcBase.h"
 //#include "resource.h"
 
 /* ------------------------------------------------------------------- */
@@ -258,18 +257,18 @@ public :
 		double		fResult;
 
 		if (fValue < m_fMin)
-			fResult = m_fOrgMin + fValue/max(1.0, m_fMin - m_fOrgMin) * (m_fUsedMin - m_fOrgMin);
+			fResult = m_fOrgMin + fValue/std::max(1.0, m_fMin - m_fOrgMin) * (m_fUsedMin - m_fOrgMin);
 		else if (fValue > m_fMax)
-			fResult = m_fOrgMax - (fValue - m_fMax)/max(1.0, m_fOrgMax - m_fMax) * (m_fOrgMax - m_fUsedMax);
+			fResult = m_fOrgMax - (fValue - m_fMax)/std::max(1.0, m_fOrgMax - m_fMax) * (m_fOrgMax - m_fUsedMax);
 		else
-			fResult = m_fUsedMin + AdjustValue((fValue-m_fMin)/max(1.0, (m_fMax - m_fMin)))*(m_fUsedMax - m_fUsedMin);
+			fResult = m_fUsedMin + AdjustValue((fValue-m_fMin)/std::max(1.0, (m_fMax - m_fMin)))*(m_fUsedMax - m_fUsedMin);
 
 		// Then shift the value
 		fResult = fResult + (m_fUsedMax - m_fUsedMin)*m_fShift;
 		if (fResult < m_fOrgMin)
-			fResult = m_fOrgMin + fValue/max(1.0, m_fMin - m_fOrgMin) * (m_fUsedMin - m_fOrgMin);
+			fResult = m_fOrgMin + fValue/std::max(1.0, m_fMin - m_fOrgMin) * (m_fUsedMin - m_fOrgMin);
 		else if (fResult > m_fOrgMax)
-			fResult = m_fOrgMax - (fValue - m_fMax)/max(1.0, m_fOrgMax - m_fMax) * (m_fOrgMax - m_fUsedMax);
+			fResult = m_fOrgMax - (fValue - m_fMax)/std::max(1.0, m_fOrgMax - m_fMax) * (m_fOrgMax - m_fUsedMax);
 
 		return fResult;
 	};
@@ -549,13 +548,13 @@ public :
 			m_lNrValues+=lNrValues;
 			m_fPowSum += (fValue*fValue)*lNrValues;
 			m_fSum	  += fValue * lNrValues;
-			m_lMax	  = max(m_lMax, static_cast<int>(m_vValues[lNrStep]));
+			m_lMax	  = std::max(m_lMax, static_cast<int>(m_vValues[lNrStep]));
 
-			m_fMax = max(m_fMax, fValue);
+			m_fMax = std::max(m_fMax, fValue);
 			if (m_fMin < 0)
 				m_fMin = fValue;
 			else
-				m_fMin = min(m_fMin, fValue);
+				m_fMin = std::min(m_fMin, fValue);
 		};
 	};
 

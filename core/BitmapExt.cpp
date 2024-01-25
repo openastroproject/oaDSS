@@ -1,4 +1,7 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
+#include <omp.h>
+
 #include "BitmapExt.h"
 #include "DSSProgress.h"
 #include "MemoryBitmap.h"
@@ -7,16 +10,12 @@
 #include "BitmapIterator.h"
 #include "AHDDemosaicing.h"
 #include "Multitask.h"
-#include "Ztrace.h"
-#include "ZExcBase.h"
-#include "ZExcept.h"
 #include "RationalInterpolation.h"
 #include "RAWUtils.h"
 #include "TIFFUtil.h"
 #include "FITSUtil.h"
 #include "File.h"
 #include "MedianFilterEngine.h"
-#include "omp.h"
 #include "dssbase.h"
 
 using namespace DSS;

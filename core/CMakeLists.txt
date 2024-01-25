@@ -38,7 +38,7 @@ add_library( dsscore
 #	FrameInfo.cpp								# BITMAP-related code
 	FrameList.cpp
 	GrayBitmap.cpp
-	GreyMultiBitmap.cpp
+#	GreyMultiBitmap.cpp					# default argument for template parameter
 	group.cpp
 	ImageListModel.cpp
 	imageloader.cpp

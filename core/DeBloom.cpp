@@ -1,10 +1,10 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "DeBloom.h"
 #include "GrayBitmap.h"
 #include "DSSTools.h"
 #include "DSSProgress.h"
 #include "BackgroundCalibration.h"
-#include "Ztrace.h"
 
 using namespace DSS;
 

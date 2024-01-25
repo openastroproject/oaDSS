@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "StarMask.h"
 #include "DSSProgress.h"
 #include "RegisterEngine.h"

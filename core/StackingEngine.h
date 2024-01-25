@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mutex>
+
 #include "RegisterEngine.h"
 #include "PixelTransform.h"
 #include "BackgroundCalibration.h"
@@ -175,7 +177,7 @@ private:
 	CPostCalibrationSettings	m_PostCalibrationSettings;
 	bool						m_bChannelAlign;
 
-	CComAutoCriticalSection		m_CriticalSection;
+	std::mutex		m_CriticalSection;
 
 public:
 	CStackingEngine() :

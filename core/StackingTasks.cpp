@@ -1,15 +1,13 @@
-#include <stdafx.h>
+#include "dss_common.h"
 
 #include "StackingTasks.h"
 #include "DSSProgress.h"
-#include "Ztrace.h"
 #include "BitmapInfo.h"
 #include "BitmapExt.h"
 #include "RAWUtils.h"
 #include "TaskInfo.h"
 #include "TIFFUtil.h"
 #include "Settings.h"
-#include "ZExcBase.h"
 #include "MemoryBitmap.h"
 
 using namespace DSS;

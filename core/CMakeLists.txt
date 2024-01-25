@@ -61,7 +61,7 @@ add_library( dsscore
 	TaskInfo.cpp
 #	TIFFUtil.cpp								# BITMAP-related code
 	tracecontrol.cpp
-	Workspace.cpp
+#	Workspace.cpp								# Qt6 specifics
 	avx_avg.cpp
 	avx_bitmap_filler.cpp
 	avx_cfa.cpp

@@ -37,8 +37,11 @@
 // FileStacker.h : Header file
 //
 #include <deque>
+
 #include <QThread>
+
 #include "RunningStackingEngine.h"
+#include "dssliveenums.h"
 
 class CLightFrameInfo;
 class LoadedImage;

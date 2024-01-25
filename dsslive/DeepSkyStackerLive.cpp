@@ -36,10 +36,16 @@
 // DeepSkyStackerLive.cpp : Defines the class behaviors for the application.
 //
 
-#include <stdafx.h>
+#include "dss_common.h"
+
+#include "QtCore"
+
+#ifdef WINDOWS
 #include <htmlhelp.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
+#include <malloc.h>
 
 #include <source_location>
 
@@ -47,7 +53,6 @@
 #include <QErrorMessage>
 #include <QMessageBox>
 #include <QImageReader>
-#include <QtLogging>
 
 //
 // Necessary Windows header
@@ -62,9 +67,7 @@
 #include "ExceptionHandling.h"
 #include "FrameInfoSupport.h"
 #include "LiveSettings.h"
-#include <zexcept.h>
-#include <ztrace.h>
-#include "./../DeepSkyStacker/SetUILanguage.h"	// Explicit include so not to pull over all headers in DSS if we added just a new include path.
+#include "SetUILanguage.h"	// Explicit include so not to pull over all headers in DSS if we added just a new include path.
 #include "tracecontrol.h"
 #include "Workspace.h"
 #include "foldermonitor.h"
@@ -73,7 +76,9 @@
 #include "progresslive.h"
 #include "RegisterEngine.h"
 #include "RestartMonitoring.h"
+#ifdef WINDOWS
 #include <SmtpMime/SmtpMime>
+#endif
 
 using namespace DSS;
 using namespace std;
@@ -94,7 +99,7 @@ namespace
 	{
 		QByteArray localMsg = msg.toLocal8Bit();
 		const char* file = context.file ? context.file : "";
-		char* name{ static_cast<char*>(_alloca(1 + strlen(file))) };
+		char* name{ static_cast<char*>(alloca(1 + strlen(file))) };
 		strcpy(name, file);
 		if (0 != strlen(name))
 		{
@@ -203,7 +208,11 @@ bool LoadTranslations()
 	// Try to load each language file - allow failures though (due to issue with ro and reloading en translations)
 	QSettings settings;
 	const QString language = settings.value("Language").toString();
+#if QT_VERSION >= 0x00060000
 	LoadTranslationUnit(*qApp, theQtTranslator, "qt_", QLibraryInfo::path(QLibraryInfo::TranslationsPath), language);
+#else
+	LoadTranslationUnit(*qApp, theQtTranslator, "qt_", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
+#endif
 	LoadTranslationUnit(*qApp, theAppTranslator, "DSSLive_", ":/i18n/", language);
 	LoadTranslationUnit(*qApp, theKernelTranslator, "DSSKernel_", ":/i18n/", language);
 
@@ -757,7 +766,9 @@ void DeepSkyStackerLive::help()
 	ZFUNCTRACE_RUNTIME();
 	QString helpFile{ QCoreApplication::applicationDirPath() + "/" + tr("DeepSkyStacker Help.chm","IDS_HELPFILE") };
 
+#ifdef WINDOWS
 	::HtmlHelp(::GetDesktopWindow(), helpFile.toStdWString().c_str(), HH_DISPLAY_TOPIC, 0);
+#endif
 }
 
 /* ------------------------------------------------------------------- */
@@ -941,7 +952,7 @@ bool DeepSkyStackerLive::canWriteToMonitoredFolder()
 #if defined _WINDOWS
 			_wfopen(file.generic_wstring().c_str(), L"wt")
 #else
-			std::fopen(file.generic_u8string().c_str(), "wt")
+			std::fopen(file.c_str(), "wt")
 #endif
 			)
 		{
@@ -1419,7 +1430,7 @@ void DSSLive::handleWarning(QString warning)
 			QString folder{ liveSettings->GetWarning_FileFolder() };
 			if (!folder.isEmpty())
 			{
-				fs::path path(folder.toStdU16String());
+				fs::path path(folder.toStdString().c_str());
 				if (is_directory(path))
 				{
 					path /= "DSSLiveWarning.txt";
@@ -1436,6 +1447,7 @@ void DSSLive::handleWarning(QString warning)
 		{
 			bool sendEmail {false};
 
+#ifdef WINDOWS
 			if (liveSettings->IsWarning_SendMultipleEmails())
 				sendEmail = true;
 			else if (!emailsSent)
@@ -1520,6 +1532,7 @@ void DSSLive::handleWarning(QString warning)
 				emit showResetEmailCount();
 
 			}
+#endif
 		}
 	}
 }

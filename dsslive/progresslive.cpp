@@ -34,10 +34,10 @@
 **
 ****************************************************************************/
 // ProgressLive.cpp : Implements most of the DSSLive Progress logic
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "DeepSkyStackerLive.h"
 #include "progresslive.h"
-#include <Ztrace.h>
 
 namespace
 {

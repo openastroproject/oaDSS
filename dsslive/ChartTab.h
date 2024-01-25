@@ -1,10 +1,16 @@
 #pragma once
 
+#include <QtCharts>
 #include <QWidget>
-#include "ui_ChartTab.h"
 #include <QLineSeries>
 #include <QValueAxis>
 #include <QScatterSeries>
+
+#include "dss_common.h"
+
+#include "ui_ChartTab.h"
+
+#include "dssliveenums.h"
 
 namespace DSS
 {
@@ -35,7 +41,9 @@ namespace DSS
 		std::vector<QString> files;
 		std::map<QString, int> nameMap;
 		QChart::ChartTheme theme;
+#if QT_VERSION >= 0x00060500
 		Qt::ColorScheme scheme;
+#endif
 		QLineSeries* scoreSeries;
 		std::map<QString, int> scoreMap;
 		QChart* scoreChart;
@@ -83,7 +91,9 @@ namespace DSS
 		void dYHovered(const QPointF& point, bool state);
 		void angleHovered(const QPointF& point, bool state);
 		void skybgHovered(const QPointF& point, bool state);
+#if QT_VERSION >= 0x00060500
 		void colorSchemeChanged(Qt::ColorScheme colorScheme);
+#endif
 
 	public slots:
 		void setImageInfo(QString name, STACKIMAGEINFO info);

@@ -35,7 +35,8 @@
 ****************************************************************************/
 // RestartMonitoring.cpp : Dialog implementation
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "RestartMonitoring.h"
 
 namespace DSS

@@ -35,9 +35,9 @@
 ****************************************************************************/
 // FolderMonitor.cpp : Defines the class behaviors for the application.
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include <atomic>
-#include <Ztrace.h>
 #include "foldermonitor.h"
 
 namespace DSS

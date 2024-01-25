@@ -1,5 +1,7 @@
 #pragma once
 
+#include <immintrin.h>
+
 #include "cfa.h"
 #include "ColorBitmap.h"
 #include "GrayBitmap.h"

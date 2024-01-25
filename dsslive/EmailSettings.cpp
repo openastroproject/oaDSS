@@ -1,8 +1,11 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "DeepSkyStackerLive.h"
 #include "LiveSettings.h"
-#include "emailsettings.h"
+#include "EmailSettings.h"
+#ifdef WINDOWS
 #include <SmtpMime/SmtpMime>
+#endif
 
 namespace DSS
 {

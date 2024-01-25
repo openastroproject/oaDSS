@@ -1,6 +1,9 @@
-#include "stdafx.h"
-#include "ChartTab.h"
+#include "dss_common.h"
+
+#include <QtCharts>
 #include <QValueAxis>
+
+#include "ChartTab.h"
 #include "dssliveenums.h"
 
 namespace DSS
@@ -25,6 +28,7 @@ namespace DSS
 		QValueAxis* yAxis;
 
 		setupUi(this);
+#if QT_VERSION >= 0x00060500
 		theme = (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
 			? QChart::ChartTheme::ChartThemeBlueCerulean : QChart::ChartThemeBrownSand;
 
@@ -34,6 +38,7 @@ namespace DSS
 		offsetChart->setTheme(theme);
 		angleChart->setTheme(theme);
 		skybgChart->setTheme(theme);
+#endif
 
 		scoreSeries = new QLineSeries(this);
 		scoreSeries->setName(tr("Score", "IDC_SCORE"));
@@ -170,13 +175,17 @@ namespace DSS
 			this, &ChartTab::angleButtonClicked);
 		connect(radioBackground, &QRadioButton::clicked,
 			this, &ChartTab::skybgButtonClicked);
+#if QT_VERSION >= 0x00060500
 		connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged,
 			this, &ChartTab::colorSchemeChanged);
+#endif
 	}
 
 
 	void ChartTab::setPoint([[maybe_unused]] const QString& name, [[maybe_unused]] POINTTYPE pointType, [[maybe_unused]] CHARTTYPE chartType)
 	{
+// FIX ME -- only works post Qt6.2
+#if 0
 		//
 		// i is the index into the list of files
 		//
@@ -283,6 +292,7 @@ namespace DSS
 			}
 			break;
 		}
+#endif
 	}
 
 	/* ------------------------------------------------------------------- */
@@ -760,6 +770,7 @@ namespace DSS
 		}
 	}
 
+#if QT_VERSION >= 0x00060500
 	void ChartTab::colorSchemeChanged(Qt::ColorScheme colorScheme)
 	{
 		theme = (colorScheme == Qt::ColorScheme::Dark)
@@ -772,5 +783,6 @@ namespace DSS
 		angleChart->setTheme(theme);
 		skybgChart->setTheme(theme);
 	}
+#endif
 
 }

@@ -33,12 +33,13 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include <QFileDialog>
 #include "DeepSkyStackerLive.h"
 #include "LiveSettings.h"
 #include "settingstab.h"
-#include "emailsettings.h"
+#include "EmailSettings.h"
 #include "tracecontrol.h"
 
 namespace

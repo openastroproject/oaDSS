@@ -1,7 +1,8 @@
 // ProcessSettingsSheet.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "ProcessSettingsSheet.h"
 
 /////////////////////////////////////////////////////////////////////////////

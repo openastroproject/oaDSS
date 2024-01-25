@@ -33,10 +33,10 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "toolbar.h"
 #include "StackingDlg.h"
-#include "ZExcBase.h"
 #include "SaveEditChanges.h"
 
 namespace DSS

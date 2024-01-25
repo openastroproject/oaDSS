@@ -1,6 +1,7 @@
 // SaturationTab.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "SaturationTab.h"
 #include "ProcessingDlg.h"
 

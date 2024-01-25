@@ -35,7 +35,8 @@
 ****************************************************************************/
 // RenameGroup.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "RenameGroup.h"
 
 namespace DSS

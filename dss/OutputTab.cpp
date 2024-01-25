@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "OutputTab.h"
 #include "ui/ui_OutputTab.h"
 

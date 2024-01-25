@@ -1,15 +1,14 @@
 // StackRecap.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "StackRecap.h"
 #include "ui/ui_StackRecap.h"
 #include "DeepSkyStacker.h"
-#include "Ztrace.h"
 #include "StackingTasks.h"
 #include "Multitask.h"
 #include "FrameInfoSupport.h"
 #include "BitmapExt.h"
-#include "ZExcBase.h"
 #include "StackSettings.h"
 #include "RecommendedSettings.h"
 
@@ -44,11 +43,13 @@ StackRecap::StackRecap(QWidget *parent) :
 	//
 	ui->textBrowser->setOpenLinks(false);
 
+#if QT_VERSION >= 0x00060500
 	//
 	// If Windows Dark Theme is active set blueColour to be lightskyblue instead of deepskyblue
 	// 
 	if (Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme())
 		blueColour = QColorConstants::Svg::lightskyblue;
+#endif
 }
 
 StackRecap::~StackRecap()
@@ -248,7 +249,7 @@ void StackRecap::fillWithAllTasks()
 			strText = tr("The process temporarily requires %1 of free space on the %2 drive.<br>"
 					"Only %3 are available on this drive.", "IDS_RECAP_WARNINGDISKSPACE")
 				.arg(strNeededSpace)
-				.arg(drive.wstring().c_str())
+				.arg(drive.c_str())
 				.arg(strFreeSpace);
 			insertHTML(strHTML, strText, QColorConstants::Red, true, false);
 			if (ResultMode == SM_MOSAIC)
@@ -730,7 +731,7 @@ void StackRecap::fillWithAllTasks()
 			strText = tr("The process will temporarily use %1 on the %2 drive (%3 free).",
 				"IDS_RECAP_INFODISKSPACE")
 				.arg(strNeededSpace)
-				.arg(drive.wstring().c_str())
+				.arg(drive.c_str())
 				.arg(strFreeSpace);
 			insertHTML(strHTML, strText, windowTextColour);
 			if (ResultMode == SM_MOSAIC)

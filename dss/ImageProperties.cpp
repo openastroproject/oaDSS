@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "ImageProperties.h"
 
 namespace DSS {

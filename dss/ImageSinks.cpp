@@ -1,4 +1,5 @@
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include "ImageSinks.h"
 #include "RegisterEngine.h"
 #include "BackgroundCalibration.h"

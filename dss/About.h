@@ -1,4 +1,7 @@
 #pragma once
+
+#include <QtWidgets>
+
 namespace Ui {
 class About;
 }

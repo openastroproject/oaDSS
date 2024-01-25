@@ -38,7 +38,8 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include <map>
 #include <mutex>
 

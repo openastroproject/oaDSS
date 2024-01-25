@@ -1,9 +1,9 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "StackingParameters.h"
 #include "ui/ui_StackingParameters.h"
 #include "Workspace.h"
 #include "StackSettings.h"
-#include "ZExcept.h"
 #include "StackingTasks.h"
 #include "BackgroundOptions.h"
 

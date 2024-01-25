@@ -33,7 +33,8 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "mrulist.h"
 
 void	MRUList::readSettings()

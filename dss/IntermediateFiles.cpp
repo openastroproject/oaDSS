@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "IntermediateFiles.h"
 #include "ui/ui_IntermediateFiles.h"
 #include "Workspace.h"

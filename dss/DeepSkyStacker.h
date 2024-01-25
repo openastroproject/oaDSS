@@ -139,9 +139,9 @@ public :
 	DeepSkyStackerApp() : m_pMainDlg{ nullptr } {}
 	virtual ~DeepSkyStackerApp() = default;
 
-	virtual BOOL InitInstance( ) override;
-	virtual int ExitInstance() override;
-	virtual int Run() override;
+	virtual BOOL InitInstance( ) /* override */;
+	virtual int ExitInstance() /* override */;
+	virtual int Run() /* override */;
 
 };
 

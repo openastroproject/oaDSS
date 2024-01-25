@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "CometStacking.h"
 #include "ui/ui_CometStacking.h"
 #include "Workspace.h"

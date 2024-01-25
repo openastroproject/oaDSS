@@ -36,11 +36,11 @@
 // StackingDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "StackingDlg.h"
 #include "ui_StackingDlg.h"
 #include "picturelist.h"
-#include "Ztrace.h"
 #include "DropFilesDlg.h"
 #include "RenameGroup.h"
 #include "toolbar.h"
@@ -62,7 +62,6 @@
 #include "BatchStacking.h"
 #include "StackRecap.h"
 #include "ProcessingDlg.h"
-#include "ZExcept.h"
 #include "ImageProperties.h"
 
 #define dssApp DeepSkyStacker::instance()

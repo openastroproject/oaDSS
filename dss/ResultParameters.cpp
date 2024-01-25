@@ -1,8 +1,8 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "ResultParameters.h"
 #include "ui/ui_ResultParameters.h"
 #include "Workspace.h"
-#include "ZExcept.h"
 #include "DSSCommon.h"
 #include "StackSettings.h"
 #include "StackingTasks.h"

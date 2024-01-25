@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "AlignmentParameters.h"
 #include "ui/ui_AlignmentParameters.h"
 #include "Workspace.h"

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dss_common.h"
+
 #include "BaseDialog.h"
 #include "StackingDlg.h"
 

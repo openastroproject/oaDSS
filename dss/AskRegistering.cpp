@@ -1,4 +1,5 @@
-#include "StdAfx.h"
+#include "dss_common.h"
+
 #include "AskRegistering.h"
 #include "ui_AskRegistering.h"
 

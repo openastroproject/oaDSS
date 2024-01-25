@@ -1,6 +1,7 @@
 // StarMaskDlg.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "StarMaskDlg.h"
 #include "DSSCommon.h"
 

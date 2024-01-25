@@ -35,7 +35,8 @@
 ****************************************************************************/
 // RegisterSettings.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "RegisterSettings.h"
 #include "ui/ui_RegisterSettings.h"
 #include "Workspace.h"
@@ -258,7 +259,7 @@ void RegisterSettings::on_computeDetectedStars_clicked()
 	DSS::ProgressDlg dlg{ DeepSkyStacker::instance() };
 	CLightFrameInfo				fi;
 
-	QFileInfo info(firstLightFrame);
+	QFileInfo info(firstLightFrame.c_str());
 	QString fileName = info.fileName();
 
 	QString string = tr("Registering %1", "IDS_REGISTERINGNAME").arg(fileName);

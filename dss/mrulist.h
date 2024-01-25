@@ -82,6 +82,6 @@ public:
 	void	Add(const QString& list);
 	inline void	Add(LPCTSTR szList)
 	{
-		QString list = QString::fromWCharArray(szList);
+		QString list = szList;
 	}
 };

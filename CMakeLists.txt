@@ -27,6 +27,8 @@ endif()
 
 add_subdirectory ( libzclass )
 add_subdirectory ( libtools )
+add_subdirectory ( libdelaunay )
 add_subdirectory ( core )
+add_subdirectory ( dss )
 add_subdirectory ( dsslive )
 add_subdirectory ( dsscli )

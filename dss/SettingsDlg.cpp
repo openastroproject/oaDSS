@@ -1,7 +1,8 @@
 // SettingsDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "deepskystacker.h"
 #include "SettingsDlg.h"
 #include "dss_settings.h"

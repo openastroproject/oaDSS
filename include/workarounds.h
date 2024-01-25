@@ -63,6 +63,17 @@ typedef struct _BITMAPINFO {
 	bitmapHeader	bmiHeader;
 } bitmapInfo;
 
+class	CWnd {
+};
+
+
+class CWinApp {
+};
+
+typedef void*						HWND;
+typedef void*						HDC;
+typedef void*						HGLOBAL;
+
 typedef uint64_t				COLORREF;
 typedef void*						HBITMAP;
 typedef RECT*						LPRECT;
@@ -76,8 +87,23 @@ extern uint8_t					GetGValue ( const COLORREF );
 extern uint8_t					GetObject ( HBITMAP, size_t, bitmap* );
 extern HBITMAP					SelectObject ( void*, HBITMAP );
 extern HBITMAP					CreateCompatibleBitmap ( void*, int32_t, int32_t );
+extern HDC							GetDC ( void* );
+extern HDC							DeleteDC ( void* );
+extern HDC							ReleaseDC ( void*, void* );
+extern HDC							CreateCompatibleDC ( HDC );
+extern int							OpenClipboard ( void* );
+extern void							CloseClipboard ( void );
+extern void							EmptyClipboard ( void );
+extern int							SetClipboardData ( uint8_t, void* );
+
+extern HGLOBAL					GlobalAlloc ( int, size_t );
+extern void							GlobalFree ( HGLOBAL );
+extern void*						GlobalLock ( HGLOBAL );
+extern void							GlobalUnlock ( HGLOBAL );
 
 #define	CF_BITMAP			1
 #define	CF_DIB				2
 
 #define BI_RGB				1
+
+#define GMEM_MOVEABLE		1

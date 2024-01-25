@@ -36,7 +36,8 @@
 // SaveEditChanges.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "SaveEditChanges.h"
 
 namespace DSS

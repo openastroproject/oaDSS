@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "BackgroundOptions.h"
 #include "ui/ui_BackgroundOptions.h"
 #include "StackingTasks.h"

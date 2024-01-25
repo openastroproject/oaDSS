@@ -1,10 +1,9 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "PostCalibration.h"
 #include "ui/ui_PostCalibration.h"
 #include "Workspace.h"
 #include "StackSettings.h"
-#include "ZExcept.h"
-#include "Ztrace.h"
 #include "progressdlg.h"
 #include "MasterFrames.h"
 #include "BitmapInfo.h"

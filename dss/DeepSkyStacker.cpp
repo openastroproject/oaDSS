@@ -35,7 +35,8 @@
 ****************************************************************************/
 // DeepSkyStacker.cpp : Defines the entry point for the console application.
 //
-#include <stdafx.h>
+#include "dss_common.h"
+
 #include <htmlhelp.h>
 #include <boost/interprocess/sync/file_lock.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>

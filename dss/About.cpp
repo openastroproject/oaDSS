@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "About.h"
 #include "ui/ui_About.h"
 #include "DSSVersion.h"

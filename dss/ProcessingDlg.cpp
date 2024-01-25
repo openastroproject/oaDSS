@@ -1,12 +1,12 @@
 // ProcessingDlg.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "ProcessingDlg.h"
 #include "DeepSkyStacker.h"
 #include "DeepStack.h"
 #include "SettingsDlg.h"
-#include "Ztrace.h"
 #include "progressdlg.h"
 #include "StarMaskDlg.h"
 #include "StarMask.h"

@@ -33,7 +33,8 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "editstars.h"
 #include "Delaunay.h"
 #include "imageview.h"
@@ -42,7 +43,6 @@
 #include "RegisterEngine.h"
 #include "BackgroundCalibration.h"
 #include "DeepSkyStacker.h"
-#include "ZExcept.h"
 
 // Classes etc. private to this file
 namespace
@@ -348,7 +348,11 @@ namespace DSS
 			//
 			// Get the mouse location and convert to image coordinates
 			//
+#if QT_VERSION >= 0x00060500
 			QPointF pt{ e->position() };
+#else
+			QPointF pt{ e->localPos() };
+#endif
 			pt = imageView->screenToImage(pt);
 
 			if (pt.x() >= 0 && pt.x() < imageView->imageWidth() &&

@@ -36,6 +36,8 @@
 ****************************************************************************/
 // StackingDlg.h : header file
 //
+#include "dss_common.h"
+
 #include "DSSCommon.h"
 #include "BitmapExt.h"
 #include "FrameList.h"
@@ -59,11 +61,6 @@ namespace DSS
 namespace Ui
 {
 	class StackingDlg;
-}
-
-namespace std::filesystem
-{
-	class path;
 }
 
 class QErrorMessage;

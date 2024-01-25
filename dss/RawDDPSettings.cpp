@@ -1,13 +1,12 @@
 // RawDDPSettings.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "RawDDPSettings.h"
 #include "dslr.h"
-#include "Ztrace.h"
 #include "ui_RawDDPSettings.h"
 #include "Workspace.h"
 #include "DeepSkyStacker.h"
-#include "ZExcept.h"
 #include "StackingDlg.h"
 
 void	RawDDPSettings::fillDSLRList(std::vector<CDSLR> & vDSLRs)
@@ -437,7 +436,7 @@ void RawDDPSettings::onInitDialog()
 		}
 	}
 
-	connect(ui->DSLRs, &QComboBox::currentIndexChanged, this, &RawDDPSettings::DSLRs_currentIndexChanged);
+	connect(ui->DSLRs, SIGNAL( QComboBox::currentIndexChanged ( int )), this, SLOT( RawDDPSettings::DSLRs_currentIndexChanged ( int )));
 
 	updateBayerPattern().updateControls();
 

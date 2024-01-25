@@ -35,7 +35,8 @@
 ****************************************************************************/
 // BaseDialog.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "DeepSkyStacker.h"
 #include "BaseDialog.h"
 

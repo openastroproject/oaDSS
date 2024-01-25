@@ -1,6 +1,7 @@
 // LuminanceTab.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "LuminanceTab.h"
 #include "ProcessingDlg.h"
 

@@ -1,7 +1,8 @@
 // SavePicture.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "SavePicture.h"
 #include "resourceCZ.h"
 

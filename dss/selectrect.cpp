@@ -33,7 +33,8 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "selectrect.h"
 #include "imageview.h"
 #include "StackingDlg.h"

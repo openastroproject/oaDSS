@@ -1,7 +1,8 @@
 // CheckAbove.cpp : implementation file
 //
 
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "CheckAbove.h"
 #include "ui/ui_CheckAbove.h"
 
@@ -61,7 +62,7 @@ namespace DSS
 		const auto percent = locale().percent();
 		if (input.endsWith(percent))
 		{
-			auto tmpInput = input.left(input.length() - percent.length());
+			auto tmpInput = input.left(input.length() - /* percent.length() */ 1 );
 			if (!tmpInput.isEmpty())
 			{
 				state = m_percentValueValidator->validate(tmpInput, tmpPos);
@@ -84,7 +85,7 @@ namespace DSS
 		const auto percent = locale().percent();
 		if (input.endsWith(percent))
 		{
-			auto tmpInput = input.left(input.length() - percent.length());
+			auto tmpInput = input.left(input.length() - /* percent.length() */ 1);
 			m_percentValueValidator->fixup(input);
 			input = tmpInput + percent;
 		}

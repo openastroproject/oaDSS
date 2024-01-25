@@ -1,6 +1,7 @@
 // RGBTab.cpp : implementation file
 //
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "RGBTab.h"
 #include "ProcessingDlg.h"
 

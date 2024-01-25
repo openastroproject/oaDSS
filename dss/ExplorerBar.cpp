@@ -1,9 +1,7 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "ExplorerBar.h"
 #include "ui/ui_ExplorerBar.h"
-
-#include "Ztrace.h"
-#include "zexcept.h"
 #include "DeepSkyStacker.h"
 #include "ProcessingDlg.h"
 #include "Workspace.h"

@@ -70,13 +70,13 @@ namespace DSS
         }
 
     protected:
-        inline void enterEvent([[maybe_unused]] QEnterEvent* e) override
+        inline void enterEvent([[maybe_unused]] QEnterEvent* e) /* override */
         {
             Inherited::enterEvent(e);
             setOpacity(1.0, true);
         };
 
-        inline void leaveEvent([[maybe_unused]] QEvent* e) override
+        inline void leaveEvent([[maybe_unused]] QEvent* e) /* override */
         {
             setOpacity(0.6, true);
             Inherited::leaveEvent(e);
@@ -84,7 +84,7 @@ namespace DSS
 
         QGraphicsOpacityEffect opacityEffect;
 
-        void mousePressEvent(QMouseEvent* e) override;
+        void mousePressEvent(QMouseEvent* e) /* override */;
 
     private:
 

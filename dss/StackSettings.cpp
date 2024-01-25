@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "StackSettings.h"
 #include "ui/ui_StackSettings.h"
 #include "Workspace.h"

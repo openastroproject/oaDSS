@@ -23,7 +23,7 @@ add_library( dsscore
 	BitMapFiller.cpp
 	BitmapInfo.cpp
 #	ChannelAlign.cpp						# BITMAP-related code
-	ColorBitmap.cpp
+#	ColorBitmap.cpp							# BITMAP-related code
 	ColorHelpers.cpp
 	ColorMultiBitmap.cpp
 	CosmeticEngine.cpp

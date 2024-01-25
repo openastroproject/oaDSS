@@ -33,10 +33,10 @@
 **
 **
 ****************************************************************************/
-#include "stdafx.h"
+#include "dss_common.h"
+
 #include "group.h"
 #include "ImageListModel.h"
-#include "Ztrace.h"
 #include "FrameInfo.h"
 #include "RegisterEngine.h"
 

@@ -62,16 +62,16 @@ add_library( dsscore
 #	TIFFUtil.cpp								# BITMAP-related code
 	tracecontrol.cpp
 #	Workspace.cpp								# Qt6 specifics
-	avx_avg.cpp
-	avx_bitmap_filler.cpp
-	avx_cfa.cpp
-	avx.cpp
-	avx_entropy.cpp
-	avx_filter.cpp
-	avx_histogram.cpp
-	avx_luminance.cpp
-	avx_output.cpp
-	avx_support.cpp
+#	avx_avg.cpp									# AVX
+#	avx_bitmap_filler.cpp				# AVX
+#	avx_cfa.cpp									# AVX
+#	avx.cpp											# AVX
+#	avx_entropy.cpp							# AVX
+#	avx_filter.cpp							# AVX
+#	avx_histogram.cpp						# AVX
+#	avx_luminance.cpp						# AVX
+#	avx_output.cpp							# AVX
+#	avx_support.cpp							# AVX
 )
 
 target_include_directories ( dsscore

@@ -80,7 +80,7 @@ public :
 
 	virtual double	Compute(double fValue) override
 	{
-		return min(1.0, fFactor1 * exp(-(fValue * fValue)/fFactor2));
+		return std::min(1.0, fFactor1 * exp(-(fValue * fValue)/fFactor2));
 	};
 };
 
@@ -102,7 +102,7 @@ public :
 
 	virtual double	Compute(double fValue) override
 	{
-		return max(0.0, 1-fValue/3.0/m_fRadius);
+		return std::max(0.0, 1-fValue/3.0/m_fRadius);
 	};
 };
 
@@ -124,7 +124,7 @@ public :
 
 	virtual double	Compute(double fValue) override
 	{
-		return max(0.0, 1.5-fValue*1.5/3.0/m_fRadius);
+		return std::max(0.0, 1.5-fValue*1.5/3.0/m_fRadius);
 	};
 };
 
@@ -147,7 +147,7 @@ public :
 	virtual double	Compute(double fValue) override
 	{
 		fValue /= 3.0*m_fRadius;
-		return max(0.0, 1.0-fValue*fValue*fValue);
+		return std::max(0.0, 1.0-fValue*fValue*fValue);
 	};
 };
 
@@ -170,7 +170,7 @@ public:
 	virtual double	Compute(double fValue) override
 	{
 		fValue /= 3.0 * m_fRadius;
-		return max(0.0, 1.0 - fValue * fValue * fValue * fValue);
+		return std::max(0.0, 1.0 - fValue * fValue * fValue * fValue);
 	}
 };
 

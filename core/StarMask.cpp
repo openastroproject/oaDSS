@@ -52,9 +52,9 @@ std::shared_ptr<CMemoryBitmap> CStarMaskEngine::CreateStarMask2(CMemoryBitmap* p
 					fRadius += m_fPixelIncrease;
 
 				pStarMaskFunction->SetRadius(fRadius);
-				for (double i = max(0.0, fXCenter - 3*fRadius);i<=min(fXCenter + 3*fRadius, fWidth-1);i++)
+				for (double i = std::max(0.0, fXCenter - 3*fRadius);i<=std::min(fXCenter + 3*fRadius, fWidth-1);i++)
 				{
-					for (double j = max(0.0, fYCenter - 3*fRadius);j<=min(fYCenter + 3*fRadius, fHeight-1);j++)
+					for (double j = std::max(0.0, fYCenter - 3*fRadius);j<=std::min(fYCenter + 3*fRadius, fHeight-1);j++)
 					{
 						// Compute the distance to the center
 						double		fDistance;
@@ -68,7 +68,7 @@ std::shared_ptr<CMemoryBitmap> CStarMaskEngine::CreateStarMask2(CMemoryBitmap* p
 						fPixelValue = pStarMaskFunction->Compute(fDistance);
 
 						pOutBitmap->GetPixel(i+0.5, j+0.5, fOldPixelValue);
-						fPixelValue = max(fOldPixelValue, max(0.0, min(fPixelValue*255.0, 255.0)));
+						fPixelValue = std::max(fOldPixelValue, std::max(0.0, std::min(fPixelValue*255.0, 255.0)));
 						pOutBitmap->SetPixel(i+0.5, j+0.5, fPixelValue);
 					}
 				}

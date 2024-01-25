@@ -98,9 +98,9 @@ void CExtendedMedianImageFilter::AnalyzeImage(const CMemoryBitmap * pInBitmap, b
 			if (bComputeThresholds)
 			{
 				if (fPosition>0)
-					vHotPixels[min(fPosition*1000, 1000.0)]++;
+					vHotPixels[std::min(fPosition*1000, 1000.0)]++;
 				else if (fPosition<0)
-					vColdPixels[min(-fPosition*1000, 1000.0)]++;
+					vColdPixels[std::min(-fPosition*1000, 1000.0)]++;
 			}
 			else
 			{

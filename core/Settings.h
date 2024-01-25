@@ -51,7 +51,7 @@ public :
 	bool	Read(LPCTSTR szLine)
 	{
 		bool			bResult = false;
-		QString			strLine = QString::fromWCharArray(szLine);
+		QString			strLine = szLine;
 		int				nPos;
 
 		nPos = strLine.indexOf("=");

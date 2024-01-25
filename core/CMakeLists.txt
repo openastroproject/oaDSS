@@ -19,30 +19,30 @@ add_library( dsscore
 #	BitmapExt.cpp								# Still has Windows-specific code
 	BitMapFiller.cpp
 	BitmapInfo.cpp
-#	ChannelAlign.cpp						# BITMAP-related code
-#	ColorBitmap.cpp							# BITMAP-related code
+	ChannelAlign.cpp
+	ColorBitmap.cpp
 	ColorHelpers.cpp
 #	ColorMultiBitmap.cpp				# default argument for template parameter
-#	CosmeticEngine.cpp					# BITMAP-related code
-#	DarkFrame.cpp								# BITMAP-related code
-#	DeBloom.cpp									# BITMAP-related code
+	CosmeticEngine.cpp
+	DarkFrame.cpp
+	DeBloom.cpp
 #	DeepStack.cpp								# Windows-specific code
 	DSSProgress.cpp
 	dss_settings.cpp
 	EntropyInfo.cpp
 	ExceptionHandling.cpp
 #	File.cpp										# Windows-specific code
-#	Filters.cpp									# BITMAP-specific code
+	Filters.cpp
 #	FITSUtil.cpp								# Many compilation errors -- prototypes?
 	FlatFrame.cpp
-#	FrameInfo.cpp								# BITMAP-related code
+	FrameInfo.cpp
 	FrameList.cpp
 	GrayBitmap.cpp
 #	GreyMultiBitmap.cpp					# default argument for template parameter
 	group.cpp
 	ImageListModel.cpp
-#	imageloader.cpp							# BITMAP-related code
-#	MasterFrames.cpp						# BITMAP-related code
+	imageloader.cpp
+	MasterFrames.cpp
 	MatchingStars.cpp
 	MedianFilterEngine.cpp
 	MemoryBitmap.cpp
@@ -51,15 +51,15 @@ add_library( dsscore
 	QEventLogger.cpp
 #	RAWUtils.cpp								# pokes about in libRaw internals
 #	RegisterEngine.cpp					# AVX, Windows-specific path handling
-#	RunningStackingEngine.cpp		# BITMAP-related code
+	RunningStackingEngine.cpp
 #	Settings.cpp								# CA2CTEX?
-#	StackedBitmap.cpp						# BITMAP-related code
-#	StackingEngine.cpp					# BITMAP-related code
-#	StackingTasks.cpp						# BITMAP-related code
+	StackedBitmap.cpp
+#	StackingEngine.cpp					# File info errors
+#	StackingTasks.cpp						# CA2CTEX?
 #	StackWalker.cpp							# Platform not supported!
-#	StarMask.cpp								# BITMAP-related code
+	StarMask.cpp
 	TaskInfo.cpp
-#	TIFFUtil.cpp								# BITMAP-related code
+	TIFFUtil.cpp
 	tracecontrol.cpp
 #	Workspace.cpp								# Qt6 specifics
 #	avx_avg.cpp									# AVX

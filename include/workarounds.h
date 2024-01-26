@@ -106,11 +106,11 @@ extern void							GlobalFree ( HGLOBAL );
 extern void*						GlobalLock ( HGLOBAL );
 extern void							GlobalUnlock ( HGLOBAL );
 
-#define	CF_BITMAP			1
-#define	CF_DIB				2
+#define	CF_BITMAP				1
+#define	CF_DIB					2
 
-#define BI_RGB				1
+#define BI_RGB					1
 
 #define GMEM_MOVEABLE		1
 
-#define SRCCOPY				1
+#define SRCCOPY					1

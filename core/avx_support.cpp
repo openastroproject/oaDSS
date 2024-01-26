@@ -6,6 +6,8 @@
 #include "BitmapCharacteristics.h" 
 #include "Multitask.h" 
  
+#include <iostream>
+#include <cpuid.h>
  
  
 AvxSupport::AvxSupport(CMemoryBitmap& b) noexcept : 
@@ -180,7 +182,8 @@ void AvxSupport::reportCpuType()
 		ZTRACE_RUNTIME("Emulated processor architecture: %s", architecture);
 		std::cerr << "Emulated processor architecture: " << architecture << std::endl;
 	}
-#endif
+#endif	/* WINDOWS */
+#ifdef WINDOWS
 	int cpuid[4] = { -1 };
 	__cpuid(cpuid, 0x80000000);
 	const int nExtIds = cpuid[0];
@@ -196,7 +199,24 @@ void AvxSupport::reportCpuType()
 	}
 	else
 		memcpy(brand, "CPU brand not detected", 22);
+#else
+	unsigned int cpuid[4];
+	__get_cpuid_max( 0x80000000, cpuid);
+	const int nExtIds = cpuid[0];
+	char brand[64] = { '\0' };
+	if (nExtIds >= 0x80000004)
+	{
+		__get_cpuid( 0x80000002, &cpuid[0], &cpuid[1], &cpuid[2], &cpuid[3]);
+		memcpy(brand, cpuid, sizeof(cpuid));
+		__get_cpuid( 0x80000003, &cpuid[0], &cpuid[1], &cpuid[2], &cpuid[3]);
+		memcpy(brand + 16, cpuid, sizeof(cpuid));
+		__get_cpuid( 0x80000004, &cpuid[0], &cpuid[1], &cpuid[2], &cpuid[3]);
+		memcpy(brand + 32, cpuid, sizeof(cpuid));
+	}
+	else
+		memcpy(brand, "CPU brand not detected", 22);
 
+#endif	/* WINDOWS */
 	//
 	// Also report this on stderr so if we get a SIGILL the information 
 	// will be there along with the exception traceback. 
@@ -220,3 +240,13 @@ template bool AvxSupport::isMonochromeCfaBitmapOfType<std::uint16_t>() const;
 template bool AvxSupport::isMonochromeCfaBitmapOfType<std::uint32_t>() const;
 template bool AvxSupport::isMonochromeCfaBitmapOfType<float>() const;
 template bool AvxSupport::isMonochromeCfaBitmapOfType<double>() const;
+
+template bool AvxSupport::isColorBitmapOfType<std::uint16_t>() const;
+template bool AvxSupport::isColorBitmapOfType<std::uint32_t>() const;
+template bool AvxSupport::isColorBitmapOfType<float>() const;
+template bool AvxSupport::isColorBitmapOfType<double>() const;
+
+template bool AvxSupport::isMonochromeBitmapOfType<std::uint16_t>() const;
+template bool AvxSupport::isMonochromeBitmapOfType<std::uint32_t>() const;
+template bool AvxSupport::isMonochromeBitmapOfType<float>() const;
+template bool AvxSupport::isMonochromeBitmapOfType<double>() const;

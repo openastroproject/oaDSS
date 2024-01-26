@@ -72,7 +72,7 @@ add_library( dsscore
 	avx_histogram.cpp
 	avx_luminance.cpp
 	avx_output.cpp
-#	avx_support.cpp							# AVX
+	avx_support.cpp
 )
 
 target_include_directories ( dsscore

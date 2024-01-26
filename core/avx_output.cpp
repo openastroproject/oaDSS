@@ -25,7 +25,7 @@ AvxOutputComposition::AvxOutputComposition(CMultiBitmap& mBitmap, CMemoryBitmap&
 }
 
 template <class INPUTTYPE, class OUTPUTTYPE>
-static bool AvxOutputComposition::bitmapColorOrGray(const CMultiBitmap& bitmap) noexcept
+bool AvxOutputComposition::bitmapColorOrGray(const CMultiBitmap& bitmap) noexcept
 {
 	return
 		(dynamic_cast<const CColorMultiBitmapT<INPUTTYPE, OUTPUTTYPE>*>(&bitmap) != nullptr) || // dynamic_cast for pointers does not throw
@@ -33,7 +33,7 @@ static bool AvxOutputComposition::bitmapColorOrGray(const CMultiBitmap& bitmap) 
 }
 
 template <class T>
-inline static float AvxOutputComposition::convertToFloat(const T value) noexcept
+inline float AvxOutputComposition::convertToFloat(const T value) noexcept
 {
 	if constexpr (std::is_integral_v<T> && sizeof(T) == 4) // 32 bit integral type
 		return static_cast<float>(value >> 16);
@@ -179,10 +179,25 @@ int AvxOutputComposition::doProcessMedianKappaSigma(const int line, std::vector<
 
 	const auto vectorMedian = [&quickMedian](__m256& loMedian, __m256& hiMedian, const __m256 loLoBound, const __m256 hiLoBound, const __m256 loHiBound, const __m256 hiHiBound) -> void
 	{
+		alignas(32) float loLoBoundIn[8], loHiBoundIn[8], loMedianIn[8];
+		alignas(32) float hiLoBoundIn[8], hiHiBoundIn[8], hiMedianIn[8];
+		_mm256_store_ps ( loLoBoundIn, loLoBound );
+		_mm256_store_ps ( loHiBoundIn, loHiBound );
+		_mm256_store_ps ( loMedianIn, loMedian );
+		_mm256_store_ps ( hiLoBoundIn, hiLoBound );
+		_mm256_store_ps ( hiHiBoundIn, hiHiBound );
+		_mm256_store_ps ( hiMedianIn, hiMedian );
+
+
 		for (size_t n = 0; n < 8; ++n)
-			loMedian.m256_f32[n] = quickMedian(n, loLoBound.m256_f32[n], loHiBound.m256_f32[n], loMedian.m256_f32[n]);
+			// loMedian.m256_f32[n] = quickMedian(n, loLoBound.m256_f32[n], loHiBound.m256_f32[n], loMedian.m256_f32[n]);
+			loMedianIn[n] = quickMedian(n, loLoBoundIn[n], loHiBoundIn[n], loMedianIn[n]);
 		for (size_t n = 0; n < 8; ++n)
-			hiMedian.m256_f32[n] = quickMedian(n + 8, hiLoBound.m256_f32[n], hiHiBound.m256_f32[n], hiMedian.m256_f32[n]);
+			//hiMedian.m256_f32[n] = quickMedian(n + 8, hiLoBound.m256_f32[n], hiHiBound.m256_f32[n], hiMedian.m256_f32[n]);
+			hiMedianIn[n] = quickMedian(n, hiLoBoundIn[n], hiHiBoundIn[n], hiMedianIn[n]);
+
+		loMedian = _mm256_load_ps ( loMedianIn );
+		hiMedian = _mm256_load_ps ( hiMedianIn );
 	};
 
 

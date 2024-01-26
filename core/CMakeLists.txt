@@ -71,7 +71,7 @@ add_library( dsscore
 	avx_filter.cpp
 	avx_histogram.cpp
 	avx_luminance.cpp
-#	avx_output.cpp							# AVX (var.m256_f32[n])
+	avx_output.cpp
 #	avx_support.cpp							# AVX
 )
 

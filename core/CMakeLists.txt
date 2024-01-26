@@ -38,7 +38,7 @@ add_library( dsscore
 	FrameInfo.cpp
 	FrameList.cpp
 	GrayBitmap.cpp
-	GreyMultiBitmap.cpp					# default argument for template parameter
+	GreyMultiBitmap.cpp
 	group.cpp
 	ImageListModel.cpp
 	imageloader.cpp
@@ -62,7 +62,7 @@ add_library( dsscore
 	TaskInfo.cpp
 	TIFFUtil.cpp
 	tracecontrol.cpp
-#	Workspace.cpp								# Qt6 specifics
+	Workspace.cpp
 	avx_avg.cpp
 	avx_bitmap_filler.cpp
 	avx_cfa.cpp

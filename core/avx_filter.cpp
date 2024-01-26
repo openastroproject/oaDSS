@@ -173,8 +173,10 @@ int AvxImageFilter<T>::filter(const size_t lineStart, const size_t lineEnd)
 		{
 			advancePointersAndVectors(remainingPixels, _mm_setr_epi32(-1, 0, 0, 7));
 			median = median9(prevLinePrev, prevLine, prevLineNext, thisLinePrev, thisLine, thisLineNext, nextLinePrev, nextLine, nextLineNext);
+			alignas(32) float median_out[8];
+			_mm256_store_ps ( median_out, median);
 			for (size_t n = 8 - remainingPixels; n < 8; ++n)
-				pOut[n] = static_cast<double>(median.m256_f32[n]);
+				pOut[n] = static_cast<double>(median_out[n]);
 		}
 
 		pOut = filterEngine->m_pvOutValues + (row + 1) * width;
@@ -185,10 +187,11 @@ int AvxImageFilter<T>::filter(const size_t lineStart, const size_t lineEnd)
 
 	return AvxSupport::zeroUpper(0);
 }
-
+/*
 // Explicit template instantiation for the types we need.
 template AvxImageFilter<std::uint8_t>;
 template AvxImageFilter<std::uint16_t>;
 template AvxImageFilter<std::uint32_t>;
 template AvxImageFilter<float>;
 template AvxImageFilter<double>;
+*/

@@ -68,7 +68,7 @@ add_library( dsscore
 	avx_cfa.cpp
 	avx.cpp
 	avx_entropy.cpp
-#	avx_filter.cpp							# AVX (var.m256_f32[n])
+	avx_filter.cpp
 	avx_histogram.cpp
 	avx_luminance.cpp
 #	avx_output.cpp							# AVX (var.m256_f32[n])

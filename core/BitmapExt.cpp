@@ -1,5 +1,7 @@
 #include "dss_common.h"
 
+#include <shared_mutex>
+
 #include <omp.h>
 
 #include "BitmapExt.h"
@@ -1020,7 +1022,7 @@ bool GetPictureInfo(const fs::path& path, CBitmapInfo& BitmapInfo)
 		}
 	}
 
-	QFileInfo info{ path };
+	QFileInfo info{ path.c_str() };
 	QString extension{ info.suffix().toLower() }; 
 
 	if (!bResult)
@@ -1050,7 +1052,7 @@ bool GetPictureInfo(const fs::path& path, CBitmapInfo& BitmapInfo)
 			bResult = true;
 		else if (isJpeg || isPng)
 		{
-			QFile file{ path };
+			QFile file{ path.c_str() };
 			file.open(QIODevice::ReadOnly);
 			if (file.isOpen())
 			{
@@ -1628,9 +1630,9 @@ void CYMGToRGB2(double fCyan, double fYellow, double fMagenta, double, double& f
 	fGreen = -0.28607719 * fR + 1.706598409 * fG + 0.24881043 * fB;
 	fBlue = -0.180853396 * fR + -7.714219397 * fG + 9.438903145 * fB;
 
-	fRed = max(0.0, min(255.0, fRed));
-	fGreen = max(0.0, min(255.0, fGreen));
-	fBlue = max(0.0, min(255.0, fBlue));
+	fRed = std::max(0.0, std::min(255.0, fRed));
+	fGreen = std::max(0.0, std::min(255.0, fGreen));
+	fBlue = std::max(0.0, std::min(255.0, fBlue));
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -41,7 +41,7 @@ typedef struct _RGBQUAD {
 typedef struct _BITMAP {
 	int			bmWidth;
 	int			bmHeight;
-} bitmap;
+} BITMAP;
 
 typedef struct _BITMAPHEADER {
 	int			biSize;
@@ -55,13 +55,13 @@ typedef struct _BITMAPHEADER {
 	int			biYPelsPerMeter;
 	int			biClrUsed;
 	int			biClrImportant;
-} bitmapHeader;
+} BITMAPHEADER;
 
 typedef struct _BITMAPINFO {
 	int						bmWidth;
 	int						bmHeight;
-	bitmapHeader	bmiHeader;
-} bitmapInfo;
+	BITMAPHEADER	bmiHeader;
+} BITMAPINFO;
 
 class	CWnd {
 };
@@ -84,8 +84,9 @@ extern COLORREF					RGB ( double, double, double );
 extern uint8_t					GetRValue ( const COLORREF );
 extern uint8_t					GetBValue ( const COLORREF );
 extern uint8_t					GetGValue ( const COLORREF );
-extern uint8_t					GetObject ( HBITMAP, size_t, bitmap* );
+extern uint8_t					GetObject ( HBITMAP, size_t, BITMAP* );
 extern HBITMAP					SelectObject ( void*, HBITMAP );
+extern void							DeleteObject ( HBITMAP );
 extern HBITMAP					CreateCompatibleBitmap ( void*, int32_t, int32_t );
 extern HDC							GetDC ( void* );
 extern HDC							DeleteDC ( void* );
@@ -95,6 +96,10 @@ extern int							OpenClipboard ( void* );
 extern void							CloseClipboard ( void );
 extern void							EmptyClipboard ( void );
 extern int							SetClipboardData ( uint8_t, void* );
+extern void							BitBlt( HDC, int, int, int, int, HDC, int, int, int );
+extern HBITMAP					CreateDIBSection( HDC, BITMAPINFO*, int, void**, void*,
+														int );
+
 
 extern HGLOBAL					GlobalAlloc ( int, size_t );
 extern void							GlobalFree ( HGLOBAL );
@@ -107,3 +112,5 @@ extern void							GlobalUnlock ( HGLOBAL );
 #define BI_RGB				1
 
 #define GMEM_MOVEABLE		1
+
+#define SRCCOPY				1

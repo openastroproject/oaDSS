@@ -50,7 +50,7 @@ add_library( dsscore
 	Multitask.cpp
 	QEventLogger.cpp
 	RAWUtils.cpp
-#	RegisterEngine.cpp					# AVX, Windows-specific path handling
+	RegisterEngine.cpp
 	RunningStackingEngine.cpp
 	Settings.cpp
 #	SetUILanguage.cpp						# Very Windows-specific

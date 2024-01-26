@@ -1226,19 +1226,15 @@ void CLightFrameInfo::SaveRegisteringInfo()
 
 void CLightFrameInfo::SetBitmap(fs::path path, bool bProcessIfNecessary, bool bForceRegister)
 {
-	TCHAR				szDrive[1+_MAX_DRIVE];
-	TCHAR				szDir[1+_MAX_DIR];
-	TCHAR				szFile[1+_MAX_FNAME];
-	TCHAR				szExt[1+_MAX_EXT];
-	TCHAR				szInfoName[1+_MAX_PATH];
-
 	Reset();
 	m_bInfoOk = false;
 	filePath = path;
-	_tsplitpath(filePath.c_str(), szDrive, szDir, szFile, szExt);
-	_tmakepath(szInfoName, szDrive, szDir, szFile, _T(".info.txt"));
 
-	m_strInfoFileName = szInfoName;
+	fs::path p = path.parent_path();
+	p /= path.stem();
+	p += ".info.txt";
+
+	m_strInfoFileName = p.c_str();
 
 	if (bForceRegister || (!ReadInfoFileName() && bProcessIfNecessary))
 	{
@@ -1262,7 +1258,7 @@ bool CRegisterEngine::SaveCalibratedLightFrame(const CLightFrameInfo& lfi, std::
 
 	if (!lfi.filePath.empty() && static_cast<bool>(pBitmap))
 	{
-		const QFileInfo fileInfo(lfi.filePath);
+		const QFileInfo fileInfo(lfi.filePath.c_str());
 		const QString strPath(fileInfo.path() + QDir::separator());
 		const QString strBaseName(fileInfo.baseName());
 

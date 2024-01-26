@@ -512,10 +512,21 @@ int AvxStacking::backgroundCalibration(const CBackgroundCalibration& backgroundC
 				float* pRemaining = reinterpret_cast<float*>(pResult);
 				for (int n = nrVectors * 16; n < this->colEnd; ++n, ++pColor, ++pRemaining)
 				{
+					__m128 a_low = _mm256_extractf128_ps ( a, 0 );
+					__m128 b_low = _mm256_extractf128_ps ( b, 0 );
+					__m128 c_low = _mm256_extractf128_ps ( c, 0 );
+					__m128 fmax_low = _mm256_extractf128_ps ( fmax, 0 );
+					__m128 fmin_low = _mm256_extractf128_ps ( fmin, 0 );
+					float a0 = _mm_cvtss_f32 ( a_low );
+					float b0 = _mm_cvtss_f32 ( b_low );
+					float c0 = _mm_cvtss_f32 ( c_low );
+					float fmax0 = _mm_cvtss_f32 ( fmax_low );
+					float fmin0 = _mm_cvtss_f32 ( fmin_low );
+
 					const float fcolor = readColorValue(*pColor);
-					const float denom = b.m256_f32[0] * fcolor + c.m256_f32[0];
-					const float xplusa = fcolor + a.m256_f32[0];
-					*pRemaining = std::max(std::min(denom == 0.0f ? xplusa : (xplusa / denom), fmax.m256_f32[0]), fmin.m256_f32[0]);
+					const float denom = b0 * fcolor + c0;
+					const float xplusa = fcolor + a0;
+					*pRemaining = std::max(std::min(denom == 0.0f ? xplusa : (xplusa / denom), fmax0), fmin0);
 				}
 			}
 		};
@@ -558,7 +569,17 @@ int AvxStacking::backgroundCalibration(const CBackgroundCalibration& backgroundC
 				for (int n = nrVectors * 16; n < this->colEnd; ++n, ++pColor, ++pRemaining)
 				{
 					const float fcolor = readColorValue(*pColor);
-					*pRemaining = fcolor < xm.m256_f32[0] ? (fcolor * a0.m256_f32[0] + b0.m256_f32[0]) : (fcolor * a1.m256_f32[0] + b1.m256_f32[0]);
+					__m128 xm_low = _mm256_extractf128_ps ( xm, 0 );
+					__m128 a0_low = _mm256_extractf128_ps ( a0, 0 );
+					__m128 a1_low = _mm256_extractf128_ps ( a1, 0 );
+					__m128 b0_low = _mm256_extractf128_ps ( b0, 0 );
+					__m128 b1_low = _mm256_extractf128_ps ( b1, 0 );
+					float xm_0 = _mm_cvtss_f32 ( xm_low );
+					float a0_0 = _mm_cvtss_f32 ( a0_low );
+					float a1_0 = _mm_cvtss_f32 ( a1_low );
+					float b0_0 = _mm_cvtss_f32 ( b0_low );
+					float b1_0 = _mm_cvtss_f32 ( b1_low );
+					*pRemaining = fcolor < xm_0 ? (fcolor * a0_0 + b0_0) : (fcolor * a1_0 + b1_0);
 				}
 			}
 		};

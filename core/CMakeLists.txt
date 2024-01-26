@@ -23,7 +23,7 @@ add_library( dsscore
 	ChannelAlign.cpp
 	ColorBitmap.cpp
 	ColorHelpers.cpp
-#	ColorMultiBitmap.cpp				# default argument for template parameter
+	ColorMultiBitmap.cpp
 	CosmeticEngine.cpp
 	DarkFrame.cpp
 	DeBloom.cpp

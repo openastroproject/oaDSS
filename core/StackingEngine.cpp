@@ -19,7 +19,6 @@
 #include "avx.h"
 #include "avx_avg.h"
 #include "Workspace.h"
-#include "File.h"
 #include "MultiBitmap.h"
 #include "ColorBitmap.h"
 #include "ColorMultiBitmap.h"

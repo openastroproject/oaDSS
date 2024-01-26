@@ -1,6 +1,13 @@
 #include "dss_common.h"
 
+#include <set>
+
+#include <unistd.h>
+#include <byteswap.h>
+#include <strings.h>
 #include <libraw/libraw.h>
+#include <arpa/inet.h>
+#include <omp.h>
 
 #include "RAWUtils.h"
 #include "Workspace.h"
@@ -10,6 +17,7 @@
 #include "Multitask.h"
 #include "MedianFilterEngine.h"
 #include "BitmapInfo.h"
+#include "dssbase.h"
 
 // #include <zexcept.h>
 // #include <ztrace.h>
@@ -161,11 +169,10 @@ void PopRAWSettings()
 
 #include "BitMapFiller.h"
 
-#define Thread   __declspec( thread )
 
 namespace { // Only use in this .cpp file
 
-	static Thread ProgressBase* g_Progress;
+	thread_local static ProgressBase* g_Progress;
 
 	class DSSLibRaw : public LibRaw
 	{
@@ -248,7 +255,7 @@ namespace { // Only use in this .cpp file
 			m_fAperture{ 0.0 },
 			m_lHeight{ 0 },
 			m_lWidth{ 0 },
-			m_isRawFile{ rawProcessor.open_file(file.wstring().c_str()) == LIBRAW_SUCCESS }
+			m_isRawFile{ rawProcessor.open_file(file.c_str()) == LIBRAW_SUCCESS }
 		{
 			ZFUNCTRACE_RUNTIME();
 
@@ -435,7 +442,7 @@ namespace { // Only use in this .cpp file
 				const char* pcrhs = rhs.c_str();
 				// choose the shorter length
 				const size_t len = std::min(strlen(pclhs), strlen(pcrhs));
-				return _strnicmp(pclhs, pcrhs, len) < 0;
+				return strncasecmp (pclhs, pcrhs, len) < 0;
 			}
 		);
 
@@ -839,7 +846,7 @@ namespace { // Only use in this .cpp file
 #pragma omp parallel for default(none) schedule(static, 1'000'000) if(numberOfProcessors > 1)
 					for (int i = 0; i < size; i++)
 					{
-						raw_image[i] = _byteswap_ushort(raw_image[i]);
+						raw_image[i] = bswap_16(raw_image[i]);
 					}
 
 				const int imageWidth = S.width;
@@ -1047,8 +1054,14 @@ int DSSLibRaw::dcraw_ppm_tiff_writer(const char*)
 	}
 }
 
-#include "internal/var_defines.h"
-#define FORCC for (c=0; c < colors && c < 4; c++)
+#define IDS		imgdata.sizes
+#define IDP		imgdata.params
+#define IDC		imgdata.color
+#define IDID	imgdata.idata
+#define IDOD	libraw_internal_data.output_data
+#define IIDOP	libraw_internal_data.internal_output_params
+
+#define FORCC for (c=0; c < IDID.colors && c < 4; c++)
 #define SWAP(a,b) { a=a+b; b=a-b; a=a-b; }
 
 void DSSLibRaw::write_ppm_tiff()
@@ -1059,23 +1072,24 @@ void DSSLibRaw::write_ppm_tiff()
 	int c, row, col, soff, rstep, cstep;
 	int perc, val, total, t_white = 0x2000;
 
+
 #ifdef LIBRAW_LIBRARY_BUILD
-	perc = width * height * auto_bright_thr;
+	perc = IDS.width * IDS.height * IDP.auto_bright_thr;
 #else
-	perc = width * height * 0.01;		/* 99th percentile white level */
+	perc = IDS.width * IDS.height * 0.01;		/* 99th percentile white level */
 #endif
-	if (fuji_width) perc /= 2;
-	if (!((highlight & ~2) || no_auto_bright))
-		for (t_white = c = 0; c < colors; c++) {
+	if (IIDOP.fuji_width) perc /= 2;
+	if (!((IDP.highlight & ~2) || IDP.no_auto_bright))
+		for (t_white = c = 0; c < IDID.colors; c++) {
 			for (val = 0x2000, total = 0; --val > 32; )
-				if ((total += histogram[c][val]) > perc) break;
+				if ((total += IDOD.histogram[c][val]) > perc) break;
 			if (t_white < val) t_white = val;
 		}
-	gamma_curve(gamm[0], gamm[1], 2, (t_white << 3) / bright);
-	iheight = height;
-	iwidth = width;
-	if (flip & 4) SWAP(height, width);
-	ppm = (uchar *)calloc(width, colors*output_bps / 8);
+	gamma_curve(IDP.gamm[0], IDP.gamm[1], 2, (t_white << 3) / IDP.bright);
+	IDS.iheight = IDS.height;
+	IDS.iwidth = IDS.width;
+	if (IDS.flip & 4) SWAP(IDS.height, IDS.width);
+	ppm = (uchar *)calloc(IDS.width, IDID.colors*IDP.output_bps / 8);
 	if (nullptr == ppm) throw LIBRAW_EXCEPTION_ALLOC;
 	ppm2 = (ushort *)ppm;
 	// merror(ppm, "write_ppm_tiff()");
@@ -1090,43 +1104,43 @@ void DSSLibRaw::write_ppm_tiff()
 		if (oprof)
 			fwrite(oprof, ntohl(oprof[0]), 1, ofp);
 	}
-	else if (colors > 3)
+	else if (IDID.colors > 3)
 		fprintf(ofp,
 			"P7\nWIDTH %d\nHEIGHT %d\nDEPTH %d\nMAXVAL %d\nTUPLTYPE %s\nENDHDR\n",
-			width, height, colors, (1 << output_bps) - 1, cdesc);
+			width, height, IDID.colors, (1 << output_bps) - 1, cdesc);
 	else
 		fprintf(ofp, "P%d\n%d %d\n%d\n",
-			colors / 2 + 5, width, height, (1 << output_bps) - 1);
+			IDID.colors / 2 + 5, width, height, (1 << output_bps) - 1);
 #endif
 	//
 	// Populate some Bitmap loader variables with data that would
 	// have been written to the PGM/PPM header
 	//
-	pDSSBitMapFiller->setGrey(1 == colors);
-	pDSSBitMapFiller->setWidth(width);
-	pDSSBitMapFiller->setHeight(height);
-	pDSSBitMapFiller->setMaxColors((1 << output_bps) - 1);
+	pDSSBitMapFiller->setGrey(1 == IDID.colors);
+	pDSSBitMapFiller->setWidth(IDS.width);
+	pDSSBitMapFiller->setHeight(IDS.height);
+	pDSSBitMapFiller->setMaxColors((1 << IDP.output_bps) - 1);
 
 	soff = flip_index(0, 0);
 	cstep = flip_index(0, 1) - soff;
-	rstep = flip_index(1, 0) - flip_index(0, width);
-	for (row = 0; row < height; row++, soff += rstep)
+	rstep = flip_index(1, 0) - flip_index(0, IDS.width);
+	for (row = 0; row < IDS.height; row++, soff += rstep)
 	{
-		for (col = 0; col < width; col++, soff += cstep)
+		for (col = 0; col < IDS.width; col++, soff += cstep)
 		{
-			if (output_bps == 8)
-				FORCC ppm[col*colors + c] = curve[image[soff][c]] >> 8;
+			if (IDP.output_bps == 8)
+				FORCC ppm[col*IDID.colors + c] = IDC.curve[imgdata.image[soff][c]] >> 8;
 			else
-				FORCC ppm2[col*colors + c] = curve[image[soff][c]];
+				FORCC ppm2[col*IDID.colors + c] = IDC.curve[imgdata.image[soff][c]];
 		}
-		if (output_bps == 16 && !output_tiff && htons(0x55aa) != 0x55aa)
-			_swab((char*)ppm2, (char*)ppm2, width*colors * 2);
+		if (IDP.output_bps == 16 && !IDP.output_tiff && htons(0x55aa) != 0x55aa)
+			swab((char*)ppm2, (char*)ppm2, IDS.width*IDID.colors * 2);
 
 		//
 		// Instead of writing the bitmap data to an output file
 		// send it to our Bitmap loader class
 		//
-		pDSSBitMapFiller->Write(ppm, colors*output_bps / 8, width, row); // Gray or color, 8 or 16 bits per sample.
+		pDSSBitMapFiller->Write(ppm, IDID.colors*IDP.output_bps / 8, IDS.width, row); // Gray or color, 8 or 16 bits per sample.
 	}
 	free(ppm);
 }

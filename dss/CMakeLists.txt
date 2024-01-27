@@ -78,8 +78,8 @@ target_compile_options( DeepSkyStacker PRIVATE -fPIC)
 target_link_libraries( DeepSkyStacker
   dsscore
   zclass
-	libdelaunay
-	libtools
+	delaunay
+	dsstools
   Qt::Gui
   Qt::Widgets
   Qt::Core

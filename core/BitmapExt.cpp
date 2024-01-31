@@ -4,6 +4,7 @@
 
 #include <omp.h>
 
+#include "ConcurrentSet.h"
 #include "BitmapExt.h"
 #include "DSSProgress.h"
 #include "MemoryBitmap.h"
@@ -907,7 +908,7 @@ bool ApplyGammaTransformation(C32BitsBitmap* pOutBitmap, CMemoryBitmap* pInBitma
 /* ------------------------------------------------------------------- */
 /* ------------------------------------------------------------------- */
 
-namespace {
+//namespace {
 	//
 	// Fowler/Noll/Vo hash
 	// Do not copyright this code. This code is in the public domain.
@@ -925,27 +926,26 @@ namespace {
 		return digest;
 	}
 
-	template <class T> struct BitmapInfoHash;
-	template<>
-	struct BitmapInfoHash<CBitmapInfo>
+	struct BitmapInfoHash
 	{
-		size_t operator()(const CBitmapInfo& other) const
+		std::size_t operator()(const CBitmapInfo& other) const noexcept
 		{
-			const auto& str = QString::fromStdU16String(other.m_strFileName.generic_u16string().c_str());
-			const QByteArray data = str.toUtf8();
-			const void* pRawData = data.constData();
-			return fnv1a_hash(reinterpret_cast<const unsigned char*>(pRawData), data.length());
+			const char*						s;
+
+			s = other.m_strFileName.string().c_str();
+			return fnv1a_hash( reinterpret_cast<const unsigned char*> ( s ), strlen ( s ));
 		}
 	};
+
 
 	//typedef std::set<CBitmapInfo> InfoCache;
 	// We absolutely must use a thread-safe cache, otherwise GetPictureInfo() crashes if used concurrently (e.g. with OpenMP).
 
-	using InfoCache = concurrency::concurrent_unordered_set<CBitmapInfo, BitmapInfoHash<CBitmapInfo>>;
+	using InfoCache = concurrent_unordered_set<CBitmapInfo, BitmapInfoHash>;
 	InfoCache g_sBitmapInfoCache;
 	QDateTime g_BitmapInfoTime{ QDateTime::currentDateTime() };
 	std::shared_mutex bitmapInfoMutex;
-}
+//}
 
 namespace little_endian {
 	unsigned read_word(std::istream& ins)

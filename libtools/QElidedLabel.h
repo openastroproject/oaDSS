@@ -34,6 +34,9 @@
 **
 **
 ****************************************************************************/
+
+#include <QtWidgets>
+
 class QElidedLabel :
     public QFrame
 {

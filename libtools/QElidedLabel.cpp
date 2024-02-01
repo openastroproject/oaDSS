@@ -33,7 +33,9 @@
 **
 **
 ****************************************************************************/
+
 #include "dss_common.h"
+
 #include "QElidedLabel.h"
 
 QElidedLabel::QElidedLabel(const QString& text, QWidget* parent, Qt::WindowFlags f) :

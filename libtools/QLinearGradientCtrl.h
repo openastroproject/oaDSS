@@ -34,6 +34,9 @@
 **
 **
 ****************************************************************************/
+
+#include <QtWidgets>
+
 // QLinearGradientCtrl : header file
 //
 #define GCW_AUTO -1

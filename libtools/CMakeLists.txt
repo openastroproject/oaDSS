@@ -4,6 +4,8 @@ set( top ${CMAKE_SOURCE_DIR} )
 
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets )
 
+set(CMAKE_AUTOMOC ON)
+
 add_library( dsstools
 	imageview.cpp
 	QElidedLabel.cpp

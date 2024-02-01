@@ -5,7 +5,7 @@ set ( CMAKE_CXX_STANDARD 20 )
 set( top ${CMAKE_SOURCE_DIR} )
 set( cwd ${CMAKE_CURRENT_SOURCE_DIR} )
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui Charts Network)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${cwd}/ui)
 set(CMAKE_AUTOMOC ON)
@@ -26,19 +26,18 @@ add_executable ( DeepSkyStacker
 	BatchStacking.cpp
 	CheckAbove.cpp
 	CometStacking.cpp
-#	DeepSkyStacker.cpp					# Containts Qt6-specifics & Windows stuff
+#	DeepSkyStacker.cpp					# Contains Qt6-specifics & Windows stuff
 	DropFilesDlg.cpp
 	editstars.cpp
-#	ExplorerBar.cpp							# lots of Windows-specifics
+	ExplorerBar.cpp
 	ImageProperties.cpp
 #	ImageSinks.cpp							# relies on broken bits of libtools
 	IntermediateFiles.cpp
-#	LuminanceTab.cpp						# relies on broken bits of libtools
 	mrulist.cpp
 	OutputTab.cpp
 	picturelist.cpp
 	PostCalibration.cpp
-#	ProcessingDlg.cpp						# relies on broken bits of libtools
+	ProcessingDlg.cpp
 #	ProcessSettingsSheet.cpp		# Windows-specifics
 	progressdlg.cpp
 	RawDDPSettings.cpp
@@ -46,8 +45,6 @@ add_executable ( DeepSkyStacker
 	RegisterSettings.cpp
 	RenameGroup.cpp
 #	ResultParameters.cpp				# relies on broken bits of libtools
-#	RGBTab.cpp									# relies on broken bits of libtools
-#	SaturationTab.cpp						# relies on broken bits of libtools
 	SaveEditChanges.cpp
 #	SavePicture.cpp							# broken libtools and Windows stuff
 	selectrect.cpp
@@ -64,8 +61,10 @@ add_executable ( DeepSkyStacker
 target_include_directories ( DeepSkyStacker
 		PRIVATE
 		${top}/include
+		${Qt5Charts_INCLUDE_DIRS}
 		${Qt5Gui_INCLUDE_DIRS}
-		${Qt5Wisgets_INCLUDE_DIRS}
+		${Qt5Widgets_INCLUDE_DIRS}
+		${Qt5Network_INCLUDE_DIRS}
 		${Qt5Core_INCLUDE_DIRS}
 		${top}/libdelaunay
 		${top}/libtools
@@ -80,7 +79,9 @@ target_link_libraries( DeepSkyStacker
   zclass
 	delaunay
 	dsstools
+  Qt::Charts
   Qt::Gui
+  Qt::Network
   Qt::Widgets
   Qt::Core
 	gomp

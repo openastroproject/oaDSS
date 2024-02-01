@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QtCore>
+
 struct ExtraInfo
 {
 	enum ExtraInfoType {

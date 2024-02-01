@@ -1,8 +1,9 @@
 #include "dss_common.h"
-
 #include "ExplorerBar.h"
 #include "ui/ui_ExplorerBar.h"
+
 #include "DeepSkyStacker.h"
+#include "commonresource.h"
 #include "ProcessingDlg.h"
 #include "Workspace.h"
 #include "RegisterSettings.h"
@@ -138,6 +139,7 @@ void ExplorerBar::makeLinks()
 	QString redColour = QColorConstants::Red.name();
 	QString blueColour = QColorConstants::Blue.name();
 
+#if QT_VERSION >= 0x060500
 	//
 	// Dark colour scheme?
 	//
@@ -145,6 +147,7 @@ void ExplorerBar::makeLinks()
 	{
 		redColour = QColorConstants::Svg::gold.name();
 	}
+#endif
 
 	makeLink(ui->openLights, redColour);
 	makeLink(ui->openDarks, defColour);
@@ -260,19 +263,19 @@ void ExplorerBar::onBatchStacking()
 
 void ExplorerBar::onOpenPicture()
 {
-	dssApp->getProcessingDlg().OnLoaddsi();
+	dssApp->getProcessingDlg().loadImage();
 }
 void ExplorerBar::onCopyPicture()
 {
-	dssApp->getProcessingDlg().CopyPictureToClipboard();
+	dssApp->getProcessingDlg().copyToClipboard();
 }
 void ExplorerBar::onDoStarMask()
 {
-	dssApp->getProcessingDlg().CreateStarMask();
+	dssApp->getProcessingDlg().createStarMask();
 }
 void ExplorerBar::onSavePicture()
 {
-	dssApp->getProcessingDlg().SavePictureToFile();
+	dssApp->getProcessingDlg().saveImage();
 }
 
 /************************************************************************************/

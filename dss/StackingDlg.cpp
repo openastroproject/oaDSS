@@ -38,6 +38,8 @@
 
 #include "dss_common.h"
 
+#include <QNetworkReply>
+
 #include "StackingDlg.h"
 #include "ui_StackingDlg.h"
 #include "picturelist.h"
@@ -63,6 +65,7 @@
 #include "StackRecap.h"
 #include "ProcessingDlg.h"
 #include "ImageProperties.h"
+#include "commonresource.h"
 
 #define dssApp DeepSkyStacker::instance()
 
@@ -1487,7 +1490,7 @@ namespace DSS
 			// If the file has already been loaded complain
 			//
 			QString errorMessage{ tr("File %1 was not loaded because it was already loaded in group %2 (%3)")
-				.arg(file.generic_u8string().c_str())
+				.arg(file.c_str())
 				.arg(groupId)
 				.arg(frameList.groupName(groupId)) };
 			DSSBase::instance()->reportError(errorMessage, "Already loaded", DSSBase::Severity::Warning, DSSBase::Method::QErrorMessage);
@@ -2477,7 +2480,7 @@ namespace DSS
 					dlg.SetJointProgress(false);
 					dlg.Close();
 
-					dssApp->getProcessingDlg().LoadFile(strFileName.wstring().c_str());
+					dssApp->getProcessingDlg().loadFile(strFileName);
 
 					// Change tab to processing
 					dssApp->setTab(IDD_PROCESSING);
@@ -2504,7 +2507,7 @@ namespace DSS
 #if defined(_WINDOWS)
 				_wfopen(file.c_str(), L"rt")
 #else
-				std::fopen(file.c_ctr(), "rt")
+				std::fopen(file.c_str(), "rt")
 #endif
 				)
 			{

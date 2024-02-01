@@ -11,6 +11,10 @@ add_compile_options ( -Wno-deprecated-enum-enum-conversion )
 add_compile_options ( -march=haswell )
 add_compile_options ( -O2 )
 
+add_compile_definitions ( NDEBUG )
+
+set(CMAKE_AUTOMOC ON)
+
 add_library( dsscore
 	AHDDemosaicing.cpp
 	BackgroundCalibration.cpp
@@ -57,7 +61,6 @@ add_library( dsscore
 	StackedBitmap.cpp
 	StackingEngine.cpp
 	StackingTasks.cpp
-#	StackWalker.cpp							# Platform not supported!
 	StarMask.cpp
 	TaskInfo.cpp
 	TIFFUtil.cpp
@@ -80,6 +83,7 @@ target_include_directories ( dsscore
     ${top}/include
     ${top}/matrix
     ${top}/libzclass
+    ${top}/libstackwalk
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Core_INCLUDE_DIRS}

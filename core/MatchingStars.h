@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dss_common.h"
+
 #if !defined(NDEBUG)
 #include <boost/container/vector.hpp>
 namespace bc = boost::container;

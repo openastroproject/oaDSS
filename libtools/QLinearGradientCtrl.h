@@ -34,9 +34,6 @@
 **
 **
 ****************************************************************************/
-
-#include <QtWidgets>
-
 // QLinearGradientCtrl : header file
 //
 #define GCW_AUTO -1
@@ -137,6 +134,7 @@ public:
 	int		moveSelected(qreal newpos, bool bUpdate);
 	QColor	setSelectedPegColour(QColor newColour, bool bUpdate);
 	void	setColorAt(double pos, QColor colour);
+	int		setPeg(int index, qreal position);
 
 	// Internals
 protected:

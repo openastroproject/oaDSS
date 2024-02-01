@@ -45,6 +45,7 @@ add_executable ( DeepSkyStacker
 	RegisterSettings.cpp
 	RenameGroup.cpp
 #	ResultParameters.cpp				# relies on broken bits of libtools
+	RGBTab.cpp
 	SaveEditChanges.cpp
 #	SavePicture.cpp							# broken libtools and Windows stuff
 	selectrect.cpp

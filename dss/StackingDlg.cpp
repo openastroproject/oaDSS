@@ -523,7 +523,7 @@ namespace DSS
 
 	void StackingDlg::setSelectionRect(const QRectF& rect)
 	{
-		selectRect = DSSRect(rect.x(), rect.y(), rect.right(), rect.bottom());
+		selectionRect = DSSRect(rect.x(), rect.y(), rect.right(), rect.bottom());
 	}
 
 	bool StackingDlg::eventFilter(QObject* watched, QEvent* event)
@@ -1034,8 +1034,11 @@ namespace DSS
 		ZFUNCTRACE_RUNTIME();
 
 		ui->picture->setVisible(true);
-		editStarsPtr = new EditStars(ui->picture);
-		selectRectPtr = new SelectRect(ui->picture);
+		editStars = new EditStars(ui->picture);
+		selectRect = new SelectRect(ui->picture);
+
+		connect(selectRect, &SelectRect::selectRectChanged, this, &StackingDlg::setSelectionRect);
+
 		pToolBar = new ToolBar(this);
 		pToolBar->setObjectName(QString::fromUtf8("toolBar"));
 		pToolBar->setVisible(false);
@@ -1353,22 +1356,22 @@ namespace DSS
 
 				if (frameList.isLightFrame(fileToShow))
 				{
-					editStarsPtr->setLightFrame(fileName);
-					editStarsPtr->setBitmap(pBitmap);
+					editStars->setLightFrame(fileName);
+					editStars->setBitmap(pBitmap);
 					if (pToolBar->rectAction->isChecked())
 					{
-						editStarsPtr->rectButtonPressed();
-						selectRectPtr->rectButtonPressed();
+						editStars->rectButtonPressed();
+						selectRect->rectButtonPressed();
 					}
 					else if (pToolBar->starsAction->isChecked())
 					{
-						editStarsPtr->starsButtonPressed();
-						selectRectPtr->starsButtonPressed();
+						editStars->starsButtonPressed();
+						selectRect->starsButtonPressed();
 					}
 					else if (pToolBar->cometAction->isChecked())
 					{
-						editStarsPtr->cometButtonPressed();
-						selectRectPtr->cometButtonPressed();
+						editStars->cometButtonPressed();
+						selectRect->cometButtonPressed();
 					}
 
 					pToolBar->setVisible(true); pToolBar->setEnabled(true);
@@ -1376,14 +1379,14 @@ namespace DSS
 				else
 				{
 					pToolBar->setVisible(false); pToolBar->setEnabled(false);
-					editStarsPtr->setBitmap(nullptr);
+					editStars->setBitmap(nullptr);
 				};
 
 				CBilinearParameters		Transformation;
 				VOTINGPAIRVECTOR		vVotedPairs;
 
 				if (frameList.getTransformation(fileName, Transformation, vVotedPairs))
-					editStarsPtr->setTransformation(Transformation, vVotedPairs);
+					editStars->setTransformation(Transformation, vVotedPairs);
 				ui->information->setStyleSheet(
 					"QLabel { background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0,"
 					"stop:0 rgba(138, 185, 242, 0), stop:1 rgba(138, 185, 242, 255)) }");
@@ -1402,11 +1405,11 @@ namespace DSS
 				//
 				// No longer interested in signals from the imageView object
 				//
-				ui->picture->disconnect(editStarsPtr, nullptr);
-				ui->picture->disconnect(selectRectPtr, nullptr);
+				ui->picture->disconnect(editStars, nullptr);
+				ui->picture->disconnect(selectRect, nullptr);
 
 				pToolBar->setVisible(false); pToolBar->setEnabled(false);
-				editStarsPtr->setBitmap(nullptr);
+				editStars->setBitmap(nullptr);
 			}
 			else
 			{
@@ -1420,11 +1423,11 @@ namespace DSS
 				//
 				// No longer interested in signals from the imageView object
 				//
-				ui->picture->disconnect(editStarsPtr, nullptr);
-				ui->picture->disconnect(selectRectPtr, nullptr);
+				ui->picture->disconnect(editStars, nullptr);
+				ui->picture->disconnect(selectRect, nullptr);
 
 				pToolBar->setVisible(false); pToolBar->setEnabled(false);
-				editStarsPtr->setBitmap(nullptr);
+				editStars->setBitmap(nullptr);
 			}
 		}
 		catch (ZAccessError&)
@@ -1446,27 +1449,27 @@ namespace DSS
 
 	void StackingDlg::toolBar_rectButtonPressed([[maybe_unused]] bool checked)
 	{
-		editStarsPtr->rectButtonPressed();
-		selectRectPtr->rectButtonPressed();
+		editStars->rectButtonPressed();
+		selectRect->rectButtonPressed();
 	}
 
 	void StackingDlg::toolBar_starsButtonPressed([[maybe_unused]] bool checked)
 	{
 		checkAskRegister();
-		editStarsPtr->starsButtonPressed();
-		selectRectPtr->starsButtonPressed();
+		editStars->starsButtonPressed();
+		selectRect->starsButtonPressed();
 	}
 
 	void StackingDlg::toolBar_cometButtonPressed([[maybe_unused]] bool checked)
 	{
 		checkAskRegister();
-		editStarsPtr->cometButtonPressed();
-		selectRectPtr->cometButtonPressed();
+		editStars->cometButtonPressed();
+		selectRect->cometButtonPressed();
 	}
 
 	void StackingDlg::toolBar_saveButtonPressed([[maybe_unused]] bool checked)
 	{
-		editStarsPtr->saveRegisterSettings();
+		editStars->saveRegisterSettings();
 		pToolBar->setSaveEnabled(false);
 		// Update the list with the new info
 		frameList.updateItemScores(fileToShow);
@@ -1475,7 +1478,7 @@ namespace DSS
 	void StackingDlg::pictureChanged()
 	{
 		// Here check if the new image is dirty
-		//if (editStarsPtr->isDirty())
+		//if (editStars->isDirty())
 		pToolBar->setSaveEnabled(true);
 	}
 
@@ -1671,7 +1674,7 @@ namespace DSS
 	{
 		bool result = false;
 
-		if (editStarsPtr->isDirty())
+		if (editStars->isDirty())
 		{
 			auto dlgResult { askToSaveEditChangeMode() };
 
@@ -1681,7 +1684,7 @@ namespace DSS
 				// Save the changes as Save was pressed or defaulted
 				//
 				result = true;
-				editStarsPtr->saveRegisterSettings();
+				editStars->saveRegisterSettings();
 				pToolBar->setSaveEnabled(false);
 				// Update the list with the new info
 				frameList.updateItemScores(fileToShow);
@@ -1719,9 +1722,9 @@ namespace DSS
 		};
 
 		if (vBitmaps.size())
-			editStarsPtr->setRefStars(vBitmaps[0].m_vStars);
+			editStars->setRefStars(vBitmaps[0].m_vStars);
 		else
-			editStarsPtr->clearRefStars();
+			editStars->clearRefStars();
 	};
 
 	/* ------------------------------------------------------------------- */
@@ -1773,8 +1776,8 @@ namespace DSS
 			// Select the main group tab which will in turn select group 0
 			pictureList->tabBar->setCurrentIndex(0);
 			frameList.clear();
-			selectRectPtr->reset();
-			editStarsPtr->setBitmap(nullptr);
+			selectRect->reset();
+			editStars->setBitmap(nullptr);
 			fileToShow.clear();
 			ui->information->setText("");
 			imageLoader.clearCache();
@@ -2086,8 +2089,8 @@ namespace DSS
 
 			frameList.fillTasks(tasks);
 			tasks.ResolveTasks();
-			if (!selectRect.isEmpty())
-				tasks.setCustomRectangle(selectRect);
+			if (!selectionRect.isEmpty())
+				tasks.setCustomRectangle(selectionRect);
 
 			dlgSettings.setStackingTasks(&tasks);
 
@@ -2132,7 +2135,7 @@ namespace DSS
 							&& frameList.isChecked(fileToShow))
 						{
 							// Update the registering info
-							editStarsPtr->setLightFrame(QString::fromStdU16String(fileToShow.generic_u16string()));
+							editStars->setLightFrame(QString::fromStdU16String(fileToShow.generic_u16string()));
 							ui->picture->update();
 						};
 
@@ -2179,8 +2182,8 @@ namespace DSS
 
 			frameList.fillTasks(tasks);
 			tasks.ResolveTasks();
-			if (!selectRect.isEmpty())
-				tasks.setCustomRectangle(selectRect);
+			if (!selectionRect.isEmpty())
+				tasks.setCustomRectangle(selectionRect);
 
 			if (checkReadOnlyFolders(tasks))
 			{

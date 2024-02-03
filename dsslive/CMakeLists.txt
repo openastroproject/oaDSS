@@ -19,7 +19,7 @@ add_compile_options ( -O2 )
 
 add_executable ( dsslive
 	ChartTab.cpp
-#	DeepSkyStackerLive.cpp	# May require Qt6
+	DeepSkyStackerLive.cpp
 #	EmailSettings.cpp				# SMTP- and Windows-specific
 	fileregistrar.cpp
 	filestacker.cpp
@@ -46,8 +46,6 @@ target_include_directories ( dsslive
 )
 
 target_compile_options( dsslive PRIVATE -fPIC)
-
-#set_property(TARGET dsslive PROPERTY AUTOGEN_BUILD_DIR ${cwd}/ui)
 
 target_link_libraries( dsslive
 	dsscore

@@ -41,10 +41,10 @@ add_executable ( DeepSkyStacker
 #	ProcessSettingsSheet.cpp		# Windows-specifics
 	progressdlg.cpp
 	RawDDPSettings.cpp
-#	RecommendedSettings.cpp			# Qt6-specifics
+	RecommendedSettings.cpp
 	RegisterSettings.cpp
 	RenameGroup.cpp
-#	ResultParameters.cpp				# relies on broken bits of libtools
+	ResultParameters.cpp
 	RGBTab.cpp
 	SaveEditChanges.cpp
 #	SavePicture.cpp							# broken libtools and Windows stuff

@@ -58,11 +58,6 @@ namespace DSS
 	class ToolBar;
 }
 
-namespace Ui
-{
-	class StackingDlg;
-}
-
 class QErrorMessage;
 class QTextOption;
 class QSortFilterProxyModel;
@@ -71,6 +66,11 @@ class Workspace;
 
 namespace DSS
 {
+	namespace Ui
+	{
+		class StackingDlg;
+	}
+
 	class IconSizeDelegate : public QStyledItemDelegate
 	{
 		Q_OBJECT

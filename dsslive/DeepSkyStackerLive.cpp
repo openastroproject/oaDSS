@@ -40,6 +40,7 @@
 
 #include "QtCore"
 
+#include <exiv2/exiv2.hpp>
 #ifdef WINDOWS
 #include <htmlhelp.h>
 #endif
@@ -1434,7 +1435,7 @@ void DSSLive::handleWarning(QString warning)
 				if (is_directory(path))
 				{
 					path /= "DSSLiveWarning.txt";
-					QFile file(path);
+					QFile file(path.c_str());
 					if (file.open(QFile::WriteOnly | QFile::Append))
 					{
 						QTextStream stream{ &file };
@@ -1633,17 +1634,21 @@ int main(int argc, char* argv[])
 	DeepSkyStackerLive mainWindow;
 	DSSBase::setInstance(&mainWindow);
 
+#if 0
 	//
 	// Register QMessageBox::Icon enum as meta type
 	//
 	qRegisterMetaType<STACKIMAGEINFO>();
 	qRegisterMetaType<QMessageBox::Icon>();
+#endif
 
+#if QT_VERSION >= 0x00060000
 	//
 	// Increase maximum size of QImage from the default of 128MB to 1GB
 	//
 	constexpr int oneGB{ 1024 * 1024 * 1024 };
 	QImageReader::setAllocationLimit(oneGB);
+#endif
 
 	ZTRACE_RUNTIME("Invoking QApplication::exec()");
 	try

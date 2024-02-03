@@ -1055,7 +1055,7 @@ namespace DSS
 		//
 		// If the model data changes let me know
 		//
-		connect(frameList.currentTableModel(), &ImageListModel::dataChanged, this, &StackingDlg::tableViewModel_dataChanged);
+		connect(frameList.currentTableModel(), SIGNAL ( ImageListModel::dataChanged ( QModelIndex&, QModelIndex&  )), this, SLOT( StackingDlg::tableViewModel_dataChanged ( QModelIndex&, QModelIndex& )));
 		
 		//
 		// Set up a QSortFilterProxyModel to allow sorting of the table view
@@ -2176,7 +2176,6 @@ namespace DSS
 		{
 			bool				bContinue;
 			CAllStackingTasks	tasks;
-			CRect				rcSelect;
 
 			emit statusMessage("");
 
@@ -2730,7 +2729,7 @@ namespace DSS
 	{
 		frameList.setGroup(index);
 		auto model{ frameList.currentTableModel() };
-		connect(frameList.currentTableModel(), &ImageListModel::dataChanged, this, &StackingDlg::tableViewModel_dataChanged);
+		connect(frameList.currentTableModel(), SIGNAL( ImageListModel::dataChanged ( QModelIndex&, QModelIndex& )), this, SLOT( StackingDlg::tableViewModel_dataChanged ( QModelIndex&, QModelIndex& )));
 		proxyModel->setSourceModel(model);
 	}
 

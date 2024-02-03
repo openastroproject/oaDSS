@@ -51,7 +51,7 @@ add_executable ( DeepSkyStacker
 	selectrect.cpp
 #	SettingsDlg.cpp							# Windows-specifics
 #	SetUILanguage.cpp						# Windows-specifics
-#	StackingDlg.cpp							# relies on broken bits of libtools
+	StackingDlg.cpp
 	StackingParameters.cpp
 	StackRecap.cpp
 	StackSettings.cpp

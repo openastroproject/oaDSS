@@ -4,7 +4,6 @@
 #include <omp.h>
 
 #include "DarkFrame.h"
-#include "Ztrace.h"
 #include "DSSProgress.h"
 #include "MemoryBitmap.h"
 #include "Filters.h"
@@ -1070,7 +1069,7 @@ double CDarkAmpGlowParameters::computeMedianValueInRect(CMemoryBitmap* pBitmap, 
 {
 	ZFUNCTRACE_RUNTIME();
 	double				fResult = 0;
-	CRGBHistogram		RGBHistogram;
+	RGBHistogram		RGBHistogram;
 	bool				bMonochrome = pBitmap->IsMonochrome();
 	bool				bCFA = pBitmap->IsCFA();
 
@@ -1585,7 +1584,7 @@ void CDarkFrame::FindBadVerticalLines(ProgressBase*)
 class CFindHotPixelTask1
 {
 public:
-	CRGBHistogram m_RGBHistogram;
+	RGBHistogram m_RGBHistogram;
 	std::shared_ptr<CMemoryBitmap> m_pBitmap;
 	ProgressBase* m_pProgress;
 
@@ -1605,7 +1604,7 @@ public:
 template <class T> struct threadLocals {
 	const T* bitmap;
 	BitmapIteratorConst<const CMemoryBitmap*> PixelIt;
-	CRGBHistogram RGBHistogram;
+	DSS::RGBHistogram RGBHistogram;
 
 	explicit threadLocals(const T* bm) : bitmap{ bm }, PixelIt{ bm }
 	{
@@ -1702,7 +1701,7 @@ void CDarkFrame::FindHotPixels(ProgressBase* pProgress)
 	m_vHotPixels.clear();
 	if (static_cast<bool>(m_pMasterDark))
 	{
-		CRGBHistogram RGBHistogram;
+		RGBHistogram RGBHistogram;
 		const bool bMonochrome = m_pMasterDark->IsMonochrome();
 
 		if (pProgress)
@@ -1917,7 +1916,7 @@ bool CDarkFrame::Subtract(std::shared_ptr<CMemoryBitmap> pTarget, ProgressBase* 
 			::Subtract(pTarget, m_pAmpGlow, pProgress, fAmpGlow, fAmpGlow, fAmpGlow);
 			::Subtract(pTarget, m_pDarkCurrent, pProgress, fHotDark, fHotDark, fHotDark);
 		}
-		else
+		else if (m_fDarkFactor != 1.0)
 		{
 			if (pProgress != nullptr)
 			{
@@ -1925,6 +1924,15 @@ bool CDarkFrame::Subtract(std::shared_ptr<CMemoryBitmap> pTarget, ProgressBase* 
 				pProgress->Start2(strText, 0);
 			}
 			::Subtract(pTarget, m_pMasterDark, pProgress, m_fDarkFactor, m_fDarkFactor, m_fDarkFactor);
+		}
+		else
+		{
+			if (pProgress != nullptr)
+			{
+				const QString strText(QCoreApplication::translate("DarkFrame", "Subtracting Dark Frame", "IDS_SUBSTRACTINGDARK"));
+				pProgress->Start2(strText, 0);
+			}
+			::Subtract(pTarget, m_pMasterDark, pProgress);
 		}
 	}
 

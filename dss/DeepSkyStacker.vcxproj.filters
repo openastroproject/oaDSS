@@ -123,9 +123,6 @@
     <ClCompile Include="..\Tools\GradientCtrlImpl.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\Tools\Label.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\Tools\ToolTipButton.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -218,6 +215,12 @@
     </ClCompile>
     <ClCompile Include="About.cpp">
       <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessingSettings.cpp">
+      <Filter>Dialogs\Processing</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessingSettingsDlg.cpp">
+      <Filter>Dialogs\Processing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,9 +343,6 @@
     <ClInclude Include="..\Tools\GradientCtrlImpl.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\Tools\Label.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\Tools\ToolTipButton.h">
       <Filter>Tools</Filter>
     </ClInclude>
@@ -375,6 +375,15 @@
     </ClInclude>
     <ClInclude Include="dslr.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessingSettings.h">
+      <Filter>Dialogs\Processing</Filter>
+    </ClInclude>
+    <ClInclude Include="Histogram.h">
+      <Filter>Dialogs\Processing</Filter>
+    </ClInclude>
+    <ClInclude Include="BezierAdjust.h">
+      <Filter>Dialogs\Processing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -819,6 +828,9 @@
     <QtUic Include="ui\ProcessingDlg.ui">
       <Filter>Qt\ui</Filter>
     </QtUic>
+    <QtUic Include="ui\ProcessingSettingsDlg.ui">
+      <Filter>Qt\ui</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="qwinwidget.h">
@@ -925,6 +937,9 @@
     </QtMoc>
     <QtMoc Include="About.h">
       <Filter>Dialogs</Filter>
+    </QtMoc>
+    <QtMoc Include="ProcessingSettingsDlg.h">
+      <Filter>Dialogs\Processing</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

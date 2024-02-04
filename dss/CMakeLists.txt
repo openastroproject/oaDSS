@@ -38,7 +38,8 @@ add_executable ( DeepSkyStacker
 	picturelist.cpp
 	PostCalibration.cpp
 	ProcessingDlg.cpp
-#	ProcessSettingsSheet.cpp		# Windows-specifics
+	ProcessingSettings.cpp
+	ProcessingSettingsDlg.cpp
 	progressdlg.cpp
 	RawDDPSettings.cpp
 	RecommendedSettings.cpp
@@ -49,7 +50,6 @@ add_executable ( DeepSkyStacker
 	SaveEditChanges.cpp
 #	SavePicture.cpp							# broken libtools and Windows stuff
 	selectrect.cpp
-#	SettingsDlg.cpp							# Windows-specifics
 #	SetUILanguage.cpp						# Windows-specifics
 	StackingDlg.cpp
 	StackingParameters.cpp

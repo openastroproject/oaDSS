@@ -33,7 +33,6 @@ add_library( dsscore
 	DeBloom.cpp
 	DeepStack.cpp
 	DSSProgress.cpp
-	dss_settings.cpp
 	EntropyInfo.cpp
 	ExceptionHandling.cpp
 	Filters.cpp

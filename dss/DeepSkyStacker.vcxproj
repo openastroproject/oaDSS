@@ -252,10 +252,6 @@ $(QtToolsPath)\windeployqt --pdb $(TargetPath)</Command>
     <ClCompile Include="..\Tools\GradientCtrl.cpp" />
     <ClCompile Include="..\Tools\GradientCtrlImpl.cpp" />
     <ClCompile Include="..\Tools\imageview.cpp" />
-    <ClCompile Include="..\Tools\Label.cpp">
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Level3</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Level3</WarningLevel>
-    </ClCompile>
     <ClCompile Include="..\Tools\QElidedLabel.cpp" />
     <ClCompile Include="..\Tools\QLinearGradientCtrl.cpp" />
     <ClCompile Include="..\Tools\ToolTipButton.cpp" />
@@ -343,7 +339,6 @@ $(QtToolsPath)\windeployqt --pdb $(TargetPath)</Command>
     <ClCompile Include="SaveEditChanges.cpp" />
     <ClCompile Include="SavePicture.cpp" />
     <ClCompile Include="selectrect.cpp" />
-    <ClCompile Include="SettingsDlg.cpp" />
     <ClCompile Include="SetUILanguage.cpp" />
     <ClCompile Include="StackingDlg.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -397,7 +392,6 @@ $(QtToolsPath)\windeployqt --pdb $(TargetPath)</Command>
     <ClInclude Include="..\Tools\gradientctrl.h" />
     <ClInclude Include="..\Tools\GradientCtrlImpl.h" />
     <QtMoc Include="..\Tools\imageview.h" />
-    <ClInclude Include="..\Tools\Label.h" />
     <QtMoc Include="..\Tools\QLinearGradientCtrl.h" />
     <QtMoc Include="..\Tools\QElidedLabel.h" />
     <ClInclude Include="..\Tools\ToolTipButton.h" />
@@ -410,6 +404,7 @@ $(QtToolsPath)\windeployqt --pdb $(TargetPath)</Command>
     <QtMoc Include="BaseDialog.h" />
     <QtMoc Include="CometStacking.h" />
     <QtMoc Include="CheckAbove.h" />
+    <ClInclude Include="BezierAdjust.h" />
     <ClInclude Include="commonresource.h" />
     <QtMoc Include="DeepSkyStacker.h" />
     <ClInclude Include="Delaunay.h" />
@@ -450,7 +445,6 @@ $(QtToolsPath)\windeployqt --pdb $(TargetPath)</Command>
     <QtMoc Include="SaveEditChanges.h" />
     <ClInclude Include="SavePicture.h" />
     <QtMoc Include="selectrect.h" />
-    <ClInclude Include="SettingsDlg.h" />
     <ClInclude Include="SetUILanguage.h" />
     <QtMoc Include="StackingDlg.h" />
     <QtMoc Include="StackingParameters.h" />
@@ -615,6 +609,7 @@ $(QtToolsPath)\windeployqt --pdb $(TargetPath)</Command>
     <QtUic Include="ui\PictureList.ui" />
     <QtUic Include="ui\PostCalibration.ui" />
     <QtUic Include="ui\ProcessingDlg.ui" />
+    <QtUic Include="ui\ProcessingSettingsDlg.ui" />
     <QtUic Include="ui\ProgressDlg.ui" />
     <QtUic Include="ui\RawDDPSettings.ui" />
     <QtUic Include="ui\RecommendedSettings.ui" />

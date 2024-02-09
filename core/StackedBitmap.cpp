@@ -1,5 +1,7 @@
 #include "dss_common.h"
 
+#include "dsscompat.h"
+
 #include <omp.h>
 #include <tiffio.h>
 

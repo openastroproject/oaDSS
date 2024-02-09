@@ -1,4 +1,5 @@
 #include "dss_common.h"
+#include "dsscompat.h"
 
 #include <shared_mutex>
 

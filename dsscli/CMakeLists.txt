@@ -25,6 +25,7 @@ target_include_directories ( dsscli
 		${top}/Tools
 		${top}/libzclass
 		${top}/core
+		${top}/libdsscompat
 )
 
 target_compile_options( dsscli PRIVATE -fPIC)

@@ -74,16 +74,11 @@ typedef void*						HWND;
 typedef void*						HDC;
 typedef void*						HGLOBAL;
 
-typedef uint64_t				COLORREF;
 typedef void*						HBITMAP;
 typedef RECT*						LPRECT;
 typedef RECT						tagRECT;
 typedef RGBQUAD*				LPRGBQUAD;
 
-extern COLORREF					RGB ( double, double, double );
-extern uint8_t					GetRValue ( const COLORREF );
-extern uint8_t					GetBValue ( const COLORREF );
-extern uint8_t					GetGValue ( const COLORREF );
 extern uint8_t					GetObject ( HBITMAP, size_t, BITMAP* );
 extern HBITMAP					SelectObject ( void*, HBITMAP );
 extern void							DeleteObject ( HBITMAP );

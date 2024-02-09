@@ -34,9 +34,9 @@
 **
 ****************************************************************************/
 #include "dss_common.h"
+#include "dsscompat.h"
 
 #include "imageview.h"
-#include "Ztrace.h"
 
 namespace DSS
 {

@@ -71,6 +71,7 @@ target_include_directories ( DeepSkyStacker
 		${top}/libdelaunay
 		${top}/libtools
 		${top}/libzclass
+		${top}/libdsscompat
 		${top}/core
 )
 

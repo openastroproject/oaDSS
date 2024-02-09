@@ -1,4 +1,7 @@
 #pragma once
+
+#include "dsscompat.h"
+
 #include "StackedBitmap.h"
 #include "BitmapExt.h"
 

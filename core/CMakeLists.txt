@@ -83,6 +83,7 @@ target_include_directories ( dsscore
     ${top}/matrix
     ${top}/libzclass
     ${top}/libstackwalk
+    ${top}/libdsscompat
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Core_INCLUDE_DIRS}

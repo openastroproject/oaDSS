@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dsscompat.h"
+
 #include "BitmapConstants.h"
 #include "DSSCommon.h"
 #include "BitmapExtraInfo.h"

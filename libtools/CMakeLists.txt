@@ -33,6 +33,7 @@ target_include_directories ( dsstools
     PRIVATE
 		${top}/include
 		${top}/libzclass
+		${top}/libdsscompat
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}

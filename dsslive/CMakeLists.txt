@@ -41,6 +41,7 @@ target_include_directories ( dsslive
 		${Qt5Charts_INCLUDE_DIRS}
 		${top}/libtools
 		${top}/libzclass
+		${top}/libdsscompat
 		${top}/core
 		${cwd}
 )

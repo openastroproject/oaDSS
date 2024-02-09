@@ -44,8 +44,11 @@
 #include <boost/interprocess/sync/file_lock.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
 #include <boost/interprocess/exceptions.hpp>
+#include <exiv2/exiv2.hpp>
 
 #include <fstream>
+#include <source_location>
+#include <memory.h>
 
 namespace bip = boost::interprocess;
 
@@ -66,8 +69,8 @@ namespace bip = boost::interprocess;
 #include "QEventLogger.h"
 
 
-CString OUTPUTFILE_FILTERS;
-CString STARMASKFILE_FILTERS;
+QString OUTPUTFILE_FILTERS;
+QString STARMASKFILE_FILTERS;
 bool	g_bShowRefStars = false;
 
 //
@@ -82,7 +85,7 @@ namespace
 	{
 		QByteArray localMsg = msg.toLocal8Bit();
 		const char* file = context.file ? context.file : "";
-		char* name{ static_cast<char*>(_alloca(1 + strlen(file))) };
+		char* name{ static_cast<char*>(alloca(1 + strlen(file))) };
 		strcpy(name, file);
 		if (0 != strlen(name))
 		{
@@ -399,7 +402,11 @@ void DeepSkyStacker::onInitialise()
 
 void DeepSkyStacker::createStatusBar()
 {
+#if QT_VERSION >= 0x00060500
 	QColor	linkColour{ (Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme()) ? Qt::cyan : Qt::darkBlue };
+#else
+	QColor	linkColour{ Qt::darkBlue };
+#endif
 
 	QString text{ QString("<img border=\"0\" src=\":/Heart.png\" width=\"16\" height=\"16\" >&nbsp;"
 		"<a style=\"font-size:16px; color:%1;\" href=\"https://github.com/sponsors/deepskystacker\""
@@ -543,9 +550,11 @@ void DeepSkyStacker::closeEvent(QCloseEvent* e)
 };
 
 
+#ifdef GDIPLUS
 GdiplusStartupOutput gdiSO;
 ULONG_PTR gdiplusToken{ 0ULL };
 ULONG_PTR gdiHookToken{ 0ULL };
+#endif
 
 void DeepSkyStacker::disableSubDialogs()
 {
@@ -637,7 +646,9 @@ void DeepSkyStacker::help()
 	ZFUNCTRACE_RUNTIME();
 	QString helpFile{ QCoreApplication::applicationDirPath() + "/" + tr("DeepSkyStacker Help.chm","IDS_HELPFILE") };
 
+#ifdef _WINDOWS
 	::HtmlHelp(::GetDesktopWindow(), helpFile.toStdWString().c_str(), HH_DISPLAY_TOPIC, 0);
+#endif
 }
 
 /* ------------------------------------------------------------------- */
@@ -691,6 +702,7 @@ void DeepSkyStacker::updateStatus(const QString& text)
 BOOL DeepSkyStackerApp::InitInstance()
 {
 	ZFUNCTRACE_RUNTIME();
+#ifdef _WINDOWS
 	CWinApp::InitInstance();
 
 	EnableHtmlHelp();
@@ -704,9 +716,10 @@ BOOL DeepSkyStackerApp::InitInstance()
 	// First free the string allocated by MFC at CWinApp startup.
 	// The string is allocated before InitInstance is called.
 	free((void*)m_pszProfileName);
+
 	// Change the name of the registry profile to use.
 	// The CWinApp destructor will free the memory.
-	m_pszProfileName = _tcsdup(_T("DeepSkyStacker5"));
+	m_pszProfileName = strdup("DeepSkyStacker5");
 
 	//ZTRACE_RUNTIME("AfxInitialize()");
 	//if (!AfxInitialize())
@@ -740,19 +753,21 @@ BOOL DeepSkyStackerApp::InitInstance()
 	ZTRACE_RUNTIME("Initialize GDI+ - ok");
 
 	AfxInitRichEdit2();
+#endif
 
+	OUTPUTFILE_FILTERS = QCoreApplication::translate("DeepSkyStacker","TIFF Image (16 bit/ch)|*.TIF|TIFF Image (32 bit/ch - integer)|*.TIF|TIFF Image (32 bit/ch - rational)|*.TIF|FITS Image (16 bit/ch)|*.FTS|FITS Image (32 bit/ch - integer)|*.FTS|FITS Image (32 bit/ch -rational)|*.FTS||","IDS_FILTER_OUTPUT");
+	STARMASKFILE_FILTERS = QCoreApplication::translate("DeepSkyStacker","TIFF Image|*.tif;*.tiff|FITS Image|*.fits;*.fts;*.fit||","IDS_FILTER_MASK");
 
-	OUTPUTFILE_FILTERS.LoadString(IDS_FILTER_OUTPUT);
-	STARMASKFILE_FILTERS.LoadString(IDS_FILTER_MASK);
-
-	return TRUE;
+	return true;
 };
 
 int DeepSkyStackerApp::ExitInstance()
 {
 	ZFUNCTRACE_RUNTIME();
 
+#ifdef _WINDOWS
 	AfxOleTerm(FALSE);
+#endif
 
 #ifndef NOGDIPLUS
 	// Shutdown GDI+
@@ -761,7 +776,11 @@ int DeepSkyStackerApp::ExitInstance()
 	GdiplusShutdown(gdiplusToken);
 #endif
 
+#ifdef _WINDOWS
 	return CWinApp::ExitInstance();
+#else
+	return 0;
+#endif
 }
 
 // The DeepSkyStacker class, a subclass of CWinApp, runs the event loop in the default implementation of Run().
@@ -996,7 +1015,11 @@ bool LoadTranslations()
 	// Try to load each language file - allow failures though (due to issue with ro and reloading en translations)
 	QSettings settings;
 	const QString language = settings.value("Language").toString();
+#if QT_VERSION >= 0x00060000
 	LoadTranslationUnit(*qApp, theQtTranslator, "qt_", QLibraryInfo::path(QLibraryInfo::TranslationsPath), language);
+#else
+	LoadTranslationUnit(*qApp, theQtTranslator, "qt_", QLibraryInfo::location(QLibraryInfo::TranslationsPath), language);
+#endif
 	LoadTranslationUnit(*qApp, theAppTranslator, "DSS_", ":/i18n/", language);
 	LoadTranslationUnit(*qApp, theKernelTranslator, "DSSKernel_", ":/i18n/", language);
 	
@@ -1063,8 +1086,9 @@ int main(int argc, char* argv[])
 	QApplication app(argc, argv);
 
 	if (hasExpired())
-		return FALSE;
+		return false;
 
+#ifdef _WINDOWS
 	ZTRACE_RUNTIME("Initialize MFC");
 	// initialize MFC and print and error on failure
 	if (!AfxWinInit(::GetModuleHandle(nullptr), nullptr, ::GetCommandLine(), 0))
@@ -1075,6 +1099,7 @@ int main(int argc, char* argv[])
 		QMessageBox::critical(nullptr, "DeepSkyStacker", errorMessage);
 		return 1;
 	}
+#endif
 	// initialize all the windows stuff we need for now
 	theApp.InitInstance();
 
@@ -1116,14 +1141,14 @@ int main(int argc, char* argv[])
 	//
 	// Register PICTURETYPE and QMessageBox::Icon enums as meta types
 	//
-	qRegisterMetaType<PICTURETYPE>();
-	qRegisterMetaType<QMessageBox::Icon>();
+	//qRegisterMetaType<PICTURETYPE>();
+	//qRegisterMetaType<QMessageBox::Icon>();
 
 	//
 	// Increase maximum size of QImage from the default of 128MB to 1GB
 	//
 	constexpr int oneGB{ 1024 * 1024 * 1024 };
-	QImageReader::setAllocationLimit(oneGB);
+	//QImageReader::setAllocationLimit(oneGB);
 
 	ZTRACE_RUNTIME("Invoking QApplication::exec()");
 	try
@@ -1202,6 +1227,7 @@ int main(int argc, char* argv[])
 		QMessageBox::critical(nullptr, "DeepSkyStacker", errorMessage);
 #endif
 	}
+#ifdef _WINDOWS
 	catch (CException& e)
 	{
 		traceControl.setDeleteOnExit(false);
@@ -1213,6 +1239,7 @@ int main(int argc, char* argv[])
 		e.ReportError();
 		e.Delete();
 	}
+#endif
 	catch (ZException& ze)
 	{
 		traceControl.setDeleteOnExit(false);
@@ -1263,6 +1290,7 @@ int main(int argc, char* argv[])
 
 /* ------------------------------------------------------------------- */
 
+#ifdef _WINDOWS
 void	SaveWindowPosition(CWnd* pWnd, LPCSTR szRegistryPath)
 {
 	ZFUNCTRACE_RUNTIME();
@@ -1303,7 +1331,6 @@ void	SaveWindowPosition(CWnd* pWnd, LPCSTR szRegistryPath)
 
 	key = regBase + "/Height";
 	settings.setValue(key, (uint)dwHeight);
-
 };
 
 /* ------------------------------------------------------------------- */
@@ -1355,3 +1382,4 @@ void	RestoreWindowPosition(CWnd* pWnd, LPCSTR szRegistryPath, bool bCenter)
 			pWnd->CenterWindow();
 	};
 };
+#endif

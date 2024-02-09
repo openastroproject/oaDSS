@@ -142,9 +142,10 @@ public :
 
 };
 
+#ifdef _WINDOWS
 //
 // Temporarily left here while still have to position MFC windows
 //
 void	SaveWindowPosition(CWnd* pWnd, LPCSTR szRegistryPath);
 void	RestoreWindowPosition(CWnd* pWnd, LPCSTR szRegistryPath, bool bCenter = false);
-
+#endif

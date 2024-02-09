@@ -26,7 +26,7 @@ add_executable ( DeepSkyStacker
 	BatchStacking.cpp
 	CheckAbove.cpp
 	CometStacking.cpp
-#	DeepSkyStacker.cpp					# Contains Qt6-specifics & Windows stuff
+	DeepSkyStacker.cpp
 	DropFilesDlg.cpp
 	editstars.cpp
 	ExplorerBar.cpp

@@ -50,7 +50,6 @@ add_executable ( DeepSkyStacker
 	SaveEditChanges.cpp
 #	SavePicture.cpp							# broken libtools and Windows stuff
 	selectrect.cpp
-#	SetUILanguage.cpp						# Windows-specifics
 	StackingDlg.cpp
 	StackingParameters.cpp
 	StackRecap.cpp

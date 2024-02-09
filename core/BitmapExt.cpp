@@ -28,6 +28,7 @@ const QStringList rawFileExtensions{ "cr2", "cr3", "crw", "nef", "mrw", "orf", "
 
 /* ------------------------------------------------------------------- */
 
+#if 0
 void CopyBitmapToClipboard(HBITMAP hBitmap)
 {
 	ZFUNCTRACE_RUNTIME();
@@ -71,6 +72,7 @@ void CopyBitmapToClipboard(HBITMAP hBitmap)
 		CloseClipboard();
 	};
 };
+#endif
 
 namespace
 {
@@ -504,6 +506,7 @@ bool LoadOtherPicture(const fs::path& file, std::shared_ptr<CMemoryBitmap>& rpBi
 	return result;
 }
 
+#if 0
 bool C32BitsBitmap::CopyToClipboard()
 {
 	ZFUNCTRACE_RUNTIME();
@@ -557,6 +560,7 @@ bool C32BitsBitmap::CopyToClipboard()
 
 	return bResult;
 };
+#endif
 
 /* ------------------------------------------------------------------- */
 

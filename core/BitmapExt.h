@@ -59,7 +59,9 @@ public:
 	HBITMAP GetHBITMAP() { return m_hBitmap; }
 	HBITMAP	Create(int lWidth, int lHeight);
 	bool InitFrom(CMemoryBitmap* pBitmap);
+#if 0
 	bool CopyToClipboard();
+#endif
 	bool IsEmpty() { return (m_hBitmap == nullptr); }
 	void Free();
 	HBITMAP Detach();

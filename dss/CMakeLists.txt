@@ -17,6 +17,8 @@ add_compile_options ( -Wno-ignored-attributes )
 add_compile_options ( -march=haswell )
 add_compile_options ( -O2 )
 
+add_compile_definitions ( NOGDIPLUS )
+
 add_executable ( DeepSkyStacker
 	About.cpp
 	AlignmentParameters.cpp

@@ -5,7 +5,14 @@ set ( CMAKE_CXX_STANDARD 20 )
 set( top ${CMAKE_SOURCE_DIR} )
 set( cwd ${CMAKE_CURRENT_SOURCE_DIR} )
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui Charts Network)
+find_package(Qt5 REQUIRED COMPONENTS
+		Core
+		Widgets
+		Gui
+		Charts
+		Network
+		LinguistTools
+)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${cwd}/ui)
 set(CMAKE_AUTOMOC ON)
@@ -18,6 +25,12 @@ add_compile_options ( -march=haswell )
 add_compile_options ( -O2 )
 
 add_compile_definitions ( NOGDIPLUS )
+
+file(GLOB TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.ts)
+
+configure_file( i18n/translations.qrc translations.qrc COPYONLY)
+qt5_add_translation(QM_FILES ${TS_FILES})
+qt5_add_resources(I18N_QRCFILE ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 
 add_executable ( DeepSkyStacker
 	About.cpp
@@ -58,6 +71,8 @@ add_executable ( DeepSkyStacker
 	StackSettings.cpp
 #	StarMaskDlg.cpp							# relies on broken bits of libtools
 	toolbar.cpp
+	${I18N_QRCFILE}
+	resources.qrc
 )
 
 target_include_directories ( DeepSkyStacker

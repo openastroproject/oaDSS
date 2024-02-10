@@ -37,7 +37,7 @@
 //
 #include "dss_common.h"
 
-#ifdef WINDOWS
+#ifdef _WINDOWS
 #include <htmlhelp.h>
 #endif
 

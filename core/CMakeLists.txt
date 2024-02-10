@@ -4,7 +4,7 @@ set ( CMAKE_CXX_STANDARD 20 )
 
 set ( top ${CMAKE_SOURCE_DIR} )
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui LinguistTools)
 
 add_compile_options ( -Wno-ignored-attributes )
 add_compile_options ( -Wno-deprecated-enum-enum-conversion )
@@ -14,6 +14,13 @@ add_compile_options ( -O2 )
 add_compile_definitions ( NDEBUG )
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+file(GLOB TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.ts)
+
+configure_file( i18n/translations_kernel.qrc translations_kernel.qrc COPYONLY)
+qt5_add_translation(QM_FILES ${TS_FILES})
+qt5_add_resources(I18N_QRCFILE ${CMAKE_CURRENT_BINARY_DIR}/translations_kernel.qrc)
 
 add_library( dsscore
 	AHDDemosaicing.cpp
@@ -75,6 +82,7 @@ add_library( dsscore
 	avx_luminance.cpp
 	avx_output.cpp
 	avx_support.cpp
+	${I18N_QRCFILE}
 )
 
 target_include_directories ( dsscore

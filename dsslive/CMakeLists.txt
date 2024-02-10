@@ -5,7 +5,7 @@ set ( CMAKE_CXX_STANDARD 20 )
 set( top ${CMAKE_SOURCE_DIR} )
 set( cwd ${CMAKE_CURRENT_SOURCE_DIR} )
 
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui Charts)
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets Gui Charts LinguistTools)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${cwd}/ui)
 set(CMAKE_AUTOMOC ON)
@@ -16,6 +16,12 @@ set(CMAKE_AUTOUIC ON)
 add_compile_options ( -Wno-ignored-attributes )
 add_compile_options ( -march=haswell )
 add_compile_options ( -O2 )
+
+file(GLOB TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/i18n/*.ts)
+
+configure_file( i18n/translations.qrc translations.qrc COPYONLY)
+qt5_add_translation(QM_FILES ${TS_FILES})
+qt5_add_resources(I18N_QRCFILE ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 
 add_executable ( dsslive
 	ChartTab.cpp
@@ -30,6 +36,7 @@ add_executable ( dsslive
 	progresslive.cpp
 	RestartMonitoring.cpp
 	settingstab.cpp
+	${I18N_QRCFILE}
 )
 
 target_include_directories ( dsslive

@@ -63,7 +63,7 @@ add_library( dsscore
 	RegisterEngine.cpp
 	RunningStackingEngine.cpp
 	Settings.cpp
-#	SetUILanguage.cpp						# Very Windows-specific
+	SetUILanguage.cpp						# Very Windows-specific
 	StackedBitmap.cpp
 	StackingEngine.cpp
 	StackingTasks.cpp

@@ -5,6 +5,7 @@
 /* ------------------------------------------------------------------- */
 
 
+#ifdef _WINDOWS
 void	SetUILanguage(LANGID LangID)
 {
 	if (IsWindowsVistaOrGreater())
@@ -174,6 +175,7 @@ void	SetUILanguage(LANGID LangID)
 	else
 		SetThreadLocale(MAKELCID(LangID,SORT_DEFAULT));
 };
+#endif
 
 /* ------------------------------------------------------------------- */
 
@@ -276,6 +278,7 @@ void	SetUILanguage()
 			DSSLanguage = DSSL_TURKISH;
 	};
 
+#ifdef _WINDOWS
 	if (DSSLanguage == DSSL_DEFAULT)
 	{
 		// Get the main current language and adapth it
@@ -369,6 +372,7 @@ void	SetUILanguage()
 		SetUILanguage(MAKELANGID(LANG_TURKISH,SUBLANG_DEFAULT));
 		break;
 	}
+#endif
 };
 
 /* ------------------------------------------------------------------- */

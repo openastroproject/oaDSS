@@ -37,6 +37,7 @@ add_executable ( dsslive
 	RestartMonitoring.cpp
 	settingstab.cpp
 	${I18N_QRCFILE}
+	resources.qrc
 )
 
 target_include_directories ( dsslive

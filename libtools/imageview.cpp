@@ -36,6 +36,8 @@
 #include "dss_common.h"
 #include "dsscompat.h"
 
+#include <QScreen>
+
 #include "imageview.h"
 
 namespace DSS

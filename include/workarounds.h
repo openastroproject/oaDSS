@@ -79,12 +79,10 @@ typedef RECT*						LPRECT;
 typedef RECT						tagRECT;
 typedef RGBQUAD*				LPRGBQUAD;
 
-extern HDC							GetDC ( void* );
-extern void							DeleteObject ( HBITMAP );
-extern HBITMAP					CreateDIBSection( HDC, BITMAPINFO*, int, void**, void*,
-														int );
-extern HDC							ReleaseDC ( void*, void* );
-
+inline HDC							GetDC ( void* p ) { return static_cast<void*>(0); }
+inline void							DeleteObject ( void* p ) {}
+inline HDC							ReleaseDC ( void* p, void* q ) { return static_cast<void*>(0);}
+inline HBITMAP					CreateDIBSection( HDC ph, BITMAPINFO* pb, int i1, void** pp1, void* pp2, int i2 ) { return static_cast<void*>(0);}
 
 #define	CF_BITMAP				1
 #define	CF_DIB					2

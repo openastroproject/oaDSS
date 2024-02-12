@@ -853,7 +853,7 @@ void CLightFrameInfo::RegisterPicture(CGrayBitmap& Bitmap)
 		}
 	};
 
-#pragma omp parallel default(none) shared(stars1, stars2, stars3, stars4) num_threads(std::min(nrEnabledThreads, 4)) if(nrEnabledThreads > 1)
+#pragma omp parallel default(none) shared(stars1, stars2, stars3, stars4,processDisjointArea,nrSubrectsX,nrSubrectsY) num_threads(std::min(nrEnabledThreads, 4)) if(nrEnabledThreads > 1)
 {
 #pragma omp master // There is no implied barrier.
 		ZTRACE_RUNTIME("Registering with %d OpenMP threads.", omp_get_num_threads());
@@ -939,7 +939,7 @@ void CComputeLuminanceTask::process()
 
 	AvxLuminance avxLuminance{ *m_pBitmap, *m_pGrayBitmap };
 
-#pragma omp parallel for schedule(static, 5) default(none) firstprivate(avxLuminance) if(nrProcessors > 1)
+#pragma omp parallel for schedule(static, 5) default(none) shared(height,nrProcessors,progress) firstprivate(avxLuminance) if(nrProcessors > 1)
 	for (int row = 0; row < height; row += lineBlockSize)
 	{
 		if (omp_get_thread_num() == 0 && m_pProgress != nullptr)

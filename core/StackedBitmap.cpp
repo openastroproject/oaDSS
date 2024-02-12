@@ -354,7 +354,7 @@ HBITMAP StackedBitmap::GetHBitmap(C32BitsBitmap & Bitmap, RECT * pRect)
 
 		const int nrProcessors = CMultitask::GetNrProcessors();
 
-#pragma omp parallel for default(none) shared(lYMin, lYMax) if(nrProcessors > 1)
+#pragma omp parallel for default(none) shared(lYMin, lYMax, Bitmap, lXMin, pBaseRedPixel, pBaseGreenPixel, pBaseBluePixel, lXMax) if(nrProcessors > 1)
 		for (int j = lYMin; j < lYMax; j++)
 		{
 			std::uint8_t* lpOut = Bitmap.GetPixelBase(lXMin, j);
@@ -443,7 +443,7 @@ std::shared_ptr<CMemoryBitmap> StackedBitmap::GetBitmap(ProgressBase* const pPro
 			pBaseBluePixel = m_vBluePlane.data() + (m_lWidth * lYMin + lXMin);
 		}
 
-#pragma omp parallel for default(none) schedule(static, 100)
+#pragma omp parallel for default(none) shared(lYMax,pBaseRedPixel,pBaseGreenPixel,pBaseBluePixel,pBitmap,lXMax,pProgress,iProgress) schedule(static, 100)
 		for (int j = lYMin; j < lYMax; j++)
 		{
 			//

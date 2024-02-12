@@ -846,7 +846,7 @@ bool computeOffsets(CStackingEngine* const pStackingEngine, ProgressBase* const 
 	if (pProg != nullptr)
 		pProg->Progress1(strText, 0);
 
-#pragma omp parallel for schedule(dynamic) default(none) shared(stop, nLoopCount, strText) if(nrProcessors > 1)
+#pragma omp parallel for schedule(dynamic) default(none) shared(stop, nLoopCount, strText,nrBitmaps,pProg,pStackingEngine) if(nrProcessors > 1)
 	for (int i = 1; i < nrBitmaps; ++i)
 	{
 		// OpenMP loops need to loop till the end, breaking earlier is difficult. 
@@ -1738,7 +1738,7 @@ void CStackTask::process()
 
 	AvxStacking avxStacking(0, 0, *m_pBitmap, *m_pTempBitmap, m_rcResult, *m_pAvxEntropy);
 
-#pragma omp parallel for default(none) firstprivate(avxStacking) shared(runOnlyOnce) if(nrProcessors > 1) // No "schedule" clause gives fastest result.
+#pragma omp parallel for default(none) firstprivate(avxStacking) shared(runOnlyOnce,height,nrProcessors,progress) if(nrProcessors > 1) // No "schedule" clause gives fastest result.
 	for (int row = 0; row < height; row += lineBlockSize)
 	{
 		const int endRow = std::min(row + lineBlockSize, height);

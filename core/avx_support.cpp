@@ -1,13 +1,17 @@
 #include "dss_common.h"
 
+#include <iostream>
+
+#include <cpuid.h>
 #include <immintrin.h>
+#include <stdlib.h>
+#ifndef _WINDOWS
+#include <sys/utsname.h>
+#endif
 
 #include "avx_support.h" 
 #include "BitmapCharacteristics.h" 
 #include "Multitask.h" 
- 
-#include <iostream>
-#include <cpuid.h>
  
  
 AvxSupport::AvxSupport(CMemoryBitmap& b) noexcept : 
@@ -104,18 +108,19 @@ bool AvxSupport::checkAvx2CpuSupport()
 	GetNativeSystemInfo(&info);
 	if (info.wProcessorArchitecture != PROCESSOR_ARCHITECTURE_AMD64) // AVX instructions can only be supported on x64 CPUs.
 		return false;
+#endif
 
 	int cpuid[4] = { -1 };
 
 	__cpuidex(cpuid, 1, 0);
-	const bool FMAsupported = ((cpuid[2] & (1 << 12)) != 0);
-	const bool XSAVEsupported = ((cpuid[2] & (1 << 26)) != 0);
-	const bool OSXSAVEsupported = ((cpuid[2] & (1 << 27)) != 0);
+	const bool FMAsupported = ((cpuid[2] & bit_FMA ) != 0);
+	const bool XSAVEsupported = ((cpuid[2] & bit_XSAVE ) != 0);
+	const bool OSXSAVEsupported = ((cpuid[2] & bit_OSXSAVE) != 0);
 
 	__cpuidex(cpuid, 7, 0);
-	const bool AVX2supported = ((cpuid[1] & (1 << 5)) != 0);
-	//const bool BMI1supported = ((cpuid[1] & (1 << 3) != 0);
-	//const bool BMI2supported = ((cpuid[1] & (1 << 8)) != 0);
+	const bool AVX2supported = ((cpuid[1] & bit_AVX2) != 0);
+	//const bool BMI1supported = ((cpuid[1] & bit_BMI ) != 0);
+	//const bool BMI2supported = ((cpuid[1] & bit_BMI2 ) != 0);
 
 	const bool RequiredCpuFlags = FMAsupported && AVX2supported && XSAVEsupported && OSXSAVEsupported;
 
@@ -126,9 +131,6 @@ bool AvxSupport::checkAvx2CpuSupport()
 	_mm_setcsr(_mm_getcsr() | _MM_FLUSH_ZERO_ON | _MM_DENORMALS_ZERO_ON);
 
 	return (RequiredCpuFlags && AVXenabledOS);
-#else
-	return false;
-#endif
 };
 
 bool AvxSupport::checkSimdAvailability()
@@ -182,8 +184,13 @@ void AvxSupport::reportCpuType()
 		ZTRACE_RUNTIME("Emulated processor architecture: %s", architecture);
 		std::cerr << "Emulated processor architecture: " << architecture << std::endl;
 	}
+#else
+	struct utsname buf;
+
+	uname ( &buf );
+	std::cerr << "Processor architecture: " << buf.machine << std::endl;
 #endif	/* WINDOWS */
-#ifdef WINDOWS
+#ifdef _WINDOWS
 	int cpuid[4] = { -1 };
 	__cpuid(cpuid, 0x80000000);
 	const int nExtIds = cpuid[0];
@@ -200,21 +207,18 @@ void AvxSupport::reportCpuType()
 	else
 		memcpy(brand, "CPU brand not detected", 22);
 #else
-	unsigned int cpuid[4];
-	__get_cpuid_max( 0x80000000, cpuid);
-	const int nExtIds = cpuid[0];
 	char brand[64] = { '\0' };
-	if (nExtIds >= 0x80000004)
-	{
-		__get_cpuid( 0x80000002, &cpuid[0], &cpuid[1], &cpuid[2], &cpuid[3]);
-		memcpy(brand, cpuid, sizeof(cpuid));
-		__get_cpuid( 0x80000003, &cpuid[0], &cpuid[1], &cpuid[2], &cpuid[3]);
-		memcpy(brand + 16, cpuid, sizeof(cpuid));
-		__get_cpuid( 0x80000004, &cpuid[0], &cpuid[1], &cpuid[2], &cpuid[3]);
-		memcpy(brand + 32, cpuid, sizeof(cpuid));
-	}
-	else
-		memcpy(brand, "CPU brand not detected", 22);
+  unsigned int reg[4];
+	char *p = brand;
+
+	if (__get_cpuid(0, &reg[0], &reg[1], &reg[3], &reg[2])) {
+		for (int j = 1; j < 4; j++ ) {
+			for (int i = 0; i < 4; i++) {
+				 *p++ = ( reg[j] >> (i * 8)) & 0xff;
+			}
+		}
+	} else
+			memcpy(brand, "CPU brand not detected", 22);
 
 #endif	/* WINDOWS */
 	//

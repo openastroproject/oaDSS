@@ -993,10 +993,14 @@ bool LoadTranslationUnit(QApplication& app, QTranslator& translator, const char*
 		return false;
 	}
 	
-	if(!app.installTranslator(&translator))
-	{
-		qDebug() << " *** Failed to install translator for file [" << translatorFileName << "]";
-		return false;
+	if ( translator.isEmpty()) {
+			qDebug() << " *** translator file is empty [" << translatorFileName << "]";
+	} else {
+		if(!app.installTranslator(&translator))
+		{
+			qDebug() << " *** Failed to install translator for file [" << translatorFileName << "]";
+			return false;
+		}
 	}
 	return true;
 }

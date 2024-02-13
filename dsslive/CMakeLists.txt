@@ -26,7 +26,7 @@ qt5_add_resources(I18N_QRCFILE ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 add_executable ( dsslive
 	ChartTab.cpp
 	DeepSkyStackerLive.cpp
-#	EmailSettings.cpp				# SMTP- and Windows-specific
+	EmailSettings.cpp
 	fileregistrar.cpp
 	filestacker.cpp
 	foldermonitor.cpp
@@ -59,6 +59,7 @@ target_compile_options( dsslive PRIVATE -fPIC)
 target_link_libraries( dsslive
 	dsscore
 	zclass
+	dsstools
 	Qt::Charts
 	Qt::Widgets
 	gomp

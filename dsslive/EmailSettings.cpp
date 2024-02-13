@@ -180,6 +180,7 @@ namespace DSS
 		QString	server{ smtpServer->text() };
 		QString	password{};
 
+#ifdef _WINDOWS
 		SmtpClient::ConnectionType connectionType{ static_cast<SmtpClient::ConnectionType>(smtpEncryption->currentIndex()) };
 
 		MimeMessage message;
@@ -232,5 +233,6 @@ namespace DSS
 
 		smtp.quit();
 		QMessageBox::information(this, "SMTP", tr("Test email sent OK!"));
+#endif
 	}
 }

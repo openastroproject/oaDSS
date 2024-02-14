@@ -39,6 +39,12 @@
 #include "dss_common.h"
 
 #include <QNetworkReply>
+#include <QModelIndex>
+#if QT_VERSION >= 0x00060000
+#include <QList>
+#else
+#include <QVector>
+#endif
 
 #include "StackingDlg.h"
 #include "ui_StackingDlg.h"
@@ -1055,7 +1061,7 @@ namespace DSS
 		//
 		// If the model data changes let me know
 		//
-		connect(frameList.currentTableModel(), SIGNAL ( ImageListModel::dataChanged ( QModelIndex&, QModelIndex&  )), this, SLOT( StackingDlg::tableViewModel_dataChanged ( QModelIndex&, QModelIndex& )));
+		connect(frameList.currentTableModel(), &ImageListModel::dataChanged, this, &StackingDlg::tableViewModel_dataChanged );
 		
 		//
 		// Set up a QSortFilterProxyModel to allow sorting of the table view
@@ -1260,7 +1266,11 @@ namespace DSS
 
 	}
 
-	void StackingDlg::tableViewModel_dataChanged(const QModelIndex& first, const QModelIndex&, const QList<int>&)
+#if QT_VERSION >= 0x00060000
+	void StackingDlg::tableViewModel_dataChanged(const QModelIndex& first, const QModelIndex& last, const QList<int>& roles = QList<int>())
+#else
+	void StackingDlg::tableViewModel_dataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int>& roles = QVector<int>())
+#endif
 	{
 		//
 		// Only interested if the user has ticked the check box in column 0
@@ -2729,8 +2739,8 @@ namespace DSS
 	{
 		frameList.setGroup(index);
 		auto model{ frameList.currentTableModel() };
-		connect(frameList.currentTableModel(), SIGNAL( ImageListModel::dataChanged ( QModelIndex&, QModelIndex& )), this, SLOT( StackingDlg::tableViewModel_dataChanged ( QModelIndex&, QModelIndex& )));
-		proxyModel->setSourceModel(model);
+		connect(frameList.currentTableModel(), &ImageListModel::dataChanged, this, &StackingDlg::tableViewModel_dataChanged);
+    proxyModel->setSourceModel(model);
 	}
 
 	void StackingDlg::updateGroupTabs()

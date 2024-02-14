@@ -12,6 +12,7 @@ find_package(Qt5 REQUIRED COMPONENTS
 		Charts
 		Network
 		LinguistTools
+		Help
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${cwd}/ui)
@@ -83,6 +84,7 @@ target_include_directories ( DeepSkyStacker
 		${Qt5Widgets_INCLUDE_DIRS}
 		${Qt5Network_INCLUDE_DIRS}
 		${Qt5Core_INCLUDE_DIRS}
+		${Qt5Help_INCLUDE_DIRS}
 		${top}/libdelaunay
 		${top}/libtools
 		${top}/libzclass
@@ -100,6 +102,7 @@ target_link_libraries( DeepSkyStacker
   Qt::Charts
   Qt::Gui
   Qt::Network
+  Qt::Help
   Qt::Widgets
   Qt::Core
 	gomp

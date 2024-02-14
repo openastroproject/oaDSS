@@ -39,6 +39,8 @@
 
 #ifdef _WINDOWS
 #include <htmlhelp.h>
+#else
+#include <QtHelp>
 #endif
 
 #include <boost/interprocess/sync/file_lock.hpp>
@@ -77,6 +79,30 @@ bool	g_bShowRefStars = false;
 // Set up tracing and manage trace file deletion
 //
 DSS::TraceControl traceControl{ std::source_location::current().file_name() };
+
+#ifndef _WINDOWS
+class HelpBrowser : public QTextBrowser
+{
+public:
+    HelpBrowser(QHelpEngine* helpEngine, QWidget* parent = 0);
+    QVariant loadResource (int type, const QUrl& name);
+private:
+    QHelpEngine* helpEngine;
+};
+
+HelpBrowser::HelpBrowser(QHelpEngine* helpEngine,
+                         QWidget* parent):QTextBrowser(parent),
+                         helpEngine(helpEngine)
+{
+}
+
+QVariant HelpBrowser::loadResource(int type, const QUrl &name){
+    if (name.scheme() == "qthelp")
+        return QVariant(helpEngine->fileData(name));
+    else
+        return QTextBrowser::loadResource(type, name);
+}
+#endif
 
 namespace
 {
@@ -240,6 +266,7 @@ DeepSkyStacker::DeepSkyStacker() :
 	explorerBar{ nullptr },
 	stackedWidget{ nullptr },
 	stackingDlg{ nullptr },
+	helpWindow{ nullptr },
 	activePanel{ ActivePanel::StackingPanel },
 	args{ qApp->arguments() },
 	// m_taskbarList{ nullptr },
@@ -315,6 +342,7 @@ DeepSkyStacker::DeepSkyStacker() :
 
 	setWindowTitle(baseTitle);
 
+	initHelpWindow();
 	//
 	// Set up the status bar
 	//
@@ -637,6 +665,35 @@ void DeepSkyStacker::updatePanel()
 	explorerBar->update();
 };
 
+
+void DeepSkyStacker::initHelpWindow()
+{
+	QHelpEngine* helpEngine = new QHelpEngine("dsshelp-en.qhc");
+	helpEngine->setupData();
+	QTabWidget* help = new QTabWidget;
+	help->setMaximumWidth ( 200 );
+	help->addTab ( helpEngine->contentWidget(), tr ( "Contents" ));
+	HelpBrowser* textViewer = new HelpBrowser ( helpEngine );
+	textViewer->setSource ( QUrl ( "qthelp://dss.deepskystacker.com/doc/english/userguide.htm"));
+  connect(helpEngine->contentWidget(), SIGNAL(linkActivated(QUrl)),
+			textViewer, SLOT(setSource(QUrl)));
+  connect(helpEngine->indexWidget(), SIGNAL(linkActivated(QUrl, QString)),
+            textViewer, SLOT(setSource(QUrl)));
+
+	helpWindow = new QSplitter(Qt::Horizontal);
+  helpWindow->insertWidget(0, help);
+  helpWindow->insertWidget(1, textViewer);
+
+	/*
+  helpWindow = new QDockWidget(tr("Help"), this);
+  helpWindow->setWidget(horizSplitter);
+  helpWindow->setFloating ( true );
+  addDockWidget(Qt::BottomDockWidgetArea, helpWindow);
+	*/
+	helpWindow->setObjectName ( "HelpWindow" );
+  helpWindow->hide();
+}
+
 /* ------------------------------------------------------------------- */
 /* Slots                                                               */
 /* ------------------------------------------------------------------- */
@@ -644,10 +701,16 @@ void DeepSkyStacker::updatePanel()
 void DeepSkyStacker::help()
 {
 	ZFUNCTRACE_RUNTIME();
+#ifdef _WINDOWS
 	QString helpFile{ QCoreApplication::applicationDirPath() + "/" + tr("DeepSkyStacker Help.chm","IDS_HELPFILE") };
 
-#ifdef _WINDOWS
 	::HtmlHelp(::GetDesktopWindow(), helpFile.toStdWString().c_str(), HH_DISPLAY_TOPIC, 0);
+#else
+	if ( helpWindow ) {
+		helpWindow->show();
+	} else {
+		qDebug() << "helpWindow is null in show help method";
+	}
 #endif
 }
 

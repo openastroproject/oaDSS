@@ -80,6 +80,7 @@ private:
 	QStringList args;
 	QString baseTitle;
 	QString currentPathName;
+	QSplitter* helpWindow;
 	bool m_progress;
 	QLabel* sponsorText;
 	QLabel* statusBarText;
@@ -91,6 +92,7 @@ private:
 	void updatePanel();
 	static inline DeepSkyStacker* theMainWindow{ nullptr };
 	void connectSignalsToSlots();
+	void initHelpWindow();
 
 protected:
 	void closeEvent(QCloseEvent* e) override;

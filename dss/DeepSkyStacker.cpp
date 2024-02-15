@@ -37,11 +37,7 @@
 //
 #include "dss_common.h"
 
-#ifdef _WINDOWS
-#include <htmlhelp.h>
-#else
 #include <QtHelp>
-#endif
 
 #include <boost/interprocess/sync/file_lock.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
@@ -80,7 +76,6 @@ bool	g_bShowRefStars = false;
 //
 DSS::TraceControl traceControl{ std::source_location::current().file_name() };
 
-#ifndef _WINDOWS
 class HelpBrowser : public QTextBrowser
 {
 public:
@@ -102,7 +97,6 @@ QVariant HelpBrowser::loadResource(int type, const QUrl &name){
     else
         return QTextBrowser::loadResource(type, name);
 }
-#endif
 
 namespace
 {
@@ -701,17 +695,12 @@ void DeepSkyStacker::initHelpWindow()
 void DeepSkyStacker::help()
 {
 	ZFUNCTRACE_RUNTIME();
-#ifdef _WINDOWS
-	QString helpFile{ QCoreApplication::applicationDirPath() + "/" + tr("DeepSkyStacker Help.chm","IDS_HELPFILE") };
 
-	::HtmlHelp(::GetDesktopWindow(), helpFile.toStdWString().c_str(), HH_DISPLAY_TOPIC, 0);
-#else
 	if ( helpWindow ) {
 		helpWindow->show();
 	} else {
 		qDebug() << "helpWindow is null in show help method";
 	}
-#endif
 }
 
 /* ------------------------------------------------------------------- */

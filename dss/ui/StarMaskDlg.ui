@@ -9,12 +9,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>469</width>
+    <width>484</width>
     <height>493</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Create a Star Mask</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QGroupBox { margin-top: 1ex; border: 2px groove grey; } 
+QGroupBox::title { subcontrol-origin: margin; subcontrol-position: left top; left: 1em; }</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -205,7 +209,7 @@
         <rect>
          <x>210</x>
          <y>30</y>
-         <width>57</width>
+         <width>65</width>
          <height>15</height>
         </rect>
        </property>
@@ -218,7 +222,7 @@
         <rect>
          <x>210</x>
          <y>80</y>
-         <width>57</width>
+         <width>65</width>
          <height>15</height>
         </rect>
        </property>
@@ -231,7 +235,7 @@
         <rect>
          <x>210</x>
          <y>100</y>
-         <width>57</width>
+         <width>65</width>
          <height>15</height>
         </rect>
        </property>
@@ -335,7 +339,7 @@
         <rect>
          <x>210</x>
          <y>30</y>
-         <width>57</width>
+         <width>65</width>
          <height>15</height>
         </rect>
        </property>
@@ -348,7 +352,7 @@
         <rect>
          <x>210</x>
          <y>60</y>
-         <width>57</width>
+         <width>65</width>
          <height>15</height>
         </rect>
        </property>

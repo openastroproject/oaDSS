@@ -3,48 +3,15 @@
 #include "StarMaskDlg.h"
 #include "DSSCommon.h"
 
-
 extern QString STARMASKFILE_FILTERS;
 
 namespace DSS {
-
-	class SaveMaskDlg : public QFileDialog
-	{
-#if 0
-		public:
-	SaveMaskDlg ( bool bOpenFileDialog, // true == open, false == save as
-		LPCTSTR lpszDefExt = nullptr,
-		LPCTSTR lpszFileName = nullptr,
-		std::uint32_t dwFlags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
-		LPCTSTR lpszFilter = nullptr,
-		QWidget* pParentWnd = nullptr ) : QFileDialog ( bOpenFileDialog, lpszDefExt, lpszFileName, dwFlags, lpszFilter, pParentWnd)
-#endif
-
-	};
 
 	StarMaskDlg::StarMaskDlg ( QWidget* parent )
 		: QDialog ( parent )
 	{
 		QSettings	settings;
 	
-		/*
-    QLabel *label;
-    QComboBox *starShape;
-    QLabel *shapeImage;
-    QCheckBox *hotPixels;
-    QSlider *thresholdSlider;
-    QSlider *minSlider;
-    QSlider *maxSlider;
-    QLabel *thresholdLabel;
-    QLabel *minLabel;
-    QLabel *maxLabel;
-    QSlider *pcSlider;
-    QSlider *pixSlider;
-    QLabel *pcLabel;
-    QLabel *pixLabel;
-		QDialogButtonBox *buttonBox;
-		*/
-
 		ZFUNCTRACE_RUNTIME();
 
     setupUi ( this );
@@ -78,6 +45,11 @@ namespace DSS {
 				&StarMaskDlg::ok );
 		connect ( buttonBox, &QDialogButtonBox::rejected, this,
 				&StarMaskDlg::cancel );
+
+		m_bOutputFITS = false;
+		m_strOutputFile = "";
+
+		m_filenameFilter = QCoreApplication::translate("DeepSkyStacker","TIFF Image (*.tiff *.tif);;FITS Image (*.fits *.fts *.fit)","IDS_FILTER_MASK");
 	}
 
 
@@ -134,6 +106,7 @@ namespace DSS {
 		pixUpdated ( lPos );
 	};
 
+
 	void
 	StarMaskDlg::updateStarShapePreview ( int index )
 	{
@@ -152,11 +125,13 @@ namespace DSS {
 		}
 	}
 
+
 	void
 	StarMaskDlg::thresholdUpdated ( int newVal )
 	{
 		thresholdLabel->setText ( QString ( tr ( "%1%" )).arg ( newVal ));
 	}
+
 
 	void
 	StarMaskDlg::minUpdated ( int newVal )
@@ -164,11 +139,13 @@ namespace DSS {
 		minLabel->setText ( QString ( tr ( "%1 pixels" )).arg ( newVal ));
 	}
 
+
 	void
 	StarMaskDlg::maxUpdated ( int newVal )
 	{
 		maxLabel->setText ( QString ( tr ( "%1 pixels" )).arg ( newVal ));
 	}
+
 
 	void
 	StarMaskDlg::percentUpdated ( int newVal )
@@ -176,16 +153,18 @@ namespace DSS {
 		pcLabel->setText ( QString ( tr ( "%1%" )).arg ( newVal ));
 	}
 
+
 	void
 	StarMaskDlg::pixUpdated ( int newVal )
 	{
 		pixLabel->setText ( QString ( tr ( "%1 pixel(s)" )).arg ( newVal ));
 	}
 
+
 	void
 	StarMaskDlg::ok ( void )
 	{
-		//if (AskOutputFile())
+		if ( askOutputFile())
 		{
 			QSettings			settings;
 			int						saveVal;
@@ -212,130 +191,48 @@ namespace DSS {
 		done ( QDialog::Accepted );
 	}
 
+
 	void
 	StarMaskDlg::cancel ( void )
 	{
 		done ( QDialog::Rejected );
 	}
 
-}
-
-
-#if (0)
-// CStarMaskDlg dialog
-/* ------------------------------------------------------------------- */
-
-class CSaveMaskDlg : public CFileDialog
-{
-	DECLARE_DYNAMIC(CSaveMaskDlg)
-
-public :
-	CSaveMaskDlg(bool bOpenFileDialog, // true for FileOpen, false for FileSaveAs
-		LPCTSTR lpszDefExt = nullptr,
-		LPCTSTR lpszFileName = nullptr,
-		std::uint32_t dwFlags = OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
-		LPCTSTR lpszFilter = nullptr,
-		CWnd* pParentWnd = nullptr):CFileDialog(bOpenFileDialog, lpszDefExt, lpszFileName, dwFlags, lpszFilter, pParentWnd)
+	bool
+	StarMaskDlg::askOutputFile ( void )
 	{
-	};
+		bool						bResult = false;
+		QSettings				settings;
+	
+		auto dwFileType = settings.value("StarMask/FileType", 0).toUInt();
+	
+		fs::path initialDir = m_strOutputFile;
+		if ( dwFileType == 2 )
+			initialDir.replace_filename ( "StarMask.fits" );
+		else
+			initialDir.replace_filename ( "StarMask.tif" );
 
-	virtual ~CSaveMaskDlg() {};
+		QString	filename = QFileDialog::getSaveFileName ( this,
+				tr ( "Save the StarMask as ..."), initialDir.c_str(),
+				m_filenameFilter );
 
-//protected:
-//	virtual void OnTypeChange()
-//	{
-//		CFileDialog::OnTypeChange();
-//		CString			strFileName = GetFileTitle();
-//
-//		if (strFileName.GetLength())
-//		{
-//			if (m_ofn.nFilterIndex == 1)
-//				strFileName += ".tif";
-//			else
-//				strFileName += ".fits";
-//			SetControlText(FILE_DIALOG_NAME, strFileName);
-//		};
-//	};
-};
-
-/* ------------------------------------------------------------------- */
-
-CStarMaskDlg::CStarMaskDlg(CWnd* pParent /*=nullptr*/)
-	: CDialog(CStarMaskDlg::IDD, pParent)
-{
-	m_bOutputFITS = false;
+		if ( filename != "" ) {
+			m_strOutputFile = filename.toStdString();
+			fs::path extn = m_strOutputFile.extension();
+			if ( extn == "fits" || extn == "fts"|| extn == "fit" ) {
+				m_bOutputFITS = true;
+				bResult = true;
+			} else {
+				if ( extn == "tif" || extn == "tiff" ) {
+					m_bOutputFITS = false;
+					bResult = true;
+				} else {
+					qDebug() << "file extension not recognised: " << extn.c_str();
+					bResult = false;
+				}
+			}
+		}
+	
+		return bResult;
+	}
 }
-
-/* ------------------------------------------------------------------- */
-
-CStarMaskDlg::~CStarMaskDlg()
-{
-}
-
-/* ------------------------------------------------------------------- */
-
-
-bool CStarMaskDlg::AskOutputFile()
-{
-	bool					bResult = false;
-	CString					strTitle;
-	QSettings				settings;
-
-	auto dwFileType = settings.value("StarMask/FileType", 0).toUInt();
-
-	strTitle.LoadString(IDS_TITLE_MASK);
-
-	CSaveMaskDlg			dlgSave(false,
-								nullptr,
-								nullptr,
-								OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_ENABLESIZING,
-								STARMASKFILE_FILTERS,
-								this);
-
-	// Get Base directory from base output file
-	CString					strBaseDirectory;
-	TCHAR					szDrive[1+_MAX_DRIVE];
-	TCHAR					szDir[1+_MAX_DIR];
-
-	_tsplitpath(m_strOutputFile, szDrive, szDir, nullptr, nullptr);
-	strBaseDirectory = szDrive;
-	strBaseDirectory += szDir;
-
-	if (strBaseDirectory.GetLength())
-		dlgSave.m_ofn.lpstrInitialDir = strBaseDirectory.GetBuffer(_MAX_PATH);
-
-	TCHAR				szBigBuffer[20000];
-
-	if (dwFileType==2)
-		lstrcpy(szBigBuffer, _T("StarMask.fits"));
-	else
-		lstrcpy(szBigBuffer, _T("StarMask.tif"));
-
-	dlgSave.GetOFN().lpstrFile = szBigBuffer;
-	dlgSave.GetOFN().nMaxFile  = sizeof(szBigBuffer) / sizeof(szBigBuffer[0]);
-	dlgSave.GetOFN().lpstrTitle = strTitle.GetBuffer(200);
-	dlgSave.GetOFN().nFilterIndex = dwFileType;
-
-	if (dlgSave.DoModal() == IDOK)
-	{
-		POSITION		pos;
-
-		pos = dlgSave.GetStartPosition();
-		if (pos)
-		{
-			m_strOutputFile = dlgSave.GetNextPathName(pos);
-
-			dwFileType = dlgSave.GetOFN().nFilterIndex;
-			settings.setValue("StarMask/FileType", (uint)dwFileType);
-			bResult = true;
-			m_bOutputFITS = (dwFileType == 2);
-		};
-	};
-
-	return bResult;
-};
-
-/* ------------------------------------------------------------------- */
-
-
-#endif

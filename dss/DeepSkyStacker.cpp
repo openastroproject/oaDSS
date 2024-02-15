@@ -68,7 +68,6 @@ namespace bip = boost::interprocess;
 
 
 QString OUTPUTFILE_FILTERS;
-QString STARMASKFILE_FILTERS;
 bool	g_bShowRefStars = false;
 
 //
@@ -808,7 +807,6 @@ BOOL DeepSkyStackerApp::InitInstance()
 #endif
 
 	OUTPUTFILE_FILTERS = QCoreApplication::translate("DeepSkyStacker","TIFF Image (16 bit/ch)|*.TIF|TIFF Image (32 bit/ch - integer)|*.TIF|TIFF Image (32 bit/ch - rational)|*.TIF|FITS Image (16 bit/ch)|*.FTS|FITS Image (32 bit/ch - integer)|*.FTS|FITS Image (32 bit/ch -rational)|*.FTS||","IDS_FILTER_OUTPUT");
-	STARMASKFILE_FILTERS = QCoreApplication::translate("DeepSkyStacker","TIFF Image|*.tif;*.tiff|FITS Image|*.fits;*.fts;*.fit||","IDS_FILTER_MASK");
 
 	return true;
 };

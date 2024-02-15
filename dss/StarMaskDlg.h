@@ -1,15 +1,38 @@
 #pragma once
+
+#include <QDialog>
+
 #include "commonresource.h"
+#include "ui_StarMaskDlg.h"
 
 
-// CStarMaskDlg dialog
-
-class CStarMaskDlg : public CDialog
+namespace DSS
 {
-	DECLARE_DYNAMIC(CStarMaskDlg)
+	class StarMaskDlg : public QDialog, public ::Ui::StarMaskDlg
+	{
+		Q_OBJECT
 
 public:
-	CStarMaskDlg(CWnd* pParent = nullptr);   // standard constructor
+		StarMaskDlg ( QWidget* pParent = nullptr );
+		~StarMaskDlg ( void ) {};
+		void initialise ( void );
+
+private:
+		void updateTexts ( void );
+
+private slots:
+		void updateStarShapePreview (int index );
+		void thresholdUpdated ( int newVal );
+		void minUpdated ( int newVal );
+		void maxUpdated ( int newVal );
+		void percentUpdated ( int newVal );
+		void pixUpdated ( int newVal );
+		void ok ( void );
+		void cancel ( void );
+	};
+}
+
+#if (0)
 	virtual ~CStarMaskDlg();
 
 	void	SetBaseFileName(LPCTSTR szOutputFile)
@@ -70,3 +93,4 @@ private :
 	CStatic					m_PixelsText;
 	CSliderCtrl				m_Pixels;
 };
+#endif

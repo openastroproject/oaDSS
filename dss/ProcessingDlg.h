@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QDialog>
+
+#include "StarMaskDlg.h"
 #include "dssrect.h"
 #include "Histogram.h"
 #include "ProcessingSettings.h"
@@ -218,6 +220,7 @@ namespace DSS
 		SelectRect* selectRect;
 		DSSRect	selectionRect;
 
+		StarMaskDlg* starMaskDlg;
 
 		HistogramAdjustmentCurve redAdjustmentCurve_;
 		HistogramAdjustmentCurve greenAdjustmentCurve_;

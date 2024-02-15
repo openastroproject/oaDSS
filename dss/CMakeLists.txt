@@ -47,7 +47,7 @@ add_executable ( DeepSkyStacker
 	editstars.cpp
 	ExplorerBar.cpp
 	ImageProperties.cpp
-#	ImageSinks.cpp							# relies on broken bits of libtools
+#	ImageSinks.cpp							# uses broken bits of libtools.  May be redundant
 	IntermediateFiles.cpp
 	mrulist.cpp
 	OutputTab.cpp
@@ -70,7 +70,7 @@ add_executable ( DeepSkyStacker
 	StackingParameters.cpp
 	StackRecap.cpp
 	StackSettings.cpp
-#	StarMaskDlg.cpp							# relies on broken bits of libtools
+	StarMaskDlg.cpp
 	toolbar.cpp
 	${I18N_QRCFILE}
 	resources.qrc

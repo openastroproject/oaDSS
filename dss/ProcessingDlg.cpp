@@ -1,6 +1,7 @@
 #include "dss_common.h"
 
 #include "DeepSkyStacker.h"
+#include "StarMaskDlg.h"
 #include "ProcessingDlg.h"
 #include "progressdlg.h"
 #include "selectrect.h"
@@ -34,6 +35,8 @@ namespace DSS {
 		blueGradient->setColorAt(0.5, QColor(qRgb(0, 0, 128)));
 		blueGradient->setColorAt(0.999, Qt::blue);
 		blueGradient->setColorAt(1.0, Qt::blue);
+
+		starMaskDlg = nullptr;
 
 		connectSignalsToSlots();
 
@@ -116,8 +119,12 @@ namespace DSS {
 	void ProcessingDlg::createStarMask()
 	{
 		ZFUNCTRACE_RUNTIME();
-		qDebug() << "Create star mask";
-		return;
+
+		if ( starMaskDlg == nullptr ) {
+			starMaskDlg = new StarMaskDlg ( this );
+		}
+		starMaskDlg->initialise();
+		starMaskDlg->open();
 	}
 
 	/* ------------------------------------------------------------------- */

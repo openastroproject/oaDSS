@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SavePicture</class>
+ <widget class="QWidget" name="SavePicture">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>806</width>
+    <height>697</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SavePicture</string>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>801</width>
+     <height>691</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>Compression</string>
+      </property>
+      <widget class="QRadioButton" name="noneButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>50</y>
+         <width>103</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>None</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="zipButton">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>50</y>
+         <width>103</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ZIP (Deflate)</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="lzwButton">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>50</y>
+         <width>141</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>LZW (Deprecated)</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Options</string>
+      </property>
+      <widget class="QRadioButton" name="embedButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>90</y>
+         <width>411</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Embed adjustments in the saved image but do not apply them</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="rectangle">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>140</y>
+         <width>411</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Create an image from the selected rectangle</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="applyButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>50</y>
+         <width>411</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Apply adjustments to the saved image</string>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,174 +1,181 @@
-// SavePicture.cpp : implementation file
-//
-
 #include "dss_common.h"
 
 #include "SavePicture.h"
-#include "resourceCZ.h"
 
-/* ------------------------------------------------------------------- */
-// CSavePicture
+namespace DSS {
 
-IMPLEMENT_DYNAMIC(CSavePicture, CFileDialog)
-
-CSavePicture::CSavePicture(bool bOpenFileDialog, LPCTSTR lpszDefExt, LPCTSTR lpszFileName,
-		std::uint32_t dwFlags, LPCTSTR lpszFilter, CWnd* pParentWnd) :
-		CFileDialog(bOpenFileDialog, lpszDefExt, lpszFileName, dwFlags, lpszFilter, pParentWnd, 0, false)
-{
-	SetTemplate(IDD_SAVEPICTURE, IDD_SAVEPICTURE);
-	m_bApplied = false;
-	m_bEnableUseRect = false;
-	m_bUseRect = false;
-	m_ofn.FlagsEx = OFN_EX_NOPLACESBAR;
-
-	m_Compression = TC_DEFLATE;
-}
-
-/* ------------------------------------------------------------------- */
-
-CSavePicture::~CSavePicture()
-{
-}
-
-/* ------------------------------------------------------------------- */
-
-void CSavePicture::DoDataExchange(CDataExchange* pDX)
-{
-	CFileDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CRawDDPSettings)
-	DDX_Control(pDX, IDC_APPLIED, m_Applied);
-	DDX_Control(pDX, IDC_EMBEDDED, m_Embedded);
-	DDX_Control(pDX, IDC_USERECT, m_UseRect);
-	DDX_Control(pDX, IDC_COMPRESSION_NONE, m_CompressionNone);
-	DDX_Control(pDX, IDC_COMPRESSION_ZIP, m_CompressionZIP);
-	DDX_Control(pDX, IDC_COMPRESSION_LZW, m_CompressionLZW);
-	//}}AFX_DATA_MAP
-}
-
-/* ------------------------------------------------------------------- */
-
-BEGIN_MESSAGE_MAP(CSavePicture, CFileDialog)
-	ON_BN_CLICKED(IDC_APPLIED, OnApplied)
-	ON_BN_CLICKED(IDC_EMBEDDED, OnEmbedded)
-	ON_BN_CLICKED(IDC_USERECT, OnUseRect)
-	ON_BN_CLICKED(IDC_COMPRESSION_NONE, OnCompressionNone)
-	ON_BN_CLICKED(IDC_COMPRESSION_ZIP, OnCompressionZIP)
-	ON_BN_CLICKED(IDC_COMPRESSION_LZW, OnCompressionLZW)
-END_MESSAGE_MAP()
-
-/* ------------------------------------------------------------------- */
-// CSavePicture message handlers
-
-BOOL CSavePicture::OnInitDialog()
-{
-	CFileDialog::OnInitDialog();
-
-	if (m_bApplied)
+	SavePicture::SavePicture ( bool bOpenFileDialog, LPCTSTR lpszDefExt,
+			LPCTSTR lpszFileName, LPCTSTR lpszFilter, QWidget* parent )
+			: QWidget ( parent )
 	{
-		m_Applied.SetCheck(true);
-		m_Embedded.SetCheck(false);
-	}
-	else
-	{
-		m_Applied.SetCheck(false);
-		m_Embedded.SetCheck(true);
-	};
+		QFileDialog* fileDlg = new QFileDialog ( parent );
+		fileDlg->setOption ( QFileDialog::DontUseNativeDialog );
+		verticalLayout->addWidget ( fileDlg, Qt::AlignTop );
+		
+		ZFUNCTRACE_RUNTIME();
 
-	if (m_bEnableUseRect)
-	{
-		m_UseRect.EnableWindow(true);
-		m_UseRect.SetCheck(m_bUseRect);
-	}
-	else
-	{
-		m_UseRect.EnableWindow(false);
-	};
+		setupUi ( this );
 
-	m_Embedded.GetWindowText(m_strSaveEmbed);
-
-	m_CompressionNone.SetCheck(m_Compression == TC_NONE);
-	m_CompressionZIP.SetCheck(m_Compression == TC_DEFLATE);
-	m_CompressionLZW.SetCheck(m_Compression == TC_LZW);
-
-	CString			strText;
-
-	strText.LoadString(IDS_TT_APPLIED);
-	m_Applied.SetToolTipText(strText);
-
-	strText.LoadString(IDS_TT_EMBEDDED);
-	m_Embedded.SetToolTipText(strText);
-
-	UpdateControls();
-	EnableToolTips();
-	EnableTrackingToolTips();
-
-	return true;
-}
-
-/* ------------------------------------------------------------------- */
-
-void CSavePicture::OnApplied()
-{
-	if (m_Applied.GetCheck())
-	{
-		m_Embedded.SetCheck(false);
-		m_bApplied = true;
-	};
-};
-
-/* ------------------------------------------------------------------- */
-
-void CSavePicture::OnEmbedded()
-{
-	if (m_Embedded.GetCheck())
-	{
-		m_Applied.SetCheck(false);
 		m_bApplied = false;
-	};
-};
+		m_bEnableUseRect = false;
+		m_bUseRect = false;
+		m_Compression = TC_DEFLATE;
 
-/* ------------------------------------------------------------------- */
+		connect ( noneButton, &QRadioButton::pressed, this,
+				&SavePicture::nonePressed );
+		connect ( zipButton, &QRadioButton::pressed, this,
+				&SavePicture::zipPressed );
+		connect ( lzwButton, &QRadioButton::pressed, this,
+				&SavePicture::lzwPressed );
+		connect ( applyButton, &QRadioButton::pressed, this,
+				&SavePicture::applyPressed );
+		connect ( embedButton, &QRadioButton::pressed, this,
+				&SavePicture::embedPressed );
+		connect ( rectangle, &QCheckBox::stateChanged, this,
+				&SavePicture::rectangleChanged );
+		connect ( fileDlg, &QFileDialog::filterSelected, this,
+				&SavePicture::filterChanged );
 
-void CSavePicture::OnUseRect()
-{
-	m_bUseRect = m_UseRect.GetCheck();
-};
+		qDebug() << "set tooltips";
+	}
 
-/* ------------------------------------------------------------------- */
 
-void CSavePicture::OnCompressionNone()
-{
-	if (m_CompressionNone.GetCheck())
+	SavePicture::~SavePicture ( void )
+	{
+		qDebug() << "stuff to go in destructor?";
+	}
+
+
+	void
+	SavePicture::initialise( void )
+	{
+		if ( m_bApplied ) {
+			applyButton->setDown ( true );
+			// don't think this is required -- can't have more than one down
+			// embedButton->setDown ( false );
+		} else {
+			embedButton->setDown ( true );
+			// don't think this is required -- can't have more than one down
+			// applyButton->setDown ( false );
+		}
+
+		if (m_bEnableUseRect) {
+			rectangle->setEnabled ( true );
+			rectangle->setChecked ( true );
+		} else {
+			rectangle->setDisabled ( true );
+		}
+
+		// m_Embedded.GetWindowText(m_strSaveEmbed);
+
+		noneButton->setChecked ( m_Compression == TC_NONE );
+		zipButton->setChecked ( m_Compression == TC_DEFLATE );
+		lzwButton->setChecked ( m_Compression == TC_LZW );
+
+		applyButton->setToolTip ( tr ( "This option save the image a you see it\n"
+				"Use it if you plan to do further processing in another software" ));
+
+		embedButton->setToolTip ( tr ( "This option save the unprocessed image"
+				"but embed the processing settings\nUse it if you plan to do all the "
+				"processing in another software or if you plan to re-open the "
+				"picture with DeepSkyStacker" ));
+	
+
+		//UpdateControls();
+	}
+
+
+	void
+	SavePicture::nonePressed ( void )
 	{
 		m_Compression = TC_NONE;
-		m_CompressionZIP.SetCheck(false);
-		m_CompressionLZW.SetCheck(false);
-	};
-};
+	}
 
-/* ------------------------------------------------------------------- */
 
-void CSavePicture::OnCompressionZIP()
-{
-	if (m_CompressionZIP.GetCheck())
+	void
+	SavePicture::zipPressed ( void )
 	{
 		m_Compression = TC_DEFLATE;
-		m_CompressionNone.SetCheck(false);
-		m_CompressionLZW.SetCheck(false);
-	};
-};
+	}
 
-/* ------------------------------------------------------------------- */
 
-void CSavePicture::OnCompressionLZW()
-{
-	if (m_CompressionLZW.GetCheck())
+	void
+	SavePicture::lzwPressed ( void )
 	{
 		m_Compression = TC_LZW;
-		m_CompressionNone.SetCheck(false);
-		m_CompressionZIP.SetCheck(false);
-	};
-};
+	}
+
+	void
+	SavePicture::applyPressed ( void )
+	{
+		m_bApplied = true;
+	}
+
+	void
+	SavePicture::embedPressed ( void )
+	{
+		m_bApplied = false;
+	}
+
+
+	void
+	SavePicture::rectangleChanged ( int state )
+	{
+		m_bUseRect = state ? true : false;
+	}
+
+	void
+	SavePicture::filterChanged ( const QString& newFilter )
+	{
+		//UpdateControls();
+	}
+
+
+	void
+	SavePicture::setApplied ( bool applied )
+	{
+		m_bApplied = applied;
+	}
+
+
+	bool
+	SavePicture::getApplied ( void )
+	{
+		return m_bApplied;
+	}
+
+
+	void
+	SavePicture::setUseRect ( bool enable, bool use )
+	{
+		m_bEnableUseRect = enable;
+		m_bUseRect = use;
+	}
+
+
+	bool
+	SavePicture::getUseRect ( void )
+	{
+		return m_bUseRect;
+	}
+
+
+	void
+	SavePicture::setCompression ( TIFFCOMPRESSION compression )
+	{
+		m_Compression = compression;
+	}
+
+
+	TIFFCOMPRESSION
+	SavePicture::getCompression ( void )
+	{
+		return m_Compression;
+	}
+}
+
+#if (0)
+
 
 /* ------------------------------------------------------------------- */
 
@@ -194,14 +201,4 @@ void CSavePicture::UpdateControls()
 		m_Embedded.SetWindowText(m_strSaveEmbed);
 	};
 };
-
-/* ------------------------------------------------------------------- */
-
-void CSavePicture::OnTypeChange()
-{
-	CFileDialog::OnTypeChange();
-	UpdateControls();
-};
-
-/* ------------------------------------------------------------------- */
-
+#endif

@@ -64,7 +64,7 @@ add_executable ( DeepSkyStacker
 	ResultParameters.cpp
 	RGBTab.cpp
 	SaveEditChanges.cpp
-#	SavePicture.cpp							# broken libtools and Windows stuff
+	SavePicture.cpp							# broken libtools and Windows stuff
 	selectrect.cpp
 	StackingDlg.cpp
 	StackingParameters.cpp

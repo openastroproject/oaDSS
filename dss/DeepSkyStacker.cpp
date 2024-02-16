@@ -67,7 +67,6 @@ namespace bip = boost::interprocess;
 #include "QEventLogger.h"
 
 
-QString OUTPUTFILE_FILTERS;
 bool	g_bShowRefStars = false;
 
 //
@@ -805,8 +804,6 @@ BOOL DeepSkyStackerApp::InitInstance()
 
 	AfxInitRichEdit2();
 #endif
-
-	OUTPUTFILE_FILTERS = QCoreApplication::translate("DeepSkyStacker","TIFF Image (16 bit/ch)|*.TIF|TIFF Image (32 bit/ch - integer)|*.TIF|TIFF Image (32 bit/ch - rational)|*.TIF|FITS Image (16 bit/ch)|*.FTS|FITS Image (32 bit/ch - integer)|*.FTS|FITS Image (32 bit/ch -rational)|*.FTS||","IDS_FILTER_OUTPUT");
 
 	return true;
 };

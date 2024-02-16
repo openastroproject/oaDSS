@@ -3,8 +3,6 @@
 #include "StarMaskDlg.h"
 #include "DSSCommon.h"
 
-extern QString STARMASKFILE_FILTERS;
-
 namespace DSS {
 
 	StarMaskDlg::StarMaskDlg ( QWidget* parent )
@@ -217,6 +215,14 @@ namespace DSS {
 				m_filenameFilter );
 
 		if ( filename != "" ) {
+			/*
+			 * This is a bit of a cack-handed way to work out whether the format
+			 * will be FITS or not, but there doesn't seem to be a neat way to
+			 * manage it in Qt.  Not using a dialog through the static functions
+			 * would allow fetching the filter selected, but it would still come
+			 * down to a string comparison.  The index of the filter doesn't seem
+			 * to be avaiable.  So do it the most compact way.
+			 */
 			m_strOutputFile = filename.toStdString();
 			fs::path extn = m_strOutputFile.extension();
 			if ( extn == "fits" || extn == "fts"|| extn == "fit" ) {
@@ -235,4 +241,21 @@ namespace DSS {
 	
 		return bResult;
 	}
+
+
+	void
+	StarMaskDlg::setBaseFilename ( LPCTSTR szOutputFile )
+	{
+    m_strOutputFile = szOutputFile;
+		m_strOutputFile.replace_filename ( "StarMask" );
+	};
+
+
+	void
+	StarMaskDlg::getOutputFileName( QString& strOutputFile, bool& bFits )
+	{
+		strOutputFile = m_strOutputFile.c_str();
+		bFits = m_bOutputFITS;
+	};
+
 }

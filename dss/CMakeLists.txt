@@ -53,7 +53,7 @@ add_executable ( DeepSkyStacker
 	OutputTab.cpp
 	picturelist.cpp
 	PostCalibration.cpp
-	ProcessingDlg.cpp
+	ProcessingDlg.cpp						# David still working on this
 	ProcessingSettings.cpp
 	ProcessingSettingsDlg.cpp
 	progressdlg.cpp
@@ -64,7 +64,7 @@ add_executable ( DeepSkyStacker
 	ResultParameters.cpp
 	RGBTab.cpp
 	SaveEditChanges.cpp
-	SavePicture.cpp							# broken libtools and Windows stuff
+	SavePicture.cpp
 	selectrect.cpp
 	StackingDlg.cpp
 	StackingParameters.cpp

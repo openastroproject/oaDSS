@@ -5,6 +5,8 @@
 #include <cstring>
 #include <filesystem>
 #include <memory>
+#include <iostream>
+
 #include <execinfo.h>
 
 #include "StackWalker.h"
@@ -134,6 +136,10 @@ void setDssExceptionHandling()
 
 #else
 
+// Seems we've half fallen back to C here.  Try to roll with it.
+
+	char*	programName;
+
 	void writeOutput(const char* text)
 	{
 		fputs(text, stderr);
@@ -142,7 +148,7 @@ void setDssExceptionHandling()
 
 /* Resolve symbol name and source location given the path to the executable
    and an address */
-int addr2line(char const* const program_name, void const* const addr)
+int addr2line( const char* program_name, const void* addr)
 {
 	char addr2line_cmd[512]{ 0 };
 
@@ -153,6 +159,7 @@ int addr2line(char const* const program_name, void const* const addr)
 #else
 	sprintf(addr2line_cmd, "addr2line -f -p -e %.256s %p", program_name, addr);
 #endif
+	std::cerr << "cmd: " << addr2line_cmd << std::endl;
 
 	/* This will print a nicely formatted string specifying the
 	   function and source line of the address */
@@ -189,19 +196,31 @@ void posix_print_stack_trace()
 	   // we'll use this for now so you can see what's going on
 	for (i = 0; i < trace_size; ++i)
 	{
-		if (addr2line("program name", stack_traces[i]) != 0)
+#if 0
+		if (addr2line( programName, stack_traces[i]) != 0)
 		{
 			snprintf(buffer, sizeof(buffer) / sizeof(char),
 				"  error determining line # for: %s\n", messages[i]);
 			writeOutput(buffer);
 		}
+#else
+			snprintf ( buffer, sizeof ( buffer ), "%s\n", messages[i] );
+			writeOutput(buffer);
+#endif
 
 	}
 	if (messages) { free(messages); }
+	exit ( 255 );
 }
 
 void signalHandler(int signal)
 {
+	std::signal(SIGINT, SIG_DFL );
+	std::signal(SIGILL, SIG_DFL );
+	std::signal(SIGFPE, SIG_DFL );
+	std::signal(SIGSEGV, SIG_DFL );
+	std::signal(SIGTERM, SIG_DFL );
+
 	/*
 	if (backPocket)
 	{
@@ -238,8 +257,11 @@ void signalHandler(int signal)
 	// DeepSkyStacker::instance()->close();
 }
 
-void setDssExceptionHandling()
+void setDssExceptionHandling ( char const* prog )
 {
+	if (( programName = strdup ( prog )) == NULL ) {
+		std::cerr << "strdup failed in setDssExceptionHandling" << std::endl;
+	}
 	std::signal(SIGINT, signalHandler);
 	std::signal(SIGILL, signalHandler);
 	std::signal(SIGFPE, signalHandler);

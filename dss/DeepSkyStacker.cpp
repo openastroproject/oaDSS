@@ -1098,6 +1098,7 @@ int main(int argc, char* argv[])
 	// 
 	global_program_name = argv[0];
 
+#ifdef _WINDOWS
 	//
 	// Create a storage cushion (aka back pocket storage)
 	// and ensure that it is actually touched.
@@ -1107,6 +1108,7 @@ int main(int argc, char* argv[])
 	{
 		*p = static_cast<uint8_t>('\xff');
 	}
+#endif
 
 	int result{ 0 };
 
@@ -1185,7 +1187,7 @@ int main(int argc, char* argv[])
 	//
 	// Set things up to capture terminal errors
 	//
-	setDssExceptionHandling();
+	setDssExceptionHandling ( global_program_name );
 
 	askIfVersionCheckWanted();
 

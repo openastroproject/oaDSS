@@ -1,3 +1,3 @@
 #pragma once
 
-void setDssExceptionHandling();
+void setDssExceptionHandling( char const* prog );

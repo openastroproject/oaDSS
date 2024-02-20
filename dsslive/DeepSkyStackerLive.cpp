@@ -1601,7 +1601,7 @@ int main(int argc, char* argv[])
 	//
 	// Set things up to capture terminal errors
 	//
-	setDssExceptionHandling();
+	setDssExceptionHandling ( global_program_name );
 
 	QApplication app(argc, argv);
 

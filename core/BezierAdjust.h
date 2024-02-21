@@ -130,7 +130,7 @@ namespace DSS
 			// Set the next 4 control points of the bezier curve
 			pt1 = pt3;
 			pt2.x = pt1.x + sin(m_fMidtoneAngle * PI / 180.0) * size * m_fHighlightPower / 100.0;
-			pt2.y = pt1.y + cos(m_fMidtoneAngle * PI / 180.0) * size * m_fHighlightPower / 100.0;;
+			pt2.y = pt1.y + cos(m_fMidtoneAngle * PI / 180.0) * size * m_fHighlightPower / 100.0;
 			pt3.x = size;
 			pt3.y = size;
 			pt4 = pt3;

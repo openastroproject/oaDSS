@@ -422,8 +422,8 @@ void DoSubWindow(const int x, const int y, CAHDTaskVariables<T>& var, const CRGB
 			*pVaPixel = a;
 			*pVbPixel = b;
 
-			pHRedPixel++; pHGreenPixel++; pHBluePixel++;;
-			pVRedPixel++; pVGreenPixel++; pVBluePixel++;;
+			pHRedPixel++; pHGreenPixel++; pHBluePixel++;
+			pVRedPixel++; pVGreenPixel++; pVBluePixel++;
 
 			pHLPixel++; pHaPixel++; pHbPixel++;
 			pVLPixel++; pVaPixel++; pVbPixel++;
@@ -488,7 +488,7 @@ void DoSubWindow(const int x, const int y, CAHDTaskVariables<T>& var, const CRGB
 				if ((lDiffH[i] <= lEpsilon) && (abDiffH[i] <= abEpsilon))
 					(*pHHomoPixel)++;
 				if ((lDiffV[i] <= lEpsilon) && (abDiffV[i] <= abEpsilon))
-					(*pVHomoPixel)++;;
+					(*pVHomoPixel)++;
 			}
 
 			pHHomoPixel++;
@@ -544,8 +544,8 @@ void DoSubWindow(const int x, const int y, CAHDTaskVariables<T>& var, const CRGB
 			}
 
 			pHHomoPixel++; pVHomoPixel++;
-			pHRedPixel++;  pHGreenPixel++; pHBluePixel++;;
-			pVRedPixel++;  pVGreenPixel++; pVBluePixel++;;
+			pHRedPixel++;  pHGreenPixel++; pHBluePixel++;
+			pVRedPixel++;  pVGreenPixel++; pVBluePixel++;
 			pOutputRedPixel++; pOutputGreenPixel++; pOutputBluePixel++;
 		}
 	}

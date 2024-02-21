@@ -530,7 +530,7 @@ void QLinearGradientCtrl::mouseMoveEvent(QMouseEvent *event)
 		//"The id of the selection may change"//
 		selectedPeg = setPeg(selectedPeg, stops[selectedPeg].second, pos);
 		m_Gradient.setStops(stops);
-		region = region.united(getPegRegion());;
+		region = region.united(getPegRegion());
 		//----- Get the region for the pegs and erase them -----//
 		//
 		// Note that this uses repaint() not update()

@@ -1109,7 +1109,7 @@ double CDarkAmpGlowParameters::computeMedianValueInRect(CMemoryBitmap* pBitmap, 
 				double				fRed, fGreen, fBlue;
 
 				pBitmap->GetPixel(i, j, fRed, fGreen, fBlue);
-				RGBHistogram.AddValues(fRed, fGreen, fBlue);;
+				RGBHistogram.AddValues(fRed, fGreen, fBlue);
 			}
 		}
 	}

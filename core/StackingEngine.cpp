@@ -2089,7 +2089,7 @@ std::pair<bool, T> CStackingEngine::StackLightFrame(std::shared_ptr<CMemoryBitma
 								StackTask.m_pTempBitmap->GetPixel(i, j, fNewRed, fNewGreen, fNewBlue);
 								fOutRed = std::max(fOutRed, fNewRed);
 								fOutGreen = std::max(fOutGreen, fNewGreen);
-								fOutBlue = std::max(fOutBlue, fNewBlue);;
+								fOutBlue = std::max(fOutBlue, fNewBlue);
 								m_pOutput->SetPixel(i, j, fOutRed, fOutGreen, fOutBlue);
 							}
 							else

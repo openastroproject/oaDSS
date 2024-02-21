@@ -362,7 +362,7 @@ namespace DSS
 		else if (MBP_SIGMACLIP == newMethod || MBP_MEDIANSIGMACLIP == newMethod)
 		{
 			ui->staticKappa->setEnabled(true);
-			ui->kappa->setEnabled(true);;
+			ui->kappa->setEnabled(true);
 			ui->staticIterations->setEnabled(true);
 			ui->iterations->setEnabled(true);
 		}

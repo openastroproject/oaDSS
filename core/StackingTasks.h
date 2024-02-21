@@ -151,7 +151,7 @@ private :
 	void	CopyFrom(const CStackingInfo & si)
 	{
 		m_pOffsetTask	= si.m_pOffsetTask;
-		m_pDarkTask		= si.m_pDarkTask;;
+		m_pDarkTask		= si.m_pDarkTask;
 		m_pFlatTask		= si.m_pFlatTask;
 		m_pLightTask	= si.m_pLightTask;
 		m_pDarkFlatTask = si.m_pDarkFlatTask;

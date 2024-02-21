@@ -85,7 +85,7 @@ bool cdxCRot90DC::Create(CDC & destDC, const CRect & rectDC, int iAngle, bool bC
 	//
 
 	m_pDC					=	&destDC;
-	m_Angle				=	mkAngle(iAngle);;
+	m_Angle				=	mkAngle(iAngle);
 	m_rectDC				=	rectDC;
 	m_rectMine			=	rotate(m_rectDC);
 	m_rectMineClipped	=	rotate(m_rectDCClipped);

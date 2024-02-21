@@ -527,7 +527,7 @@ bool C32BitsBitmap::CopyToClipboard()
 			bmpInfo.bmiHeader.biSize = sizeof(bmpInfo.bmiHeader);
 			bmpInfo.bmiHeader.biWidth = m_lWidth;
 			bmpInfo.bmiHeader.biHeight= m_lHeight;
-			bmpInfo.bmiHeader.biPlanes= 1;;
+			bmpInfo.bmiHeader.biPlanes= 1;
 			bmpInfo.bmiHeader.biBitCount= 32;
 			bmpInfo.bmiHeader.biCompression= BI_RGB;
 			bmpInfo.bmiHeader.biSizeImage= 0;
@@ -1733,7 +1733,7 @@ HBITMAP	C32BitsBitmap::Create(int lWidth, int lHeight)
 	bmpInfo.bmiHeader.biSize = sizeof(bmpInfo.bmiHeader);
 	bmpInfo.bmiHeader.biWidth = lWidth;
 	bmpInfo.bmiHeader.biHeight = lHeight;
-	bmpInfo.bmiHeader.biPlanes = 1;;
+	bmpInfo.bmiHeader.biPlanes = 1;
 	bmpInfo.bmiHeader.biBitCount = 32;
 	bmpInfo.bmiHeader.biCompression = BI_RGB;
 	bmpInfo.bmiHeader.biSizeImage = 0;

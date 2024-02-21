@@ -288,7 +288,7 @@ BOOL CWndImage::CreateZoomBitmap()
 				if (ptBitmap.y >= 15)
 				{
 					src.bottom= min(m_bmpSize.cy, ptBitmap.y + 15);
-					src.top   = src.bottom-30;;
+					src.top   = src.bottom-30;
 				}
 				else
 				{

@@ -114,7 +114,12 @@ namespace DSS
     void ImageView::resizeEvent(QResizeEvent* e)
     {
         QSize size{ e->size() };
-        qreal ratio{ devicePixelRatio() };
+				// This line causes a compiler warning.  Really not sure why at the
+				// moment.  devicePixelRatio() is declared as returning a const qreal,
+				// but the compiler seems to think that an int is involved somewhere.
+        // qreal ratio{ devicePixelRatio() };
+				// Replacing with the line below shuts up the warning.
+        qreal ratio = devicePixelRatio();
         size *= ratio;
         m_drawingPixmap = QPixmap(size);
         m_drawingPixmap.setDevicePixelRatio(ratio);

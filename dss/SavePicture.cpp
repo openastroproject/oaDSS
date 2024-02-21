@@ -4,9 +4,8 @@
 
 namespace DSS {
 
-	SavePicture::SavePicture ( bool bOpenFileDialog, LPCTSTR lpszDefExt,
-			LPCTSTR lpszFileName, LPCTSTR lpszFilter, QWidget* parent )
-			: QWidget ( parent )
+	SavePicture::SavePicture ( QString lpszDefExt, QString lpszFileName,
+			QString lpszFilter, QWidget* parent ) : QWidget ( parent )
 	{
 		QFileDialog* fileDlg = new QFileDialog ( parent );
 		fileDlg->setOption ( QFileDialog::DontUseNativeDialog );
@@ -35,14 +34,12 @@ namespace DSS {
 				&SavePicture::rectangleChanged );
 		connect ( fileDlg, &QFileDialog::filterSelected, this,
 				&SavePicture::filterChanged );
-
-		qDebug() << "set tooltips";
 	}
 
 
 	SavePicture::~SavePicture ( void )
 	{
-		qDebug() << "stuff to go in destructor?";
+		qDebug() << "stuff to go in SavePicture destructor?";
 	}
 
 

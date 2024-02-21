@@ -13,8 +13,8 @@ namespace DSS
 		Q_OBJECT
 
 public:
-		SavePicture ( bool bOpenFileDialog, LPCTSTR lpszDefExt,
-				LPCTSTR lpszFileName, LPCTSTR lpszFilter, QWidget* parent = nullptr );
+		SavePicture ( QString lpszDefExt, QString lpszFileName, QString lpszFilter,
+				QWidget* parent = nullptr );
 		~SavePicture ( void );
 		void initialise ( void );
 

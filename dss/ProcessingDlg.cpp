@@ -1,5 +1,8 @@
 #include "dss_common.h"
 
+#include <QtCore>
+#include <QMessageBox>
+
 #include "DeepSkyStacker.h"
 #include "StarMaskDlg.h"
 #include "ProcessingDlg.h"
@@ -334,7 +337,158 @@ namespace DSS {
 	}
 #endif
 
+/* ------------------------------------------------------------------- */
+
+	bool ProcessingDlg::askToSave()
+	{
+		bool				bResult = false;
+
+		if ( dirty_ ) {
+
+			QMessageBox::StandardButton  ret = QMessageBox::warning ( this,
+					tr ( "Save modified image" ),
+					tr ( "Do you want to save the modifications?" ),
+					QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
+					QMessageBox::Save );
+
+			switch ( ret ) {
+				case QMessageBox::Discard:
+					bResult = true;
+					break;
+				case QMessageBox::Save:
+					bResult = savePictureToFile();
+					break;
+				default:
+					break;
+			}
+		} else {
+			bResult = true;
+		}
+
+		return bResult;
+	};
+
+
+	bool ProcessingDlg::savePictureToFile()
+	{
+		bool				bResult = false;
+		QSettings			settings;
+		qDebug() << "ProcessingDlg::savePictureToFile not yet implemented";
+#if 0
+		CString				strBaseDirectory;
+		CString				strBaseExtension;
+		bool				applied = false;
+		uint				dwCompression;
+		CRect				rcSelect;
+
+		if (dssApp->deepStack().IsLoaded())
+		{
+			strBaseDirectory = (LPCTSTR)settings.value("Folders/SavePictureFolder").toString().utf16();
+			strBaseExtension = (LPCTSTR)settings.value("Folders/SavePictureExtension").toString().utf16();
+			auto dwFilterIndex = settings.value("Folders/SavePictureIndex", 0).toUInt();
+			applied = settings.value("Folders/SaveApplySetting", false).toBool();
+			dwCompression = settings.value("Folders/SaveCompression", (uint)TC_NONE).toUInt();
+
+			if (!strBaseExtension.GetLength())
+				strBaseExtension = _T(".tif");
+
+			CSavePicture				dlgOpen(false,
+				_T(".TIF"),
+				nullptr,
+				OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_ENABLESIZING,
+				OUTPUTFILE_FILTERS,
+				this);
+
+			if (m_SelectRectSink.GetSelectRect(rcSelect))
+				dlgOpen.SetUseRect(true, true);
+			if (applied)
+				dlgOpen.SetApplied(true);
+
+			dlgOpen.SetCompression((TIFFCOMPRESSION)dwCompression);
+
+			if (strBaseDirectory.GetLength())
+				dlgOpen.m_ofn.lpstrInitialDir = strBaseDirectory.GetBuffer(_MAX_PATH);
+			dlgOpen.m_ofn.nFilterIndex = dwFilterIndex;
+
+			TCHAR				szBigBuffer[20000] = _T("");
+			DSS::ProgressDlg dlg{ DeepSkyStacker::instance() };
+
+			dlgOpen.m_ofn.lpstrFile = szBigBuffer;
+			dlgOpen.m_ofn.nMaxFile = sizeof(szBigBuffer) / sizeof(szBigBuffer[0]);
+
+			if (dlgOpen.DoModal() == IDOK)
+			{
+				POSITION		pos;
+
+				pos = dlgOpen.GetStartPosition();
+				if (pos)
+				{
+					CString			strFile;
+					LPRECT			lpRect = nullptr;
+					bool			bApply;
+					bool			bUseRect;
+					TIFFCOMPRESSION	Compression;
+
+					bApply = dlgOpen.GetApplied();
+					bUseRect = dlgOpen.GetUseRect();
+					Compression = dlgOpen.GetCompression();
+
+					if (bUseRect && m_SelectRectSink.GetSelectRect(rcSelect))
+						lpRect = &rcSelect;
+
+					BeginWaitCursor();
+					strFile = dlgOpen.GetNextPathName(pos);
+					if (dlgOpen.m_ofn.nFilterIndex == 1)
+						dssApp->deepStack().GetStackedBitmap().SaveTIFF16Bitmap(strFile, lpRect, &dlg, bApply, Compression);
+					else if (dlgOpen.m_ofn.nFilterIndex == 2)
+						dssApp->deepStack().GetStackedBitmap().SaveTIFF32Bitmap(strFile, lpRect, &dlg, bApply, false, Compression);
+					else if (dlgOpen.m_ofn.nFilterIndex == 3)
+						dssApp->deepStack().GetStackedBitmap().SaveTIFF32Bitmap(strFile, lpRect, &dlg, bApply, true, Compression);
+					else if (dlgOpen.m_ofn.nFilterIndex == 4)
+						dssApp->deepStack().GetStackedBitmap().SaveFITS16Bitmap(strFile, lpRect, &dlg, bApply);
+					else if (dlgOpen.m_ofn.nFilterIndex == 5)
+						dssApp->deepStack().GetStackedBitmap().SaveFITS32Bitmap(strFile, lpRect, &dlg, bApply, false);
+					else if (dlgOpen.m_ofn.nFilterIndex == 6)
+						dssApp->deepStack().GetStackedBitmap().SaveFITS32Bitmap(strFile, lpRect, &dlg, bApply, true);
+
+					TCHAR		szDir[1 + _MAX_DIR];
+					TCHAR		szDrive[1 + _MAX_DRIVE];
+					TCHAR		szExt[1 + _MAX_EXT];
+
+					_tsplitpath(strFile, szDrive, szDir, nullptr, szExt);
+					strBaseDirectory = szDrive;
+					strBaseDirectory += szDir;
+					strBaseExtension = szExt;
+
+					dwFilterIndex = dlgOpen.m_ofn.nFilterIndex;
+					settings.setValue("Folders/SavePictureFolder", QString::fromWCharArray(strBaseDirectory.GetString()));
+					settings.setValue("Folders/SavePictureExtension", QString::fromWCharArray(strBaseExtension.GetString()));
+					settings.setValue("Folders/SavePictureIndex", (uint)dwFilterIndex);
+					settings.setValue("Folders/SaveApplySetting", bApply);
+					settings.setValue("Folders/SaveCompression", (uint)Compression);
+
+					EndWaitCursor();
+
+					m_strCurrentFile = strFile;
+					UpdateInfos();
+					m_bDirty = false;
+					bResult = true;
+				};
+			};
+		}
+		else
+		{
+			AfxMessageBox(IDS_MSG_NOPICTURETOSAVE, MB_OK | MB_ICONSTOP);
+		};
+#endif
+
+		return bResult;
+};
+
 } // namespace DSS
+
+
+
 #if (0)
 /* ------------------------------------------------------------------- */
 /////////////////////////////////////////////////////////////////////////////
@@ -742,30 +896,6 @@ void CProcessingDlg::OnLoaddsi()
 
 /* ------------------------------------------------------------------- */
 
-bool CProcessingDlg::AskToSave()
-{
-	bool				bResult = false;
-
-	if (m_bDirty)
-	{
-		int				nResult;
-
-		nResult = AfxMessageBox(IDS_MSG_SAVEMODIFICATIONS, MB_YESNOCANCEL | MB_ICONQUESTION);
-		if (nResult == IDCANCEL)
-			bResult = false;
-		else if (nResult == IDNO)
-			bResult = true;
-		else
-			bResult = SavePictureToFile();
-	}
-	else
-		bResult = true;
-
-	return bResult;
-};
-
-/* ------------------------------------------------------------------- */
-
 void CProcessingDlg::ProcessAndShow(bool bSaveUndo)
 {
 	UpdateHistogramAdjust();
@@ -852,120 +982,6 @@ void CProcessingDlg::CreateStarMask()
 		AfxMessageBox(IDS_MSG_NOPICTUREFORSTARMASK, MB_OK | MB_ICONSTOP);
 	}
 }
-
-
-bool CProcessingDlg::SavePictureToFile()
-{
-	bool				bResult = false;
-	QSettings			settings;
-	CString				strBaseDirectory;
-	CString				strBaseExtension;
-	bool				applied = false;
-	uint				dwCompression;
-	CRect				rcSelect;
-
-	if (dssApp->deepStack().IsLoaded())
-	{
-		strBaseDirectory = (LPCTSTR)settings.value("Folders/SavePictureFolder").toString().utf16();
-		strBaseExtension = (LPCTSTR)settings.value("Folders/SavePictureExtension").toString().utf16();
-		auto dwFilterIndex = settings.value("Folders/SavePictureIndex", 0).toUInt();
-		applied = settings.value("Folders/SaveApplySetting", false).toBool();
-		dwCompression = settings.value("Folders/SaveCompression", (uint)TC_NONE).toUInt();
-
-		if (!strBaseExtension.GetLength())
-			strBaseExtension = _T(".tif");
-
-		CSavePicture				dlgOpen(false,
-			_T(".TIF"),
-			nullptr,
-			OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_ENABLESIZING,
-			OUTPUTFILE_FILTERS,
-			this);
-
-		if (m_SelectRectSink.GetSelectRect(rcSelect))
-			dlgOpen.SetUseRect(true, true);
-		if (applied)
-			dlgOpen.SetApplied(true);
-
-		dlgOpen.SetCompression((TIFFCOMPRESSION)dwCompression);
-
-		if (strBaseDirectory.GetLength())
-			dlgOpen.m_ofn.lpstrInitialDir = strBaseDirectory.GetBuffer(_MAX_PATH);
-		dlgOpen.m_ofn.nFilterIndex = dwFilterIndex;
-
-		TCHAR				szBigBuffer[20000] = _T("");
-		DSS::ProgressDlg dlg{ DeepSkyStacker::instance() };
-
-		dlgOpen.m_ofn.lpstrFile = szBigBuffer;
-		dlgOpen.m_ofn.nMaxFile = sizeof(szBigBuffer) / sizeof(szBigBuffer[0]);
-
-		if (dlgOpen.DoModal() == IDOK)
-		{
-			POSITION		pos;
-
-			pos = dlgOpen.GetStartPosition();
-			if (pos)
-			{
-				CString			strFile;
-				LPRECT			lpRect = nullptr;
-				bool			bApply;
-				bool			bUseRect;
-				TIFFCOMPRESSION	Compression;
-
-				bApply = dlgOpen.GetApplied();
-				bUseRect = dlgOpen.GetUseRect();
-				Compression = dlgOpen.GetCompression();
-
-				if (bUseRect && m_SelectRectSink.GetSelectRect(rcSelect))
-					lpRect = &rcSelect;
-
-				BeginWaitCursor();
-				strFile = dlgOpen.GetNextPathName(pos);
-				if (dlgOpen.m_ofn.nFilterIndex == 1)
-					dssApp->deepStack().GetStackedBitmap().SaveTIFF16Bitmap(strFile, lpRect, &dlg, bApply, Compression);
-				else if (dlgOpen.m_ofn.nFilterIndex == 2)
-					dssApp->deepStack().GetStackedBitmap().SaveTIFF32Bitmap(strFile, lpRect, &dlg, bApply, false, Compression);
-				else if (dlgOpen.m_ofn.nFilterIndex == 3)
-					dssApp->deepStack().GetStackedBitmap().SaveTIFF32Bitmap(strFile, lpRect, &dlg, bApply, true, Compression);
-				else if (dlgOpen.m_ofn.nFilterIndex == 4)
-					dssApp->deepStack().GetStackedBitmap().SaveFITS16Bitmap(strFile, lpRect, &dlg, bApply);
-				else if (dlgOpen.m_ofn.nFilterIndex == 5)
-					dssApp->deepStack().GetStackedBitmap().SaveFITS32Bitmap(strFile, lpRect, &dlg, bApply, false);
-				else if (dlgOpen.m_ofn.nFilterIndex == 6)
-					dssApp->deepStack().GetStackedBitmap().SaveFITS32Bitmap(strFile, lpRect, &dlg, bApply, true);
-
-				TCHAR		szDir[1 + _MAX_DIR];
-				TCHAR		szDrive[1 + _MAX_DRIVE];
-				TCHAR		szExt[1 + _MAX_EXT];
-
-				_tsplitpath(strFile, szDrive, szDir, nullptr, szExt);
-				strBaseDirectory = szDrive;
-				strBaseDirectory += szDir;
-				strBaseExtension = szExt;
-
-				dwFilterIndex = dlgOpen.m_ofn.nFilterIndex;
-				settings.setValue("Folders/SavePictureFolder", QString::fromWCharArray(strBaseDirectory.GetString()));
-				settings.setValue("Folders/SavePictureExtension", QString::fromWCharArray(strBaseExtension.GetString()));
-				settings.setValue("Folders/SavePictureIndex", (uint)dwFilterIndex);
-				settings.setValue("Folders/SaveApplySetting", bApply);
-				settings.setValue("Folders/SaveCompression", (uint)Compression);
-
-				EndWaitCursor();
-
-				m_strCurrentFile = strFile;
-				UpdateInfos();
-				m_bDirty = false;
-				bResult = true;
-			};
-		};
-	}
-	else
-	{
-		AfxMessageBox(IDS_MSG_NOPICTURETOSAVE, MB_OK | MB_ICONSTOP);
-	};
-
-	return bResult;
-};
 
 /* ------------------------------------------------------------------- */
 

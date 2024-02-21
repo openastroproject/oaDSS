@@ -266,7 +266,9 @@ namespace DSS
 		void greenButtonPressed();
 		void blueButtonPressed();
 
-#if (0)
+		bool	askToSave();
+		bool	savePictureToFile();
+#if 0
 		void	ProcessAndShow(bool bSaveUndo = true);
 
 		void	ResetSliders();

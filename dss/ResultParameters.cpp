@@ -64,7 +64,7 @@ namespace DSS
 			ui->normalMode->setChecked(true);
 			if (normalPix.isNull())
 			{
-				normalPix.load(":/stacking/normalmode.bmp");
+				normalPix.load(":/stacking/normalmode.png");
 			}
 			ui->previewImage->setPixmap(normalPix);
 			ui->modeText->setText(tr("The result of the stacking process is framed by the reference light frame.",
@@ -74,7 +74,7 @@ namespace DSS
 			ui->mosaicMode->setChecked(true);
 			if (mosaicPix.isNull())
 			{
-				mosaicPix.load(":/stacking/mosaicmode.bmp");
+				mosaicPix.load(":/stacking/mosaicmode.png");
 			}
 			ui->previewImage->setPixmap(mosaicPix);
 			ui->modeText->setText(tr("The result of the stacking process contains all the light frames of the stack.",
@@ -84,7 +84,7 @@ namespace DSS
 			ui->intersectionMode->setChecked(true);
 			if (intersectionPix.isNull())
 			{
-				intersectionPix.load(":/stacking/intersectionmode.bmp");
+				intersectionPix.load(":/stacking/intersectionmode.png");
 			}
 			ui->previewImage->setPixmap(intersectionPix);
 			ui->modeText->setText(tr("The result of the stacking process is framed by the intersection of all the frames.",
@@ -94,7 +94,7 @@ namespace DSS
 			ui->customMode->setChecked(true);
 			if (customPix.isNull())
 			{
-				customPix.load(":/stacking/custommode.bmp");
+				customPix.load(":/stacking/custommode.png");
 			}
 			ui->previewImage->setPixmap(customPix);
 			ui->modeText->setText("");
@@ -126,7 +126,7 @@ namespace DSS
 		workspace->setValue("Stacking/Mosaic", (uint)SM_NORMAL);
 		if (normalPix.isNull())
 		{
-			normalPix.load(":/stacking/normalmode.bmp");
+			normalPix.load(":/stacking/normalmode.png");
 		}
 		ui->previewImage->setPixmap(normalPix);
 		ui->modeText->setText(tr("The result of the stacking process is framed by the reference light frame.",
@@ -139,7 +139,7 @@ namespace DSS
 		workspace->setValue("Stacking/Mosaic", (uint)SM_MOSAIC);
 		if (mosaicPix.isNull())
 		{
-			mosaicPix.load(":/stacking/mosaicmode.bmp");
+			mosaicPix.load(":/stacking/mosaicmode.png");
 		}
 		ui->previewImage->setPixmap(mosaicPix);
 		ui->modeText->setText(tr("The result of the stacking process contains all the light frames of the stack.",
@@ -153,7 +153,7 @@ namespace DSS
 		workspace->setValue("Stacking/Mosaic", (uint)SM_INTERSECTION);
 		if (intersectionPix.isNull())
 		{
-			intersectionPix.load(":/stacking/intersectionmode.bmp");
+			intersectionPix.load(":/stacking/intersectionmode.png");
 		}
 		ui->previewImage->setPixmap(intersectionPix);
 		ui->modeText->setText(tr("The result of the stacking process is framed by the intersection of all the frames.",
@@ -167,7 +167,7 @@ namespace DSS
 		// Note well: DO NOT set workspace value "Stacking/Mosaic" to SM_CUSTOM
 		if (customPix.isNull())
 		{
-			customPix.load(":/stacking/custommode.bmp");
+			customPix.load(":/stacking/custommode.png");
 		}
 		ui->previewImage->setPixmap(customPix);
 		ui->modeText->setText("");

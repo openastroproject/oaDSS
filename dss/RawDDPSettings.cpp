@@ -459,35 +459,35 @@ namespace DSS
 			case CFATYPE_BGGR:
 				if (bggrPix.isNull())
 				{
-					bggrPix.load(":/rawddpsettings/Pattern_BGGR.bmp");
+					bggrPix.load(":/rawddpsettings/Pattern_BGGR.png");
 				}
 				ui->bayerPattern->setPixmap(bggrPix);
 				break;
 			case CFATYPE_GBRG:
 				if (gbrgPix.isNull())
 				{
-					gbrgPix.load(":/rawddpsettings/Pattern_GBRG.bmp");
+					gbrgPix.load(":/rawddpsettings/Pattern_GBRG.png");
 				}
 				ui->bayerPattern->setPixmap(gbrgPix);
 				break;
 			case CFATYPE_GRBG:
 				if (grbgPix.isNull())
 				{
-					grbgPix.load(":/rawddpsettings/Pattern_GRBG.bmp");
+					grbgPix.load(":/rawddpsettings/Pattern_GRBG.png");
 				}
 				ui->bayerPattern->setPixmap(grbgPix);
 				break;
 			case CFATYPE_RGGB:
 				if (rggbPix.isNull())
 				{
-					rggbPix.load(":/rawddpsettings/Pattern_RGGB.bmp");
+					rggbPix.load(":/rawddpsettings/Pattern_RGGB.png");
 				}
 				ui->bayerPattern->setPixmap(rggbPix);
 				break;
 			case CFATYPE_CYGMCYMG:
 				if (cygmcymgPix.isNull())
 				{
-					cygmcymgPix.load(":/rawddpsettings/Pattern_CYGMCYMG.bmp");
+					cygmcymgPix.load(":/rawddpsettings/Pattern_CYGMCYMG.png");
 				}
 				ui->bayerPattern->setPixmap(cygmcymgPix);
 				break;

@@ -71,7 +71,7 @@ namespace DSS
 		{
 			if (standardPix.isNull())
 			{
-				standardPix.load(":/comet/normal.bmp");
+				standardPix.load(":/comet/normal.png");
 			}
 			ui->laComet->setPixmap(standardPix);
 		}
@@ -79,7 +79,7 @@ namespace DSS
 		{
 			if (cometPix.isNull())
 			{
-				cometPix.load(":/comet/trails.bmp");
+				cometPix.load(":/comet/trails.png");
 			}
 			ui->laComet->setPixmap(cometPix);
 		}
@@ -87,7 +87,7 @@ namespace DSS
 		{
 			if (advancedPix.isNull())
 			{
-				advancedPix.load(":/comet/freeze.bmp");
+				advancedPix.load(":/comet/freeze.png");
 			}
 			ui->laComet->setPixmap(advancedPix);
 		}

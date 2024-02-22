@@ -6,19 +6,19 @@
         <file alias="Heart.png">res/Heart.png</file>
     </qresource>
     <qresource prefix="/calibration">
-        <file alias="rational.bmp">res/Calibration_Rational.bmp</file>
-        <file alias="linear.bmp">res/Calibration_Linear.bmp</file>
+        <file alias="rational.png">res/Calibration_Rational.png</file>
+        <file alias="linear.png">res/Calibration_Linear.png</file>
     </qresource>
     <qresource prefix="/rgbcalibration">
-        <file alias="none.bmp">res/RGBCalibration_None.bmp</file>
-        <file alias="middle.bmp">res/RGBCalibration_Middle.bmp</file>
-        <file alias="minimum.bmp">res/RGBCalibration_Minimum.bmp</file>
-        <file alias="maximum.bmp">res/RGBCalibration_Maximum.bmp</file>
+        <file alias="none.png">res/RGBCalibration_None.png</file>
+        <file alias="middle.png">res/RGBCalibration_Middle.png</file>
+        <file alias="minimum.png">res/RGBCalibration_Minimum.png</file>
+        <file alias="maximum.png">res/RGBCalibration_Maximum.png</file>
     </qresource>
     <qresource prefix="/comet">
-        <file alias="normal.bmp">res/Comet_Normal.bmp</file>
-        <file alias="freeze.bmp">res/Comet_Freeze.bmp</file>
-        <file alias="trails.bmp">res/Comet_Trails.bmp</file>
+        <file alias="normal.png">res/Comet_Normal.png</file>
+        <file alias="freeze.png">res/Comet_Freeze.png</file>
+        <file alias="trails.png">res/Comet_Trails.png</file>
     </qresource>
     <qresource prefix="/flags">
         <file alias="brazil.png">res/Brazil.png</file>
@@ -35,10 +35,10 @@
         <file alias="turkish.png">res/Turkish.png</file>
     </qresource>
     <qresource prefix="/stacking">
-        <file alias="normalmode.bmp">res/normalmode.bmp</file>
-        <file alias="intersectionmode.bmp">res/intersectionmode.bmp</file>
-        <file alias="mosaicmode.bmp">res/mosaicmode.bmp</file>
-        <file alias="custommode.bmp">res/custommode.bmp</file>
+        <file alias="normalmode.png">res/normalmode.png</file>
+        <file alias="intersectionmode.png">res/intersectionmode.png</file>
+        <file alias="mosaicmode.png">res/mosaicmode.png</file>
+        <file alias="custommode.png">res/custommode.png</file>
         <file alias="4corners.png">res/4Corners.png</file>
         <file alias="BiasColour.png">res/BiasColour.png</file>
         <file alias="BiasColour@2x.png">res/BiasColour@2x.png</file>
@@ -74,11 +74,11 @@
         <file alias="LightRGB@2.png">res/LightRGB@2x.png</file>
     </qresource>
     <qresource prefix="/rawddpsettings">
-        <file alias="Pattern_BGGR.bmp">res/Pattern_BGGR.bmp</file>
-        <file alias="Pattern_GBRG.bmp">res/Pattern_GBRG.bmp</file>
-        <file alias="Pattern_GRBG.bmp">res/Pattern_GRBG.bmp</file>
-        <file alias="Pattern_RGGB.bmp">res/Pattern_RGGB.bmp</file>
-        <file alias="Pattern_CYGMCYMG.bmp">res/Pattern_CYGMCYMG.bmp</file>
+        <file alias="Pattern_BGGR.png">res/Pattern_BGGR.png</file>
+        <file alias="Pattern_GBRG.png">res/Pattern_GBRG.png</file>
+        <file alias="Pattern_GRBG.png">res/Pattern_GRBG.png</file>
+        <file alias="Pattern_RGGB.png">res/Pattern_RGGB.png</file>
+        <file alias="Pattern_CYGMCYMG.png">res/Pattern_CYGMCYMG.png</file>
     </qresource>
     <qresource prefix="/toolbar">
         <file alias="ButtonComet_Disabled.png">res/ButtonComet_Disabled.png</file>

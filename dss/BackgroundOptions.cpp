@@ -54,7 +54,7 @@ namespace DSS
 		{
 			if (pxLinear.isNull())
 			{
-				pxLinear.load(":/calibration/linear.bmp");
+				pxLinear.load(":/calibration/linear.png");
 			}
 			ui->laCalibration->setPixmap(pxLinear);
 			ui->rbLinear->setChecked(true);
@@ -63,7 +63,7 @@ namespace DSS
 		{
 			if (pxRational.isNull())
 			{
-				pxRational.load(":/calibration/rational.bmp");
+				pxRational.load(":/calibration/rational.png");
 			}
 			ui->laCalibration->setPixmap(pxRational);
 			ui->rbRational->setChecked(true);
@@ -84,7 +84,7 @@ namespace DSS
 	{
 		if (pxNone.isNull())
 		{
-			pxNone.load(":/rgbcalibration/none.bmp");
+			pxNone.load(":/rgbcalibration/none.png");
 		}
 		ui->laRGBCalibration->setPixmap(pxNone);
 	}
@@ -93,7 +93,7 @@ namespace DSS
 	{
 		if (pxMin.isNull())
 		{
-			pxMin.load(":/rgbcalibration/minimum.bmp");
+			pxMin.load(":/rgbcalibration/minimum.png");
 		}
 		ui->laRGBCalibration->setPixmap(pxMin);
 	}
@@ -102,7 +102,7 @@ namespace DSS
 	{
 		if (pxMid.isNull())
 		{
-			pxMid.load(":/rgbcalibration/middle.bmp");
+			pxMid.load(":/rgbcalibration/middle.png");
 		}
 		ui->laRGBCalibration->setPixmap(pxMid);
 	}
@@ -111,7 +111,7 @@ namespace DSS
 	{
 		if (pxMax.isNull())
 		{
-			pxMax.load(":/rgbcalibration/maximum.bmp");
+			pxMax.load(":/rgbcalibration/maximum.png");
 		}
 		ui->laRGBCalibration->setPixmap(pxMax);
 	}

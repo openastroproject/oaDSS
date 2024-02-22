@@ -126,6 +126,7 @@ public:
 	DSS::ExplorerBar& GetExplorerBar();
 	void setWindowFilePath(const QString& name);
 	void reportError(const QString& message, const QString& type, Severity severity, Method method, bool terminate) override;
+	void reloadHelp ( void );
 };
 
 
@@ -143,6 +144,8 @@ public :
 	virtual int Run() /* override */;
 
 };
+
+extern bool LoadTranslations();
 
 #ifdef _WINDOWS
 //

@@ -9,7 +9,7 @@
 #include "DeepSkyStacker.h"
 
 extern bool	g_bShowRefStars;
-extern bool LoadTranslations();
+//extern bool LoadTranslations();
 
 #define xstr(s) str(s)
 #define str(s) #s
@@ -43,6 +43,7 @@ namespace DSS
         strText += tr("(Now somewhat out of date)") += "<br><br>";
         strHTML += strText;
 
+#ifdef _WINDOWS
         strText = "Qt Application Framework 6.5.1\nCopyright © 2023 The Qt Company Ltd.";
         strText += "<br>";
         strText = strText.replace("\n", "<br>");
@@ -85,6 +86,7 @@ namespace DSS
         strHTML += strText + "<br>";
         strText = QString("<a href=\"%1\">%1</a><br>").arg("https://github.com/bluetiger9/SmtpClient-for-Qt");
         strHTML += strText;
+#endif
 
         ui->setupUi(this);
         connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
@@ -255,5 +257,6 @@ namespace DSS
         settings.setValue("InternetCheck", m_InternetCheck);
 
         LoadTranslations();
+        DeepSkyStacker::instance()->reloadHelp();
     }
 }

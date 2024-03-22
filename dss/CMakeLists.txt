@@ -47,7 +47,7 @@ add_executable ( DeepSkyStacker
 	editstars.cpp
 	ExplorerBar.cpp
 	ImageProperties.cpp
-#	ImageSinks.cpp							# uses broken bits of libtools.  May be redundant
+#	ImageSinks.cpp							# uses broken bits of libtools
 	IntermediateFiles.cpp
 	mrulist.cpp
 	OutputTab.cpp

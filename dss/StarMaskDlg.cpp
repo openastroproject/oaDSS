@@ -25,10 +25,8 @@ namespace DSS {
 		pixSlider->setMinimum ( 0 );
 		pixSlider->setMaximum ( 10 );
 
-		// The compiler can't find a matching function if I just use pointers
-		// rather than SLOT/SIGNAL for this first one.  No idea why atm
-		connect ( starShape, SIGNAL( currentIndexChanged ( int )), this,
-				SLOT( updateStarShapePreview ( int )));
+		connect ( starShape, QOverload<int>::of( &QComboBox::currentIndexChanged ),
+        this, &StarMaskDlg::updateStarShapePreview );
 		connect ( thresholdSlider, &QSlider::sliderMoved, this,
 				&StarMaskDlg::thresholdUpdated );
 		connect ( minSlider, &QSlider::sliderMoved, this,

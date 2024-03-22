@@ -438,7 +438,7 @@ namespace DSS
 			}
 		}
 
-		connect(ui->DSLRs, SIGNAL( QComboBox::currentIndexChanged ( int )), this, SLOT( RawDDPSettings::DSLRs_currentIndexChanged ( int )));
+		connect(ui->DSLRs, QOverload<int>::of( &QComboBox::currentIndexChanged ), this, &RawDDPSettings::DSLRs_currentIndexChanged );
 
 		updateBayerPattern().updateControls();
 

@@ -1,0 +1,18 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="i18n">
+    <file>DeepSkyStacker_ca.qm</file>
+    <file>DeepSkyStacker_cs.qm</file>
+    <file>DeepSkyStacker_de.qm</file>
+    <file>DeepSkyStacker_en.qm</file>
+    <file>DeepSkyStacker_es.qm</file>
+    <file>DeepSkyStacker_fr.qm</file>
+    <file>DeepSkyStacker_it.qm</file>
+    <file>DeepSkyStacker_nl.qm</file>
+    <file>DeepSkyStacker_pt_BR.qm</file>
+    <file>DeepSkyStacker_ro.qm</file>
+    <file>DeepSkyStacker_ru.qm</file>
+    <file>DeepSkyStacker_tr.qm</file>
+    <file>DeepSkyStacker_zh_CN.qm</file>
+    <file>DeepSkyStacker_zh_TW.qm</file>
+</qresource>
+</RCC>

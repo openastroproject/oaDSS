@@ -88,7 +88,11 @@ bool RetrieveEXIFInfo(const fs::path& fileName, CBitmapInfo& BitmapInfo)
 	// ISO
 	if (iterator = isoSpeed(exifData); exifData.end() != iterator)
 	{
+#if EXIV2_TEST_VERSION(0,28,1)
 		BitmapInfo.m_lISOSpeed = iterator->toInt64(0);	// Return 1st element if multi-element IFD
+#else
+		BitmapInfo.m_lISOSpeed = iterator->toLong(0);	// Return 1st element if multi-element IFD
+#endif
 		result = true;
 	}
 

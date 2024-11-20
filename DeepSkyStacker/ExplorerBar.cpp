@@ -152,10 +152,12 @@ namespace DSS
 		//
 		// Dark colour scheme?
 		//
+#if QT_VERSION >= 0x00060500
 		if (Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme())
 		{
 			redColour = QColorConstants::Svg::gold.name();
 		}
+#endif
 
 		makeLink(ui->openLights, redColour);
 		makeLink(ui->openDarks, defColour);

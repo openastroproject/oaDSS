@@ -48,8 +48,10 @@ namespace DSS
 		//
 		// If Windows Dark Theme is active set blueColour to be lightskyblue instead of deepskyblue
 		// 
+#if QT_VERSION >= 0x060500
 		if (Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme())
 			blueColour = QColorConstants::Svg::lightskyblue;
+#endif
 	}
 
 	StackRecap::~StackRecap()

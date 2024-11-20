@@ -70,12 +70,15 @@ namespace DSS
 		ui(new Ui::RecommendedSettings),
 		workspace(new Workspace()),
 		pStackingTasks(nullptr),
-		initialised(false),
+		initialised(false)
+#if QT_VERSION >= 0x060500
+    ,
 		darkTheme{ Qt::ColorScheme::Dark == QGuiApplication::styleHints()->colorScheme() },
 		//
 		// If Windows Dark Theme is active set blueColour to be lightskyblue instead of deepskyblue
 		// 
 		blueColour{ darkTheme ? QColorConstants::Svg::lightskyblue : QColorConstants::Svg::deepskyblue }
+#endif
 	{
 		ui->setupUi(this);
 		connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);

@@ -503,7 +503,9 @@ namespace DSS
 		void blueChanging(int peg);
 		void blueChanged(int peg);
 
+#if QT_VERSION >= 0x00060500
 		void onColorSchemeChanged(Qt::ColorScheme colorScheme);
+#endif
 		void onTimer();
 
 		void redButtonPressed();

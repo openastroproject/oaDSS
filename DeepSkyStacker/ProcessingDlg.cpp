@@ -97,9 +97,11 @@ namespace DSS
 		setupUi(this);
 		controls->tabWidget->setCurrentIndex(0);	// Position on the RGB/K tab
 
+#if QT_VERSION >= 0x00060500
 		Qt::ColorScheme colorScheme{ QGuiApplication::styleHints()->colorScheme() };
 		if (Qt::ColorScheme::Dark == colorScheme)
 			iconModifier = "-dark";
+#endif
 
 		setButtonIcons();
 
@@ -225,8 +227,10 @@ namespace DSS
 
 	void ProcessingDlg::connectSignalsToSlots()
 	{
+#if QT_VERSION >= 0x00060500
 		connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged,
 			this, &ProcessingDlg::onColorSchemeChanged);
+#endif
 
 		connect(controls->applyButton, &QPushButton::pressed, this, &ProcessingDlg::onApply);
 		connect(controls->undoButton, &QPushButton::pressed, this, &ProcessingDlg::onUndo);
@@ -1349,6 +1353,7 @@ namespace DSS
 
 	/* ------------------------------------------------------------------- */
 
+#if QT_VERSION >= 0x00060500
 	void ProcessingDlg::onColorSchemeChanged(Qt::ColorScheme colorScheme)
 	{
 		iconModifier.clear();
@@ -1361,6 +1366,7 @@ namespace DSS
 		setButtonIcons();		// in RGBTab.cpp
 		update();
 	}
+#endif
 
 	/* ------------------------------------------------------------------- */
 

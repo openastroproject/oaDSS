@@ -16,10 +16,7 @@ set(CMAKE_PREFIX_PATH
 	CACHE STRING "" FORCE
 	)
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-set(CMAKE_PREFIX_PATH
-	"/opt/Qt/6.8.0/gcc_64"
-	CACHE STRING "" FORCE
-	)
+	message ( "Using system Qt installation" )
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 set(CMAKE_PREFIX_PATH
 	"/opt/Qt/6.8.0/macos"
@@ -66,8 +63,10 @@ set(CMAKE_INSTALL_LIBDIR "." CACHE STRING "" FORCE)
 set(CMAKE_INSTALL_LIBEXECDIR "." CACHE STRING "" FORCE)
 set(CMAKE_INSTALL_PLUGINSDIR "." CACHE STRING "" FORCE)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Network LinguistTools)
-
+find_package(QT REQUIRED COMPONENTS Core NAMES Qt6 Qt5)
+if ( ${QT_VERSION} VERSION_GREATER_EQUAL 6.0.0 )
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Network LinguistTools)
+endif()
 
 if(NOT WIN32)
 #

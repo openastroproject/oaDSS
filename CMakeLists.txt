@@ -135,7 +135,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Sub-projects
 ################################################################################
 add_subdirectory(DeepSkyStackerKernel)
-add_subdirectory(LibRaw/buildfiles)
 if(WIN32)
 add_subdirectory(libtiff)
 endif()

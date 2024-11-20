@@ -1,11 +1,15 @@
 set(PROJECT_NAME DeepSkyStacker)
 message("Configuring project: " ${PROJECT_NAME})
 
+if ( ${QT_VERSION} VERSION_LESS 6.3.0)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+else()
 qt_standard_project_setup()
+endif()
 
 set(COMPILE_WARNING_AS_ERROR YES)
-
-set(CMAKE_AUTORCC ON)
 
 ################################################################################
 # Source groups
@@ -326,7 +330,15 @@ qt_add_executable(DeepSkyStacker ${ALL_FILES})
 set_source_files_properties(${i18n_Files}
      PROPERTIES OUTPUT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/i18n")
 
-qt_add_lrelease(TS_FILES ${i18n_Files})
+if ( ${QT_VERSION} VERSION_LESS 6.7.0)
+if ( ${QT_VERSION} VERSION_LESS 6.2.0)
+  message(FATAL_ERROR "qt_add_lrelease missing")
+else()
+  qt_add_lrelease(DeepSkyStacker TS_FILES ${i18n_Files})
+endif() 
+else()
+  qt_add_lrelease(TS_FILES ${i18n_Files})
+endif()     
 
 set_target_properties(DeepSkyStacker PROPERTIES
     INTERPROCEDURAL_OPTIMIZATION_RELEASE "TRUE"
@@ -427,10 +439,10 @@ endif()
 ################################################################################
 # Link with other targets.
 target_link_libraries(DeepSkyStacker PRIVATE
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Widgets
-    Qt6::Network
+    Qt::Core
+    Qt::Gui
+    Qt::Widgets
+    Qt::Network
 	DeepSkyStackerKernel
     libraw
     ZClass

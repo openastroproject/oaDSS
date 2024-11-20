@@ -2,7 +2,13 @@ set(PROJECT_NAME DeepSkyStackerKernel)
 message("Configuring project: " ${PROJECT_NAME})
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
+if ( ${QT_VERSION} VERSION_LESS 6.3.0)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+else()
 qt_standard_project_setup()
+endif()
 
 set(COMPILE_WARNING_AS_ERROR YES)
 
@@ -226,9 +232,17 @@ qt_add_library(DeepSkyStackerKernel STATIC ${ALL_FILES})
 set_source_files_properties(${i18n_Files}
      PROPERTIES OUTPUT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/i18n")
 
-qt_add_lrelease(TS_FILES ${i18n_Files})
+if ( ${QT_VERSION} VERSION_LESS 6.7.0)
+if ( ${QT_VERSION} VERSION_LESS 6.2.0)
+  message(FATAL_ERROR "qt_add_lrelease missing")
+else()
+  qt_add_lrelease(DeepSkyStackerKernel TS_FILES ${i18n_Files})
+endif()
+else()
+  qt_add_lrelease(TS_FILES ${i18n_Files})
+endif()
 
-target_link_libraries(DeepSkyStackerKernel PRIVATE Qt6::Widgets Qt6::Network)
+target_link_libraries(DeepSkyStackerKernel PRIVATE Qt::Widgets Qt::Network)
 
 ################################################################################
 # Output directory
@@ -248,7 +262,6 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     .
     ../DeepSkyStacker;
     ../ZClass
-    ../LibRaw
     ../Tools
 )
 

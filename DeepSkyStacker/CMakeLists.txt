@@ -333,7 +333,7 @@ set_source_files_properties(${i18n_Files}
 if ( ${QT_VERSION} VERSION_LESS 6.7.0)
 if ( ${QT_VERSION} VERSION_LESS 6.2.0)
 if ( ${QT_VERSION} VERSION_LESS 6.0.0)
-  qt5_add_translation ( qmFiles ${i18n_Files})
+  qt5_add_translations ( qmFiles ${i18n_Files})
 else()
   message(FATAL_ERROR "qt_add_lrelease missing")
 endif()

@@ -59,7 +59,7 @@ qt_add_library(ZClass STATIC ${ALL_FILES})
 endif()
 
 set_target_properties(ZClass PROPERTIES FOLDER "Libraries")
-target_link_libraries(ZClass PRIVATE Qt6::Core)
+target_link_libraries(ZClass PRIVATE Qt::Core)
 
 ################################################################################
 # Output directory

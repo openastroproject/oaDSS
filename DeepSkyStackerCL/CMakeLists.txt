@@ -235,8 +235,8 @@ endif()
 ################################################################################
 # Link with other targets.
 target_link_libraries(DeepSkyStackerCL PRIVATE
-    Qt6::Core
-	Qt6::Gui
+    Qt::Core
+	Qt::Gui
 	DeepSkyStackerKernel
     libraw
     libtiff

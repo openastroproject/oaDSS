@@ -230,10 +230,10 @@ endif()
 ################################################################################
 # Link with other targets.
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    Qt6::Core
-    Qt6::Widgets
-    Qt6::Network
-	Qt6::Charts
+    Qt::Core
+    Qt::Widgets
+    Qt::Network
+	Qt::Charts
 	DeepSkyStackerKernel
     libraw
     libtiff

@@ -515,6 +515,7 @@ if(NOT LINUX)
     endif()
     message ("executable_path: " ${executable_path})
     message ("deploy tools options arg: " ${deploy_tool_options_arg})
+if ( ${QT_VERSION} VERSION_GREATER_EQUAL 6.0.0)
      qt_generate_deploy_script(
          TARGET DeepSkyStacker
          OUTPUT_SCRIPT deploy_script
@@ -527,6 +528,7 @@ if(NOT LINUX)
 
     INSTALL (TARGETS DeepSkyStacker)
     INSTALL (SCRIPT ${deploy_script})
+endif()
 endif()
 
 #[=[

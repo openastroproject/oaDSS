@@ -298,6 +298,7 @@ else()
 endif()
 message ("executable_path: " ${executable_path})
 message ("deploy tools options arg: " ${deploy_tool_options_arg})
+if ( ${QT_VERSION} VERSION_GREATER_EQUAL 6.0.0)
  qt_generate_deploy_script(
      TARGET DeepSkyStackerLive
      OUTPUT_SCRIPT deploy_script
@@ -310,3 +311,4 @@ message ("deploy tools options arg: " ${deploy_tool_options_arg})
 
 INSTALL (TARGETS DeepSkyStackerLive)
 INSTALL (SCRIPT ${deploy_script})
+endif()

@@ -4,7 +4,13 @@ set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
 set(COMPILE_WARNING_AS_ERROR YES)
 
+if ( ${QT_VERSION} VERSION_LESS 6.3.0)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+else()
 qt_standard_project_setup()
+endif()
+set(CMAKE_AUTORCC ON)
 
 ################################################################################
 # Source groups

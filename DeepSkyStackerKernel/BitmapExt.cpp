@@ -823,7 +823,12 @@ bool GetPictureInfo(const fs::path& path, CBitmapInfo& BitmapInfo)
 		}
 	}
 
+#if QT_VERSION < 0x00060000
+  const QString tmppath = QString::fromStdString(path.native());
+  QFileInfo info{ tmppath };
+#else
 	QFileInfo info{ path };
+#endif
 	QString extension{ info.suffix().toLower() }; 
 
 	if (!bResult)
@@ -854,7 +859,11 @@ bool GetPictureInfo(const fs::path& path, CBitmapInfo& BitmapInfo)
 			bResult = true;
 		else if (isJpeg || isPng)
 		{
+#if QT_VERSION < 0x00060000
+			QFile file{ tmppath };
+#else
 			QFile file{ path };
+#endif
 			file.open(QIODevice::ReadOnly);
 			if (file.isOpen())
 			{

@@ -8,6 +8,12 @@
 #include "ColorBitmap.h"
 #include "Multitask.h"
 
+#if !HAVE_STD_SPAN
+#if !HAVE_BOOST_SPAN
+#include "span.hpp"
+#endif
+#endif
+
 /* ------------------------------------------------------------------- */
 
 // static
@@ -168,7 +174,13 @@ bool CChannelAlign::AlignChannels(std::shared_ptr<CMemoryBitmap> pBitmap, Progre
 		CMatchingStars MatchingStars{ pBitmap->Width(), pBitmap->Height() };
 		constexpr int MaxNumberOfConsideredStars = 100;
 
-		const auto addRefOrTargetStar = [&MatchingStars, MaxNumberOfConsideredStars]<bool Refstar>(std::span<CStar> stars)
+		const auto addRefOrTargetStar = [&MatchingStars, MaxNumberOfConsideredStars]<bool Refstar>(
+#if HAVE_STD_SPAN
+        std::span
+#else
+        boost::span
+#endif
+        <CStar> stars)
 		{
 			std::ranges::sort(stars, CompareStarLuminancy);
 			for (const auto& star : std::views::take(stars, MaxNumberOfConsideredStars)) // Is safe, even if 'stars' has less than 100 elements.

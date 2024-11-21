@@ -3,6 +3,12 @@
 #include "DSSTools.h"
 #include "BilinearParameters.h"
 
+#if !HAVE_STD_SPAN
+#if !HAVE_BOOST_SPAN
+#include "span.hpp"
+#endif
+#endif
+
 class CPixelTransform
 {
 public:
@@ -183,7 +189,13 @@ inline void ComputePixelDispatch(const QPointF& pt, const int lPixelSize, PIXELD
 		}
 }
 
-inline std::array<double, 4> ComputeAll4PixelDispatches(const QPointF& pt, std::span<int, 4> xcoords, std::span<int, 4> ycoords)
+inline std::array<double, 4> ComputeAll4PixelDispatches(const QPointF& pt,
+#if HAVE_STD_SPAN
+    std::span<int, 4> xcoords, std::span<int, 4> ycoords
+#else
+    boost::span<int, 4> xcoords, boost::span<int, 4> ycoords
+#endif
+)
 {
 	const double xf = std::floor(pt.x());
 	const double yf = std::floor(pt.y());

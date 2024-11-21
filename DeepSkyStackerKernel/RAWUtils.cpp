@@ -406,7 +406,13 @@ namespace { // Only use in this .cpp file
 
 		// Initialisation of a static variable is thread-safe.
 		static const std::vector<std::string> supportedCameras = std::invoke(
-			[&comparator](const std::span<const char* const> listOfCameras)
+			[&comparator](const
+#if HAVE_STD_SPAN
+        std::span
+#else
+        boost::span
+#endif
+        `<const char* const> listOfCameras)
 			{
 				std::vector<std::string> v(listOfCameras.size(), std::string{});
 				std::ranges::copy_if(listOfCameras, v.begin(), [](const char* pCamera) { return pCamera != nullptr; });

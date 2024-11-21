@@ -80,6 +80,7 @@ include ( FindTIFF )
 find_package(OpenMP REQUIRED)
 find_package (Threads REQUIRED)
 find_package(ZLIB REQUIRED)
+find_package(Boost REQUIRED)
 endif()
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS

@@ -40,7 +40,11 @@ set(ALL_FILES
 ################################################################################
 # Target
 ################################################################################
+if ( ${QT_VERSION} VERSION_LESS 6.0.0)
+add_executable(DeepSkyStackerTest ${ALL_FILES})
+else()
 qt_add_executable(DeepSkyStackerTest ${ALL_FILES})
+endif()
 
 set_source_files_properties(${i18n_Files}
      PROPERTIES OUTPUT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/i18n")

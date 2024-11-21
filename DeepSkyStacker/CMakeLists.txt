@@ -2,12 +2,12 @@ set(PROJECT_NAME DeepSkyStacker)
 message("Configuring project: " ${PROJECT_NAME})
 
 if ( ${QT_VERSION} VERSION_LESS 6.3.0)
-set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 else()
 qt_standard_project_setup()
 endif()
+set(CMAKE_AUTORCC ON)
 
 set(COMPILE_WARNING_AS_ERROR YES)
 

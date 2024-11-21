@@ -3,12 +3,12 @@ message("Configuring project: " ${PROJECT_NAME})
 set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
 if ( ${QT_VERSION} VERSION_LESS 6.3.0)
-set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 else()
 qt_standard_project_setup()
 endif()
+set(CMAKE_AUTORCC ON)
 
 set(COMPILE_WARNING_AS_ERROR YES)
 
@@ -227,7 +227,12 @@ endif()
 ################################################################################
 # Target
 ################################################################################
+
+if ( ${QT_VERSION} VERSION_LESS 6.2.0)
 qt_add_library(DeepSkyStackerKernel STATIC ${ALL_FILES})
+else()
+qt_add_library(DeepSkyStackerKernel STATIC ${ALL_FILES})
+endif()
 
 set_source_files_properties(${i18n_Files}
      PROPERTIES OUTPUT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/i18n")

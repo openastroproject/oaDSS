@@ -46,7 +46,11 @@ set(ALL_FILES
 ################################################################################
 # Target
 ################################################################################
+if ( ${QT_VERSION} VERSION_LESS 6.2.0)
+add_library(ZClass STATIC ${ALL_FILES})
+else()
 qt_add_library(ZClass STATIC ${ALL_FILES})
+endif()
 
 set_target_properties(ZClass PROPERTIES FOLDER "Libraries")
 target_link_libraries(ZClass PRIVATE Qt6::Core)

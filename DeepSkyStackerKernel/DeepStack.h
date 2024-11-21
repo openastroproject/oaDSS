@@ -3,6 +3,9 @@
 #include <zexcept.h>
 #include <filesystem>
 #include <QImage>
+#if QT_VERSION < 0x00060000
+#include <QDebug>
+#endif
 
 namespace fs = std::filesystem;
 

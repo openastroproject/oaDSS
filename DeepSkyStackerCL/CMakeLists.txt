@@ -63,7 +63,15 @@ qt_add_executable(DeepSkyStackerCL ${ALL_FILES})
 set_source_files_properties(${i18n_Files}
      PROPERTIES OUTPUT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/i18n")
 
-qt_add_lrelease(TS_FILES ${i18n_Files})
+if ( ${QT_VERSION} VERSION_LESS 6.7.0)
+if ( ${QT_VERSION} VERSION_LESS 6.2.0)
+  message(FATAL_ERROR "qt_add_lrelease missing")
+else()
+  qt_add_lrelease(DeepSkyStackerCL TS_FILES ${i18n_Files})
+endif()
+else()
+  qt_add_lrelease(TS_FILES ${i18n_Files})
+endif()
 
 set_target_properties(DeepSkyStackerCL PROPERTIES
     INTERPROCEDURAL_OPTIMIZATION_RELEASE "TRUE"

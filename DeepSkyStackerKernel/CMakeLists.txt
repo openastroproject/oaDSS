@@ -229,7 +229,7 @@ endif()
 ################################################################################
 
 if ( ${QT_VERSION} VERSION_LESS 6.2.0)
-qt_add_library(DeepSkyStackerKernel STATIC ${ALL_FILES})
+add_library(DeepSkyStackerKernel STATIC ${ALL_FILES})
 else()
 qt_add_library(DeepSkyStackerKernel STATIC ${ALL_FILES})
 endif()

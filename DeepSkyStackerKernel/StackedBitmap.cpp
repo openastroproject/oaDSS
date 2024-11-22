@@ -1,4 +1,7 @@
 #include "stdafx.h"
+#if QT_VERSION < 0x00060000
+#include <QDebug>
+#endif
 #include "StackedBitmap.h"
 #include "TIFFUtil.h"
 #include "ColorHelpers.h"

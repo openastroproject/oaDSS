@@ -417,7 +417,11 @@ bool	WorkspaceSettings::ReadFromString(const QString& theString)
 		// We need to convert it to the same type as is currently stored
 		//
 		QVariant variant(value);
+#if QT_VERSION >= 0x00060000
 		QMetaType type = it->value().metaType();
+#else
+		QMetaType type = it->value().type();
+#endif
 		ZASSERT(variant.canConvert(type));
 		variant.convert(type);
 		it->setValue(variant);

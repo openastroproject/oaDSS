@@ -42,7 +42,7 @@ void	CLightFramesStackingInfo::SetReferenceFrame(const fs::path& path)
 
 #if QT_VERSION < 0x00060000
   QString tmppath = QString::fromStdString ( path.native());
-  const QFileInfo fileInfo(path);
+  const QFileInfo fileInfo(tmppath);
 #else
 	const QFileInfo fileInfo(path);
 #endif

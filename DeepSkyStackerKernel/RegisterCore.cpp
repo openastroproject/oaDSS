@@ -440,7 +440,14 @@ namespace DSS {
 								if (!bMainOk && !bBrighterPixel && (lMaxRadius > 2)) // We found darker pixels, no brighter pixels, candidate is not too small.
 								{
 									int maxDeltaRadii = 0;
-									const auto compareDeltaRadii = [deltaRadius, &directions, &maxDeltaRadii](std::ranges::viewable_range auto dirs) -> bool
+									const auto compareDeltaRadii = [deltaRadius, &directions, &maxDeltaRadii](
+// FIX ME not sure this is a valid test
+#if QT_VERSION < 0x00060000
+                      std::array<Dirs,4>
+#else
+                      std::ranges::viewable_range auto
+#endif
+                      dirs) -> bool
 									{
 										bool OK = true;
 										for (const Dirs k1 : dirs)

@@ -26,7 +26,13 @@ namespace DSS
 			currentValue = workspace.value(keyName);
 			value = setting.value();
 
-			switch (static_cast<QMetaType::Type>(value.typeId()))
+			switch (static_cast<QMetaType::Type>(value.
+#if QT_VERSION < 0x00060000
+            type()
+#else
+            typeId()
+#endif
+            ))
 			{
 			case QMetaType::Bool:
 				bResult = value.toBool() != currentValue.toBool();

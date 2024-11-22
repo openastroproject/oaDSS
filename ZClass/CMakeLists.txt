@@ -56,7 +56,7 @@ if ( HAVE_STD_FORMAT )
 else()
   if ( BOOST_VERSION VERSION_GREATER_EQUAL 1.31.0 )
     add_compile_definitions( HAVE_BOOST_FORMAT )
-  else
+  else()
     message(FATAL_ERROR "Neither std::format nor boost::format found")
   endif()
 endif()

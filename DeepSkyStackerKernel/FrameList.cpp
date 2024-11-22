@@ -722,9 +722,9 @@ namespace DSS
 				group.pictures->createIndex(0, 0),
 				group.pictures->createIndex(group.pictures->rowCount(), 0), 
 #if QT_VERSION < 0x00060000
-				QList
-#else
 				QVector
+#else
+				QList
 #endif
         <int>{ Qt::CheckStateRole }
 			);

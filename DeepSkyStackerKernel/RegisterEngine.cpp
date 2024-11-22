@@ -1,5 +1,9 @@
 
 #include "stdafx.h"
+
+#if QT_VERSION < 0x00060000
+#include <QTextStream>
+#endif
 #include "RegisterEngine.h"
 #include "Workspace.h"
 #include "PixelTransform.h"
@@ -138,8 +142,17 @@ namespace {
 
 bool CRegisteredFrame::SaveRegisteringInfo(const fs::path& szInfoFileName)
 {
+#if QT_VERSION < 0x00060000
+  QString tmpname = QString::fromStdString ( szInfoFileName.native());
+  QFile data( tmpname );
+#else
 	QFile data(szInfoFileName);
-	if (!data.open(QFile::WriteOnly | QFile::Truncate | QIODeviceBase::Text))
+#endif
+	if (!data.open(QFile::WriteOnly | QFile::Truncate
+#if QT_VERSION >= 0x00060000
+        | QIODeviceBase::Text
+#endif
+        ))
 		return false;
 	QByteArray buffer;
 
@@ -197,8 +210,17 @@ bool CRegisteredFrame::LoadRegisteringInfo(const fs::path& szInfoFileName)
 		return false;
 	};
 
+#if QT_VERSION < 0x00060000
+  QString tmpname = QString::fromStdString ( szInfoFileName.native());
+  QFile data( tmpname );
+#else
 	QFile data(szInfoFileName);
-	if (!data.open(QFile::ReadOnly | QIODeviceBase::Text))
+#endif
+	if (!data.open(QFile::ReadOnly
+#if QT_VERSION >= 0x00060000
+        | QIODeviceBase::Text
+#endif
+        ))
 		return unsuccessfulReturn();
 	QTextStream fileIn(&data);
 
@@ -468,7 +490,11 @@ double CLightFrameInfo::RegisterPicture(const CGrayBitmap& Bitmap, double thresh
 			if (omp_get_thread_num() == 0 && (++masterCount % 25) == 0) // Only master thread
 			{
 				const QString strText(QCoreApplication::translate("RegisterEngine", "Registering %1 (%2 stars)", "IDS_REGISTERINGNAMEPLUSTARS")
-					.arg(filePath.filename().generic_u8string().c_str())
+					.arg(filePath.filename()
+#if QT_VERSION >= 0x00060000
+            .generic_u8string()
+#endif
+            .c_str())
 					.arg(nStars.load()));
 				m_pProgress->Progress2(strText, nrSubrects.load());
 			}
@@ -921,7 +947,12 @@ bool CRegisterEngine::SaveCalibratedLightFrame(const CLightFrameInfo& lfi, std::
 
 	if (!lfi.filePath.empty() && static_cast<bool>(pBitmap))
 	{
+#if QT_VERSION < 0x00060000
+    QString tmppath = QString::fromStdString ( lfi.filePath.native());
+    const QFileInfo fileInfo( tmppath );
+#else
 		const QFileInfo fileInfo(lfi.filePath);
+#endif
 		const QString strPath(fileInfo.path() + QDir::separator());
 		const QString strBaseName(fileInfo.baseName());
 

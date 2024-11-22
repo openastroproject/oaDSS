@@ -439,7 +439,15 @@ namespace DSS
 			}
 		}
 
-		connect(ui->DSLRs, &QComboBox::currentIndexChanged, this, &RawDDPSettings::DSLRs_currentIndexChanged);
+		connect(ui->DSLRs,
+#if QT_VERSION < 0x00060000
+        QOverload<int>::of(
+#endif
+        &QComboBox::currentIndexChanged
+#if QT_VERSION < 0x00060000
+        )
+#endif
+        , this, &RawDDPSettings::DSLRs_currentIndexChanged);
 
 		updateBayerPattern().updateControls();
 

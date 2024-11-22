@@ -276,7 +276,12 @@ namespace DSS
 		DSS::ProgressDlg dlg{ DeepSkyStacker::instance() };
 		CLightFrameInfo				fi;
 
+#if QT_VERSION < 0x00060000
+    QString tmpframe = QString::fromStdString ( firstLightFrame.native());
+    QFileInfo info( tmpframe );
+#else
 		QFileInfo info(firstLightFrame);
+#endif
 		QString fileName = info.fileName();
 
 		QString string = tr("Registering %1", "IDS_REGISTERINGNAME").arg(fileName);

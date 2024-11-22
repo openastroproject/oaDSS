@@ -1,7 +1,9 @@
 
 #pragma once
 #include <zexcept.h>
+#if QT_VERSION >= 0x00060000
 #include <filesystem>
+#endif
 #include <QImage>
 #if QT_VERSION < 0x00060000
 #include <QDebug>

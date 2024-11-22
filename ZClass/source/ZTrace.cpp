@@ -71,7 +71,12 @@
 
 #if (__cplusplus > 201703L)     // C++ 20 or better
 #include <chrono>
+#if HAVE_STD_FORMAT
 #include <format>
+#else
+#if HAVE_BOOST_FORMAT
+#include <boost/format.hpp>
+#endif
 #else
 extern "C"
 {
@@ -517,7 +522,15 @@ void  ZTrace :: writeFormattedString(const std::string& strString,
       {
 #if (__cplusplus > 201703L)
           const auto now{ std::chrono::system_clock::now() };
-          const std::string s{ std::format("{:%F %T}", std::chrono::floor<std::chrono::milliseconds>(now)) };
+          const std::string s{
+#if HAVE_STD_FORMAT
+            std
+#else
+#if HAVE BOOST_FORMAT
+            boost
+#endif
+#endif
+              ::format("{:%F %T}", std::chrono::floor<std::chrono::milliseconds>(now)) };
           std::strncpy(buffer, s.c_str(), sizeof(buffer) - 1);
 #else
           char timebuff[21] = { 0 };

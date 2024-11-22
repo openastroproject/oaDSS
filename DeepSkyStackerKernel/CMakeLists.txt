@@ -225,18 +225,9 @@ set_source_files_properties(avx_simd_check.cpp
         COMPILE_OPTIONS "-mxsave")
 endif()
 
-include(CheckCXXSourceCompiles)
-check_cxx_source_compiles( 
-"#include <span>
-
-int main()
-{
-  auto std::span<const unsigned char> dummy;
-  return 0;
-}"
-HAVE_STD_SPAN
-)
-if(HAVE_STD_SPAN)
+include(CheckIncludeFileCXX)
+CHECK_INCLUDE_FILE_CXX(span HAVE_STD_SPAN)
+if ( HAVE_STD_SPAN )
   add_compile_definitions( HAVE_STD_SPAN )
 else()
   if ( BOOST_VERSION VERSION_GREATER_EQUAL 1.78.0 )

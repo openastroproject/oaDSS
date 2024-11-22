@@ -696,7 +696,13 @@ bool LoadTranslations()
 	// Try to load each language file - allow failures though (due to issue with ro and reloading en translations)
 	QSettings settings;
 	const QString language = settings.value("Language").toString();
-	LoadTranslationUnit(*qApp, theQtTranslator, "qt_", QLibraryInfo::path(QLibraryInfo::TranslationsPath), language);
+	LoadTranslationUnit(*qApp, theQtTranslator, "qt_", QLibraryInfo::
+#if QT_VERSION >= 0x00060000
+      path
+#else
+      location
+#endif
+      (QLibraryInfo::TranslationsPath), language);
 	LoadTranslationUnit(*qApp, theAppTranslator, "DeepSkyStacker_", ":/i18n/", language);
 	LoadTranslationUnit(*qApp, theKernelTranslator, "DeepSkyStackerKernel_", ":/i18n/", language);
 	

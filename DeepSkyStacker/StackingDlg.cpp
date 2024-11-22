@@ -1253,7 +1253,13 @@ namespace DSS
 
 	}
 
-	void StackingDlg::tableViewModel_dataChanged(const QModelIndex& first, const QModelIndex&, const QList<int>&)
+	void StackingDlg::tableViewModel_dataChanged(const QModelIndex& first, const QModelIndex&, const
+#if QT_VERSION >= 0x00060000
+      QList
+#else
+      QVector
+#endif
+      <int>&)
 	{
 		//
 		// Only interested if the user has ticked the check box in column 0

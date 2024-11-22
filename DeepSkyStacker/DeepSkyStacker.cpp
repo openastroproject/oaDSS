@@ -52,6 +52,7 @@
 #include <boost/interprocess/exceptions.hpp>
 
 #include <fstream>
+#include <source_location>
 
 namespace bip = boost::interprocess;
 

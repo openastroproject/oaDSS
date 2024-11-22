@@ -106,7 +106,15 @@ namespace DSS
 	{
 		connect(buttonBox, &QDialogButtonBox::accepted, this, &StarMaskDlg::onOK);
 		connect(buttonBox, &QDialogButtonBox::rejected, this, &StarMaskDlg::onCancel);
-		connect(starShape, &QComboBox::currentIndexChanged, this, &StarMaskDlg::setStarShapePreview);
+		connect(starShape,
+#if QT_VERSION < 0x00060000
+        QOverload<int>::of(
+#endif
+        &QComboBox::currentIndexChanged
+#if QT_VERSION < 0x00060000
+        )
+#endif
+        , this, &StarMaskDlg::setStarShapePreview);
 		connect(thresholdSlider, &QSlider::valueChanged, this, &StarMaskDlg::thresholdChanged);
 		connect(minSizeSlider, &QSlider::valueChanged, this, &StarMaskDlg::minSizeChanged);
 		connect(maxSizeSlider, &QSlider::valueChanged, this, &StarMaskDlg::maxSizeChanged);

@@ -69,7 +69,7 @@
 # include <os2.h>
 #endif
 
-#if (__cplusplus > 201703L)     // C++ 20 or better
+#if (__cplusplus > 201703L && (HAVE_STD_FORMAT || HAVE_BOOST_FORMAT))     // C++ 20 or better
 #include <chrono>
 #if HAVE_STD_FORMAT
 #include <format>

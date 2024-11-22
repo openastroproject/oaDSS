@@ -149,7 +149,13 @@ namespace DSS
 		void tableView_customContextMenuRequested(const QPoint& pos);
 		void tabBar_customContextMenuRequested(const QPoint& pos);
 		void tableView_selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-		void tableViewModel_dataChanged(const QModelIndex& first, const QModelIndex& last, const QList<int>& roles);
+		void tableViewModel_dataChanged(const QModelIndex& first, const QModelIndex& last, const
+#if QT_VERSION >= 0x00060000
+        QList
+#else
+        QVector
+#endif
+        <int>& roles);
 		void gammaChanging(int peg);
 		void gammaChanged(int peg);
 		void tabBar_currentChanged(int index);

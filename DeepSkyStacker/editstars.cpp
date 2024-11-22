@@ -414,7 +414,14 @@ namespace DSS
 			//
 			// Get the mouse location and convert to image coordinates
 			//
-			if (auto pt = imageView->screenToImage(QPointF{ e->position() }); pt.x() >= 0 && pt.x() < imageView->imageWidth() && pt.y() >= 0 && pt.y() < imageView->imageHeight())
+
+			if (auto pt = imageView->screenToImage(QPointF{ e->
+#if QT_VERSION >= 0x00060200
+            position()
+#else
+            localPos()
+#endif
+            }); pt.x() >= 0 && pt.x() < imageView->imageWidth() && pt.y() >= 0 && pt.y() < imageView->imageHeight())
 			{
 				// The point is in the image
 				m_ptCursor = std::move(pt);

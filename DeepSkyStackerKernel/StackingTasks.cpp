@@ -1,5 +1,7 @@
 #include "stdafx.h"
-
+#if QT_VERSION < 0x00060000
+#include <QDebug>
+#endif
 #include "StackingTasks.h"
 #include "DSSProgress.h"
 #include "ztrace.h"

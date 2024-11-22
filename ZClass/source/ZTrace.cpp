@@ -521,7 +521,7 @@ void  ZTrace :: writeFormattedString(const std::string& strString,
       //
       if (isWriteTimeStampEnabled())
       {
-#if (__cplusplus > 201703L)
+#if (__cplusplus > 201703L && (HAVE_STD_FORMAT || HAVE_BOOST_FORMAT))
           const auto now{ std::chrono::system_clock::now() };
           const std::string s{
 #if HAVE_STD_FORMAT

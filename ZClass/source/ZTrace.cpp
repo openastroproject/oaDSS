@@ -77,6 +77,7 @@
 #if HAVE_BOOST_FORMAT
 #include <boost/format.hpp>
 #endif
+#endif
 #else
 extern "C"
 {

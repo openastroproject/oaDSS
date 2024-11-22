@@ -648,7 +648,11 @@ namespace DSS
 			if (totalTime) timeText = tr("Exposure: %1 ").arg(exposureToString(totalTime));
 			if (nrFrames) framesText = tr("%n frames", "IDS_NRFRAMES", nrFrames);
 
-			text = QString("%1\n%2%3%4(%5)").arg(currentFile.generic_u8string().c_str())
+			text = QString("%1\n%2%3%4(%5)").arg(currentFile.
+#if QT_VERSION >= 0x00060000
+          generic_u8string().
+#endif
+          c_str())
 				.arg(isoText)
 				.arg(gainText)
 				.arg(timeText)
@@ -883,9 +887,15 @@ namespace DSS
 			//
 			// Create the list of points with the initial size set correctly.
 			//
+#if QT_VERSION >= 0x00060000
 			QList<QPointF>	redPoints{ lNrValues };
 			QList<QPointF>	greenPoints{ lNrValues };
 			QList<QPointF>	bluePoints{ lNrValues };
+#else
+			QVector<QPointF>	redPoints{ lNrValues };
+			QVector<QPointF>	greenPoints{ lNrValues };
+			QVector<QPointF>	bluePoints{ lNrValues };
+#endif
 
 			bool				bShow = true;
 
@@ -897,19 +907,31 @@ namespace DSS
 
 				fY = exp(-(fX - fAverage[0]) * (fX - fAverage[0]) / (fStdDev[0] * fStdDev[0] * 2)) * lWidth / lNrValues;
 				fY = lHeight - fY * lHeight;
+#if QT_VERSION >= 0x00060000
 				redPoints.emplace_back(fX, fY);
+#else
+        redPoints.append ( QPointF (fX, fY));
+#endif
 
 				bShow = bShow && (fX < 1000 && fY < 1000);
 
 				fY = exp(-(fX - fAverage[1]) * (fX - fAverage[1]) / (fStdDev[1] * fStdDev[1] * 2)) * lWidth / lNrValues;
 				fY = lHeight - fY * lHeight;
+#if QT_VERSION >= 0x00060000
 				greenPoints.emplace_back(fX, fY);
+#else
+        greenPoints.append ( QPointF (fX, fY));
+#endif
 
 				bShow = bShow && (fX < 1000 && fY < 1000);
 
 				fY = exp(-(fX - fAverage[2]) * (fX - fAverage[2]) / (fStdDev[2] * fStdDev[2] * 2)) * lWidth / lNrValues;
 				fY = lHeight - fY * lHeight;
+#if QT_VERSION >= 0x00060000
 				bluePoints.emplace_back(fX, fY);
+#else
+        bluePoints.append ( QPointF (fX, fY));
+#endif
 
 				bShow = bShow && (fX < 1000 && fY < 1000);
 			};
@@ -958,7 +980,12 @@ namespace DSS
 		//
 		// Create the points array for the curve
 		//
-		QList<QPointF>	points{ 100 };
+#if QT_VERSION >= 0x00060000
+		QList
+#else
+		QVector
+#endif
+      <QPointF>	points{ 100 };
 
 		pen.setStyle(Qt::DashLine);
 
@@ -967,7 +994,11 @@ namespace DSS
 			double	j;
 
 			j = bezierAdjust.GetValue(i);
+#if QT_VERSION >= 0x00060000
 			points.emplace_back(i * width, height - j * height);
+#else
+			points.append ( QPointF (i * width, height - j * height));
+#endif
 		};
 		QPen oldPen{ painter.pen() };
 		painter.setPen(pen);

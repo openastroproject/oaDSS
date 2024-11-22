@@ -60,7 +60,7 @@ void	CLightFramesStackingInfo::SetReferenceFrame(const fs::path& path)
 	
 	QFile file(m_strStackingFileInfo);
 	if (!file.open(QIODevice::Text | QIODevice::ReadOnly
-#if QT_VERSION < 0x00060000
+#if QT_VERSION >= 0x00060000
         | QIODeviceBase::Text
 #endif
         ))

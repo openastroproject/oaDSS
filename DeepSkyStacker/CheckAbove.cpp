@@ -31,7 +31,13 @@ namespace DSS
 		if (strValue.endsWith(locale.percent()))
 		{
 			m_bPercent = true;
-			strValue = strValue.left(strValue.length() - locale.percent().length());
+			strValue = strValue.left(strValue.length() -
+#if QT_VERSION < 0x00060000
+          1
+#else
+          locale.percent().length()
+#endif
+          );
 		}
 		m_fThreshold = locale.toDouble(strValue);
 
@@ -60,7 +66,13 @@ namespace DSS
 		const auto percent = locale().percent();
 		if (input.endsWith(percent))
 		{
-			auto tmpInput = input.left(input.length() - percent.length());
+			auto tmpInput = input.left(input.length() -
+#if QT_VERSION < 0x00060000
+          1
+#else
+          percent.length()
+#endif
+          );
 			if (!tmpInput.isEmpty())
 			{
 				state = m_percentValueValidator->validate(tmpInput, tmpPos);
@@ -83,7 +95,13 @@ namespace DSS
 		const auto percent = locale().percent();
 		if (input.endsWith(percent))
 		{
-			auto tmpInput = input.left(input.length() - percent.length());
+			auto tmpInput = input.left(input.length() -
+#if QT_VERSION < 0x00060000
+          1
+#else
+          percent.length()
+#endif
+          );
 			m_percentValueValidator->fixup(input);
 			input = tmpInput + percent;
 		}

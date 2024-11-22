@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "StackingEngine.h"
-
+#if QT_VERSION < 0x00060000
+#include <QTextStream>
+#include <QDebug>
+#endif
 #include "MasterFrames.h"
 #include "MatchingStars.h"
 #include "PixelTransform.h"
@@ -37,7 +40,12 @@ void	CLightFramesStackingInfo::SetReferenceFrame(const fs::path& path)
 {
 	ZFUNCTRACE_RUNTIME();
 
+#if QT_VERSION < 0x00060000
+  QString tmppath = QString::fromStdString ( path.native());
+  const QFileInfo fileInfo(path);
+#else
 	const QFileInfo fileInfo(path);
+#endif
 
 	referenceFrame = path;
 	m_strStackingFileInfo = QDir::toNativeSeparators(QString("%1%2%3.stackinfo.txt").arg(fileInfo.path()).arg(QDir::separator()).arg(fileInfo.baseName()));
@@ -51,7 +59,11 @@ void	CLightFramesStackingInfo::SetReferenceFrame(const fs::path& path)
 	m_vLightFrameStackingInfo.clear();
 	
 	QFile file(m_strStackingFileInfo);
-	if (!file.open(QIODevice::Text | QIODevice::ReadOnly | QIODeviceBase::Text))
+	if (!file.open(QIODevice::Text | QIODevice::ReadOnly
+#if QT_VERSION < 0x00060000
+        | QIODeviceBase::Text
+#endif
+        ))
 		return;
 
 	// Process line by line.
@@ -144,7 +156,12 @@ void	CLightFramesStackingInfo::GetInfoFileName(const fs::path& lightFrame, QStri
 	//ZFUNCTRACE_RUNTIME();
 	fs::path file{ lightFrame };
 	file.replace_extension(".info.txt");
+#if QT_VERSION < 0x00060000
+  QString tmpfile = QString::fromStdString ( file.native());
+  QFileInfo info{ tmpfile };
+#else
 	QFileInfo info{ file };
+#endif
 
 	//
 	// Get the file creation date/time if possible. If not get the last modified date/time
@@ -1478,7 +1495,12 @@ bool CStackingEngine::SaveCalibratedAndRegisteredLightFrame(CMemoryBitmap* pBitm
 
 	if (!currentLightFrame.empty() && pBitmap != nullptr)
 	{
+#if QT_VERSION < 0x00060000
+    QString tmpframe = QString::fromStdString ( currentLightFrame.native());
+    const QFileInfo fileInfo( tmpframe);
+#else
 		const QFileInfo fileInfo(currentLightFrame);		
+#endif
 		const QString strPath(fileInfo.path() + QDir::separator());
 		const QString strBaseName(fileInfo.baseName());
 		QString strOutputFile;
@@ -1520,7 +1542,12 @@ bool CStackingEngine::SaveCalibratedLightFrame(std::shared_ptr<CMemoryBitmap> pB
 
 	if (!currentLightFrame.empty() && static_cast<bool>(pBitmap))
 	{
+#if QT_VERSION < 0x00060000
+    QString tmpframe = QString::fromStdString ( currentLightFrame.native());
+    const QFileInfo fileInfo( tmpframe);
+#else
 		const QFileInfo fileInfo(currentLightFrame);
+#endif
 		const QString strPath(fileInfo.path() + QDir::separator());
 		const QString strBaseName(fileInfo.baseName());
 		QString strOutputFile;
@@ -1586,7 +1613,12 @@ bool CStackingEngine::SaveDeltaImage( CMemoryBitmap* pBitmap) const
 
 	if (!currentLightFrame.empty() && pBitmap != nullptr)
 	{
+#if QT_VERSION < 0x00060000
+    QString tmpframe = QString::fromStdString ( currentLightFrame.native());
+    const QFileInfo fileInfo( tmpframe);
+#else
 		const QFileInfo fileInfo(currentLightFrame);
+#endif
 		const QString strPath(fileInfo.path() + QDir::separator());
 		const QString strBaseName(fileInfo.baseName());
 		QString strOutputFile;
@@ -1626,7 +1658,12 @@ bool CStackingEngine::SaveCometImage(CMemoryBitmap* pBitmap) const
 
 	if (!currentLightFrame.empty() && pBitmap != nullptr)
 	{
+#if QT_VERSION < 0x00060000
+    QString tmpframe = QString::fromStdString ( currentLightFrame.native());
+    const QFileInfo fileInfo( tmpframe);
+#else
 		const QFileInfo fileInfo(currentLightFrame);
+#endif
 		const QString strPath(fileInfo.path() + QDir::separator());
 		const QString strBaseName(fileInfo.baseName());
 		QString strOutputFile;
@@ -1668,7 +1705,12 @@ bool CStackingEngine::SaveCometlessImage(CMemoryBitmap* pBitmap) const
 
 	if (!currentLightFrame.empty() && pBitmap != nullptr)
 	{
+#if QT_VERSION < 0x00060000
+    QString tmpframe = QString::fromStdString ( currentLightFrame.native());
+    const QFileInfo fileInfo( tmpframe);
+#else
 		const QFileInfo fileInfo(currentLightFrame);
+#endif
 		const QString strPath(fileInfo.path() + QDir::separator());
 		const QString strBaseName(fileInfo.baseName());
 		QString strOutputFile;
@@ -2661,7 +2703,12 @@ void	CStackingEngine::WriteDescription(CAllStackingTasks& tasks, const fs::path&
 	if (!OutputSettings.m_bOutputHTML)
 		return;
 
+#if QT_VERSION < 0x00060000
+    QString tmpfile = QString::fromStdString ( outputFile.native());
+    const QFileInfo fileInfo( tmpfile);
+#else
 	const QFileInfo fileInfo(outputFile);
+#endif
 	const QString strOutputFile(QDir::toNativeSeparators(QString("%1%2%3.html").arg(fileInfo.path()).arg(QDir::separator()).arg(fileInfo.baseName())));
 
 	QFile file(strOutputFile);

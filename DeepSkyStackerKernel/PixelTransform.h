@@ -3,7 +3,9 @@
 #include "DSSTools.h"
 #include "BilinearParameters.h"
 
-#if !HAVE_STD_SPAN
+#if HAVE_STD_SPAN
+#include <span>
+#else
 #if !HAVE_BOOST_SPAN
 #include "span.hpp"
 #endif

@@ -526,7 +526,7 @@ void  ZTrace :: writeFormattedString(const std::string& strString,
 #if HAVE_STD_FORMAT
             std
 #else
-#if HAVE BOOST_FORMAT
+#if HAVE_BOOST_FORMAT
             boost
 #endif
 #endif

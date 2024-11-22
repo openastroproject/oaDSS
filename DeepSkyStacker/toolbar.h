@@ -70,7 +70,13 @@ namespace DSS
         }
 
     protected:
-        inline void enterEvent([[maybe_unused]] QEnterEvent* e) override
+        inline void enterEvent([[maybe_unused]]
+#if QT_VERSION < 0x00060000
+            QEvent*
+#else
+            QEnterEvent*
+#endif
+            e) override
         {
             Inherited::enterEvent(e);
             setOpacity(1.0, true);

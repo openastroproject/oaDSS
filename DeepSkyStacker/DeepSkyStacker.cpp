@@ -785,14 +785,21 @@ int main(int argc, char* argv[])
 	//
 	// Register PICTURETYPE and QMessageBox::Icon enums as meta types
 	//
+#if QT_VERSION >= 0x00060500
 	qRegisterMetaType<PICTURETYPE>();
 	qRegisterMetaType<QMessageBox::Icon>();
+#else
+	qRegisterMetaType<PICTURETYPE>( "PICTURETYPE" );
+	qRegisterMetaType<QMessageBox::Icon>( "QMessageBox::Icon" );
+#endif
 
 	//
 	// Increase maximum size of QImage from the default of 128MB to 1GB
 	//
+#if QT_VERSION >= 0x00060000
 	constexpr int oneGB{ 1024 * 1024 * 1024 };
 	QImageReader::setAllocationLimit(oneGB);
+#endif
 
 	ZTRACE_RUNTIME("Invoking QApplication::exec()");
 	try

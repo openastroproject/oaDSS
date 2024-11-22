@@ -1343,7 +1343,11 @@ bool CFITSWriter::Open()
 				if ((m_lNrChannels == 1) && (m_CFAType != CFATYPE_NONE))
 					bResult = bResult && WriteKey("DSSCFATYPE", (int)m_CFAType);
 
+#if QT_VERSION < 0x00060000
+				WriteKey("SOFTWARE", QString("DeepSkyStacker %1").arg(VERSION_DEEPSKYSTACKER).toStdString().c_str());
+#else
 				WriteKey("SOFTWARE", QString("DeepSkyStacker %1").arg(VERSION_DEEPSKYSTACKER).toUtf8());
+#endif
 				WriteAllKeys();
 			};
 
@@ -1866,6 +1870,11 @@ void GetFITSExtension(const fs::path& file, QString& strExtension)
 
 void GetFITSExtension(fs::path path, QString& strExtension)
 {
+#if QT_VERSION < 0x00060000
+  QString tmppath = QString::fromStdString(path.native());
+  QDir qPath(tmppath);
+#else
 	QDir qPath(path);
+#endif
 	GetFITSExtension(qPath.absolutePath(), strExtension);
 }

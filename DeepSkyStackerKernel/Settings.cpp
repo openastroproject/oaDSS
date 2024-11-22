@@ -140,7 +140,11 @@ bool	CGlobalSettings::InitFromCurrent(CTaskInfo * pTask, const fs::path& file)
 
 		for (size_t i = 0; i < pTask->m_vBitmaps.size(); i++)
 		{
-			const QString strFile(QString("%1[%2]").arg(pTask->m_vBitmaps[i].filePath.u8string().c_str()).arg(pTask->m_vBitmaps[i].m_strDateTime));
+			const QString strFile(QString("%1[%2]").arg(pTask->m_vBitmaps[i].filePath
+#if QT_VERSION >= 0x00060000
+            .u8string()
+#endif
+            .c_str()).arg(pTask->m_vBitmaps[i].m_strDateTime));
 			m_vFiles.push_back(strFile);
 
 			if (!bFITS && (pTask->m_vBitmaps[i].m_strInfos.left(4) == "FITS"))

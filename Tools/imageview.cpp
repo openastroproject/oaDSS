@@ -111,7 +111,11 @@ namespace DSS
     void ImageView::resizeEvent(QResizeEvent* e)
     {
         QSize size{ e->size() };
+#if QT_VERSION >= 0x00060000
         qreal ratio{ devicePixelRatio() };
+#else
+        qreal ratio{ devicePixelRatioF() };
+#endif
         size *= ratio;
         m_drawingPixmap = QPixmap(size);
         m_drawingPixmap.setDevicePixelRatio(ratio);

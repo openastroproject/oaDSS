@@ -465,10 +465,8 @@ target_link_libraries(DeepSkyStacker PRIVATE
     TIFF::TIFF
     exiv2
     #expat::expat
-    JPEG::JPEG
     OpenMP::OpenMP_CXX
     Threads::Threads
-    ZLIB::ZLIB
 )
 endif()
 

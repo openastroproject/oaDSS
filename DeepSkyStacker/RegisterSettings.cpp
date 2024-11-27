@@ -67,27 +67,66 @@ namespace DSS
 		settingsOnly(false)
 	{
 		ui->setupUi(this);
-		connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-		connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-		connect(ui->checkBox_autoThreshold, &QCheckBox::
-#if QT_VERSION >= 0x00060700
-        checkStateChanged
-#else
-        stateChanged
-#endif
-        , this, &RegisterSettings::on_autoThreshold_changed);
+
+    connectSignalsToSlots();
+    
 		perCentValidator = new QIntValidator(0, 100, this);
 		ui->percentStack->setValidator(perCentValidator);
 
 		workspace->Push();
 	}
 
+
 	RegisterSettings::~RegisterSettings()
 	{
 		delete ui;
 	}
 
-	void RegisterSettings::on_autoThreshold_changed(const int state)
+	void RegisterSettings::connectSignalsToSlots()
+	{
+		connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+		connect(ui->buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+		connect(ui->forceRegister, &QCheckBox::
+#if QT_VERSION >= 0x00060700
+        checkStateChanged
+#else
+        stateChanged
+#endif
+        , this, &RegisterSettings::forceRegister_stateChanged);
+		connect(ui->hotPixels, &QCheckBox::
+#if QT_VERSION >= 0x00060700
+        checkStateChanged
+#else
+        stateChanged
+#endif
+        , this, &RegisterSettings::hotPixels_stateChanged);
+		connect(ui->stackAfter, &QGroupBox::clicked, this, &RegisterSettings::stackAfter_clicked);
+		connect(ui->percentStack, &QLineEdit::editingFinished, this, &RegisterSettings::percentStack_editingFinished);
+
+		connect(ui->recommendedSettings, &QPushButton::pressed, this, &RegisterSettings::recommendedSettings_clicked);
+		connect(ui->stackingSettings, &QPushButton::pressed, this, &RegisterSettings::stackingSettings_clicked);
+
+		connect(ui->luminanceThreshold, &QSlider::valueChanged, this, &RegisterSettings::luminanceThreshold_valueChanged);
+		connect(ui->checkBox_autoThreshold, &QCheckBox::
+#if QT_VERSION >= 0x00060700
+        checkStateChanged
+#else
+        stateChanged
+#endif
+        , this, &RegisterSettings::autoThreshold_changed);
+		connect(ui->computeDetectedStars, &QPushButton::pressed, this, &RegisterSettings::computeDetectedStars_clicked);
+		connect(ui->medianFilter, &QCheckBox::
+#if QT_VERSION >= 0x00060700
+        checkStateChanged
+#else
+        stateChanged
+#endif
+        , this, &RegisterSettings::medianFilter_stateChanged);
+	}
+
+
+	void RegisterSettings::autoThreshold_changed(const int state)
 	{
 		ui->luminanceThreshold->setEnabled(state == 0);
 		ui->label_4->setEnabled(state == 0);
@@ -228,7 +267,7 @@ namespace DSS
 		ui->forceRegister->setChecked(forceRegister);
 	}
 
-	void RegisterSettings::on_forceRegister_stateChanged(int state)
+	void RegisterSettings::forceRegister_stateChanged(int state)
 	{
 		state;
 		//
@@ -238,14 +277,14 @@ namespace DSS
 		forceRegister = ui->forceRegister->isChecked();
 	}
 
-	void RegisterSettings::on_hotPixels_stateChanged(int state)
+	void RegisterSettings::hotPixels_stateChanged(int state)
 	{
 		state;
 		bool hotPixels = ui->hotPixels->isChecked();
 		workspace->setValue("Register/DetectHotPixels", hotPixels);
 	}
 
-	void RegisterSettings::on_stackAfter_clicked()
+	void RegisterSettings::stackAfter_clicked()
 	{
 		stackAfter = ui->stackAfter->isChecked();
 		workspace->setValue("Register/StackAfter", stackAfter);
@@ -254,13 +293,13 @@ namespace DSS
 
 	}
 
-	void RegisterSettings::on_percentStack_editingFinished()
+	void RegisterSettings::percentStack_editingFinished()
 	{
 		percentStack = ui->percentStack->text().toUInt();
 		workspace->setValue("Register/PercentStack", percentStack);
 	}
 
-	void RegisterSettings::on_luminanceThreshold_valueChanged(int newValue)
+	void RegisterSettings::luminanceThreshold_valueChanged(int newValue)
 	{
 		if (detectionThreshold != static_cast<uint>(newValue))
 		{
@@ -270,7 +309,7 @@ namespace DSS
 		}
 	}
 
-	void RegisterSettings::on_computeDetectedStars_clicked()
+	void RegisterSettings::computeDetectedStars_clicked()
 	{
 		// Retrieve the first checked light frame of the list
 		DSS::ProgressDlg dlg{ DeepSkyStacker::instance() };
@@ -295,14 +334,14 @@ namespace DSS
 		ui->starCount->setText(string);
 	}
 
-	void RegisterSettings::on_medianFilter_stateChanged(int state)
+	void RegisterSettings::medianFilter_stateChanged(int state)
 	{
 		state;
 		medianFilter = ui->medianFilter->isChecked();
 		workspace->setValue("Register/ApplyMedianFilter", medianFilter);
 	}
 
-	void RegisterSettings::on_recommendedSettings_clicked()
+	void RegisterSettings::recommendedSettings_clicked()
 	{
 		RecommendedSettings		dlg;
 
@@ -317,7 +356,7 @@ namespace DSS
 		};
 	}
 
-	void RegisterSettings::on_stackingSettings_clicked()
+	void RegisterSettings::stackingSettings_clicked()
 	{
 		StackSettings dlg(this);
 
